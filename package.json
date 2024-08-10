@@ -45,7 +45,7 @@
         "dmg",
         "zip"
       ],
-      "icon": "resources/bluenvidia.png"
+      "icon": "resources/infinitylogo.png"
     },
     "win": {
       "target": [
@@ -53,16 +53,14 @@
         "zip"
       ],
       "artifactName": "${productName}-${version}-${arch}.${ext}",
-      "icon": "resources/bluenvidia.png"
+      "icon": "resources/infinitylogo.png"
     },
     "linux": {
       "target": [
-        "AppImage",
-        "deb",
-        "rpm"
+        "AppImage"
       ],
       "artifactName": "${productName}-${version}-${arch}.${ext}",
-      "icon": "resources/bluenvidia.png",
+      "icon": "resources/infinitylogo.png",
       "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>"
     }
   }
