@@ -1,0 +1,79 @@
+{
+  "name": "geforce-infnity",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win --linux",
+    "rebuild": "electron-rebuild",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [],
+  "author": {
+    "name": "AstralVixen",
+    "email": "astral.vixen.hu@gmail.com"
+  },
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "electron-rebuild": "^3.2.9"
+  },
+  "dependencies": {
+    "discord-rpc": "^4.0.1"
+  },
+  "build": {
+    "appId": "net.astralvixen.geforceinfinity",
+    "productName": "GeForceInfinity",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "main.js",
+      "preload.js",
+      "resources/**/*",
+      "config/**/**"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/",
+        "to": "resources",
+        "filter": ["**/*"]
+      }
+    ],
+    "directories": {
+      "output": "build"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "icon": "resources/infinitylogo.png"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "icon": "resources/infinitylogo.png",
+      "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>",
+      "category": "Game",
+        "desktop": {
+          "Name": "GeForce Infinity",
+          "Comment": "Enhance your GeForce NOW application experience!",
+          "GenericName": "GeForceInfinity",
+          "Terminal": "false",
+          "Type": "Application",
+          "StartupNotify": "false",
+          "Icon": "/opt/GeForceInfinity/resources/resources/infinitylogo.ico",
+          "MimeType": "x-scheme-handler/geforceinfinity"
+    }
+  }
+}
+}
