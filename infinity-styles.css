@@ -93,8 +93,8 @@ background: #285dfc !important;
 #infinity-settings-sidebar {
   position: fixed;
   top: 0;
-  right: -300px; /* Sidebar is hidden initially */
-  width: 310px;
+  right: -300px;
+  width: 300px;
   height: 100%;
   background: linear-gradient(135deg, #4a4a4a, #2a2a2a, #6e6e6e);
   transition: right 0.3s ease-in;
@@ -124,8 +124,6 @@ background: #285dfc !important;
   margin-right: 10px;
 }
 
-#infinity-settings-sidebar:hover{
-    right: 0px;}
 
 #infinity-settings-sidebar button.rpc-on svg {
   fill: #7289DA; /* Burple */
@@ -180,4 +178,54 @@ font-family: 'Eurostile', sans-serif;
 color: #dcdcdc;
 padding-left: 10px;
 cursor: pointer;
+}
+.social, .donate {
+  margin-top: 2rem;
+}
+
+.social, .donate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.social a, .donate a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #333;
+  border: 2px solid #444;
+  border-radius: 8px;
+  color: #00bfff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.social a {
+  background: linear-gradient(145deg, #333, #444);
+  border-color: #555;
+}
+
+.donate a {
+  background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
+  border-color: #3e3e3e;
+}
+
+.social a:hover {
+  background: linear-gradient(145deg, #444, #555);
+  color: #008fcc;
+  transform: scale(1.05);
+}
+
+.donate a:hover {
+  background: linear-gradient(145deg, #2e2e2e, #3e3e3e);
+  color: #ff6f61;
+  transform: scale(1.05);
+}
+#promos{
+  margin-top: 45vh;
 }

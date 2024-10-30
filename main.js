@@ -107,6 +107,17 @@ const sidebarHTML = `
     <input type="checkbox" id="autofocus" name="autofocus"><br>
     <label style="margin-left:1rem" for="notify">Notify?</label>
     <input type="checkbox" id="notify" name="notify" checked><br>
+          <section id="promos">
+          <div class="social">
+            <a href="https://github.com/AstralVixen/GeForce-Infinity" target="_blank" title="Follow me on GitHub">GitHub</a>
+            <a href="https://geforce-infinity.xyz" target="_blank" title="Check out the website!">Website</a>
+        </div>
+
+        <div class="donate">
+            <a href="https://www.patreon.com/AstralVixen" target="_blank" title="Donate via Patreon">Donate</a>
+        </div>
+      </section>
+
 
 
   
@@ -253,7 +264,7 @@ function createWindow() {
   
       if (!notified) {
         if (autofocus) {
-          mainWindow.setFullScreen(true);
+          mainWindow.maximize();
         } else if (notify) {
           new Notification({
             title: 'GeForce Infinity',
