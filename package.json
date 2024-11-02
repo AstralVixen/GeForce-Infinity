@@ -1,5 +1,5 @@
 {
-  "name": "geforce-infnity",
+  "name": "geforce-infinity",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
@@ -15,11 +15,11 @@
     "name": "AstralVixen",
     "email": "astral.vixen.hu@gmail.com"
   },
-  "license": "ISC",
-  "description": "",
+  "license": "MIT",
+  "description": "Enhance your GeForce NOW application experience!",
   "devDependencies": {
     "electron": "^31.3.1",
-    "electron-builder": "^24.13.3",
+    "electron-builder": "^25.1.8",
     "electron-rebuild": "^3.2.9"
   },
   "dependencies": {
@@ -29,22 +29,20 @@
     "appId": "net.astralvixen.geforceinfinity",
     "productName": "GeForceInfinity",
     "files": [
-      "dist/**/*",
       "node_modules/**/*",
+      "resources/**/*",
       "main.js",
       "preload.js",
-      "resources/**/*",
-      "config/**/**"
+      "infinity-styles.css"
     ],
     "extraResources": [
       {
         "from": "resources/",
-        "to": "resources",
-        "filter": ["**/*"]
+        "to": "."
       }
     ],
     "directories": {
-      "output": "build"
+      "output": "builds"
     },
     "win": {
       "target": [
@@ -64,16 +62,16 @@
       "icon": "resources/infinitylogo.png",
       "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>",
       "category": "Game",
-        "desktop": {
-          "Name": "GeForce Infinity",
-          "Comment": "Enhance your GeForce NOW application experience!",
-          "GenericName": "GeForceInfinity",
-          "Terminal": "false",
-          "Type": "Application",
-          "StartupNotify": "false",
-          "Icon": "/opt/GeForceInfinity/resources/resources/infinitylogo.ico",
-          "MimeType": "x-scheme-handler/geforceinfinity"
+      "desktop": {
+        "Name": "GeForce Infinity",
+        "Comment": "Enhance your GeForce NOW application experience!",
+        "GenericName": "GeForceInfinity",
+        "Terminal": "false",
+        "Type": "Application",
+        "StartupNotify": "false",
+        "Icon": "/opt/GeForceInfinity/resources/infinitylogo.ico",
+        "MimeType": "x-scheme-handler/geforceinfinity"
+      }
     }
   }
-}
 }

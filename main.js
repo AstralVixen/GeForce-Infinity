@@ -2,11 +2,17 @@ const { app, globalShortcut, ipcMain, shell, BrowserWindow, Tray, Menu, session,
 const path = require('path');
 const rpc = require('discord-rpc');
 const fs = require('fs');
-const os = require('os');
-const configPath = path.join(__dirname, 'config', 'infinity.cfg');
+const configPath = path.join(app.getPath('userData'), 'settings.cfg');
 
-
-const clientId = '1270181852979789825'; // Replace with your Discord application client ID
+//Reading the settings
+fs.readFile(configPath, 'utf-8', (err, data) => {
+  if (err) {
+    console.error('Error reading config file:', err);
+  } else {
+    console.log('Config file data:', data);
+  }
+});
+const clientId = '1270181852979789825'; 
 let rpcClient = new rpc.Client({ transport: 'ipc' });
 
 app.setName('GeforceInfinity');
@@ -14,6 +20,9 @@ app.setName('GeforceInfinity');
 let mainWindow;
 let tray;
 let startTime; 
+let autofocus = false;
+let notify = true;
+let rpcEnabled = true; //Base values
 let notified = false;
 
 
@@ -22,7 +31,7 @@ function loadConfig() {
     const configData = fs.readFileSync(configPath);
     const config = JSON.parse(configData);
 
-    // Set values to your variables
+    // Set values to config values
     autofocus = config.autofocus;
     notify = config.notify;
     rpcEnabled = config.rpcEnabled ?? true;
@@ -77,7 +86,7 @@ ipcMain.handle('rpc-toggle', async (event, enable) => {
       await rpcClient.login({ clientId });
       rpcClient.on('ready', () => {
         console.log('Discord Rich Presence is ready.');
-        updateActivity(null); // Make sure to reinitialize the activity
+        updateActivity(null); // Reinitialize the activity
       });
     } catch (error) {
       console.error('RPC Login Error:', error);
@@ -178,7 +187,7 @@ rpcClient.on('ready', () => {
       largeImageKey: 'infinity_logo', 
       largeImageText: 'GeForce Infinity',
       instance: false,
-      startTimestamp: startTime, // Start time for elapsed time
+      startTimestamp: startTime, // Elapsed time
     });
   };
 
@@ -254,7 +263,7 @@ function createWindow() {
   // Handle new window events by opening URLs in the default browser
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url);
-    return { action: 'deny' };
+    return { action: 'deny' }; // Prevent electron from opening new instance for the url
   });
 
   session.defaultSession.webRequest.onBeforeRequest(
@@ -290,7 +299,8 @@ function createWindow() {
   
 
   
-  // Inject custom CSS and replace colors once the page has finished loading
+  // Inject custom CSS and replace colors once the page has finished loading. TODO: Doesn't work yet
+  //TODO: The clipboard doesn't work yet
   mainWindow.webContents.on('did-finish-load', () => {
     injectCustomCSS();
     replaceColorInCSS()

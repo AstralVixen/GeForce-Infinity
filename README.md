@@ -60,7 +60,7 @@ GeForce Infinity is licensed under the [MIT License](LICENSE). See the [LICENSE]
 
 ## 📫 **Contact**
 
-For questions, feedback, or suggestions, feel free to reach out to us:
+For questions, feedback, or suggestions, feel free to reach out to me:
 
 - [GitHub Issues](https://github.com/AstralVixen/GeForce-Infinity/issues)
 - Email: [astral.vixen.hu@gmail.com](mailto:astral.vixen.hu@gmail.com)
