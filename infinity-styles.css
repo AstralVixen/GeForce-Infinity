@@ -229,3 +229,33 @@ cursor: pointer;
 #promos{
   margin-top: 45vh;
 }
+.update {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin-top: 5vh;
+}
+
+#update-button {
+  background: linear-gradient(135deg, #4A90E2, #005BB5);
+  color: black !important; 
+  border: none; 
+  border-radius: 5px;
+  padding: 6px 12px; 
+  font-size: 12px; 
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  margin-right: -10vw;
+}
+
+#update-button:hover {
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+}
+
+#update-button:active {
+  transform: translateY(0); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

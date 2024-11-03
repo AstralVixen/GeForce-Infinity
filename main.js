@@ -1,7 +1,8 @@
-const { app, globalShortcut, ipcMain, shell, BrowserWindow, Tray, Menu, session, Notification } = require('electron');
+const { app, globalShortcut, ipcMain, shell, clipboard, BrowserWindow, Tray, Menu, session, Notification } = require('electron');
 const path = require('path');
 const rpc = require('discord-rpc');
 const fs = require('fs');
+const { autoUpdater } = require('electron-updater');
 const configPath = path.join(app.getPath('userData'), 'settings.cfg');
 
 //Reading the settings
@@ -25,6 +26,14 @@ let notify = true;
 let rpcEnabled = true; //Base values
 let notified = false;
 
+// Listen for updates
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update-available');
+});
+
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update-downloaded');
+});
 
 function loadConfig() {
   if (fs.existsSync(configPath)) {
@@ -59,6 +68,23 @@ function saveConfig() {
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
   console.log('Config saved:', config);
 }
+
+ipcMain.handle('check-for-updates', () => {
+  autoUpdater.checkForUpdates();
+});
+
+ipcMain.on('quit-and-install', () => {
+  autoUpdater.quitAndInstall();
+});
+
+ipcMain.handle('download-update', async () => {
+  try {
+    await autoUpdater.downloadUpdate();
+  } catch (error) {
+    console.error('Failed to download update:', error);
+  }
+});
+
 
 ipcMain.on('open-external-link', (event, url) => {
   shell.openExternal(url);
@@ -125,6 +151,9 @@ const sidebarHTML = `
         <div class="donate">
             <a href="https://www.patreon.com/AstralVixen" target="_blank" title="Donate via Patreon">Donate</a>
         </div>
+        <div class="update">
+        <button id="update-button" onclick="checkForUpdates()">Check for Updates</button>
+        </div>
       </section>
 
 
@@ -172,7 +201,32 @@ NotifyCheckbox.addEventListener("change", (event) => {
   window.electronAPI.setNotify(event.target.checked);
 });
 
+async function checkForUpdates() {
+  try {
+    const isUpdateAvailable = await window.electronAPI.checkForUpdates();
+    console.log('Checking for updates...');
 
+    if (isUpdateAvailable) {
+      const userConsent = confirm('An update is available! Would you like to download it now?');
+      if (userConsent) {
+        // Call the function to start the download
+        await window.electronAPI.downloadUpdate();
+        alert('The update is now downloading...');
+      }
+    } else {
+      alert('No update is available.');
+    }
+  } catch (error) {
+    console.error('Failed to check for updates:', error);
+  }
+}
+
+window.electronAPI.updateDownloaded(() => {
+  const userConsent = confirm('Update downloaded. Would you like to restart and install it now?');
+  if (userConsent) {
+    window.electronAPI.quitAndInstall();
+  }
+});
 
 `;
 
