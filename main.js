@@ -16,7 +16,7 @@ fs.readFile(configPath, 'utf-8', (err, data) => {
 const clientId = '1270181852979789825'; 
 let rpcClient = new rpc.Client({ transport: 'ipc' });
 
-app.setName('GeforceInfinity');
+app.setName('Geforce Infinity');
 
 let mainWindow;
 let tray;
@@ -24,6 +24,7 @@ let startTime;
 let autofocus = false;
 let notify = true;
 let rpcEnabled = true; //Base values
+let informed = false;
 let notified = false;
 
 // Listen for updates
@@ -44,6 +45,7 @@ function loadConfig() {
     autofocus = config.autofocus;
     notify = config.notify;
     rpcEnabled = config.rpcEnabled ?? true;
+    informed = config.informed;
 
     console.log(`Loaded config: autofocus=${autofocus}, notify=${notify}, rpcEnabled=${rpcEnabled}`);
   } else {
@@ -52,6 +54,7 @@ function loadConfig() {
       autofocus: false,
       notify: true,
       rpcEnabled: true,
+      informed: false,
     };
     fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2));
     console.log('Config file created with default values.');
@@ -64,6 +67,7 @@ function saveConfig() {
     autofocus: autofocus,
     notify: notify,
     rpcEnabled: rpcEnabled,
+    informed: informed,
   };
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
   console.log('Config saved:', config);
@@ -434,9 +438,26 @@ app.whenReady().then(() => {
   createWindow();
   createTray();
 
-  globalShortcut.register('Control+I', () => {
-      mainWindow.webContents.executeJavaScript('toggleSidebar();');
+  const shortcutRegistered = globalShortcut.register('Control+I', () => {
+    mainWindow.webContents.executeJavaScript('toggleSidebar();');
   });
+
+  if (shortcutRegistered) {
+    console.log('Global shortcut registered successfully');
+    
+    // Once the shortcut is registered, show the notification
+    if (informed === false) {
+      new Notification({
+        title: 'GeForce Infinity',
+        body: 'Press Control+I to bring out the infinity settings sidebar!',
+        icon: path.join(__dirname, 'resources/infinitylogo.png'), 
+      }).show();
+      informed = true;
+      saveConfig();
+    }
+  } else {
+    console.error('Failed to register global shortcut');
+  }
 
   if (rpcEnabled) {
     rpcClient.login({ clientId }).catch(console.error);
