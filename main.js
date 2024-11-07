@@ -323,8 +323,16 @@ function createWindow() {
   session.defaultSession.webRequest.onBeforeRequest(
     { urls: ['wss://*/*'] },
     (details, callback) => {
-      console.log('Detected matching WebSocket upgrade request:', details);
-  
+    // Check if the request matches the specific Nvidia Cloudmatch endpoint
+    const url = details.url;
+    const isNvidiaRequest =
+      url.includes('nvidiagrid.net') &&
+      url.includes('/sign_in') &&
+      url.includes('peer_id');
+
+
+    if (isNvidiaRequest) {
+      console.log('Detected Nvidia Cloudmatch WebSocket upgrade request:');  
       if (!notified) {
         if (autofocus) {
           mainWindow.maximize();
@@ -342,7 +350,7 @@ function createWindow() {
           notified = false;
         }, 10000);
       }
-  
+    }
       callback({ cancel: false });
     }
   );

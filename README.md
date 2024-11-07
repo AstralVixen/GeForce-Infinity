@@ -9,7 +9,7 @@
 - **Enhanced UI**: GeForce Infinity aims to improve the user interface of GeForce NOW, providing a more intuitive and enjoyable experience.
 - **Custom Discord Rich Presence**: Show off your gaming status with personalized Discord Rich Presence. Display game details and status updates directly in your Discord profile.
 - **Instant App Switch**: Automatically switch to GeForce Infinity once your gaming rig is ready for action!
-- **Notifications** : Get notified once your gaming rig is ready for action!
+- **Notifications**: Get notified once your gaming rig is ready for action!
 
 ## 🛠️ **Planned Features**
 
