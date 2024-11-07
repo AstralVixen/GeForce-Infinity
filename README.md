@@ -8,6 +8,8 @@
 
 - **Enhanced UI**: GeForce Infinity aims to improve the user interface of GeForce NOW, providing a more intuitive and enjoyable experience.
 - **Custom Discord Rich Presence**: Show off your gaming status with personalized Discord Rich Presence. Display game details and status updates directly in your Discord profile.
+- **Instant App Switch**: Automatically switch to GeForce Infinity once your gaming rig is ready for action!
+- **Notifications** : Get notified once your gaming rig is ready for action!
 
 ## 🛠️ **Planned Features**
 
@@ -19,8 +21,6 @@ We have several exciting features planned to further enhance your experience:
   
 - **Automatic Game Startup**: Customize which game starts automatically when the app launches.
   
-- **Instant App Switch**: Automatically switch to GeForce Infinity once your gaming rig is ready for action.
-
 ## ⚠️ **Disclaimer**
 
 GeForce Infinity is an independent project and is not affiliated with, sponsored by, or endorsed by Nvidia or GeForce NOW. All trademarks and logos used are the property of their respective owners. The app is provided as-is, and the developers are not responsible for any issues or damages that may arise from its use.
@@ -64,4 +64,4 @@ For questions, feedback, or suggestions, feel free to reach out to me:
 
 - [GitHub Issues](https://github.com/AstralVixen/GeForce-Infinity/issues)
 - Email: [astral.vixen.hu@gmail.com](mailto:astral.vixen.hu@gmail.com)
-- Discord: astralvixen
+- Discord: [Join my discord](https://discord.gg/p5vRgQwZ9K)
