@@ -421,11 +421,36 @@ function createTray() {
       }
     },
     {
+      label: 'Visit website',
+      click: () => {
+        shell.openExternal('https://geforce-infinity.xyz')
+      }
+    },
+    {
+      label: 'Report issue',
+      click: () => {
+        shell.openExternal('https://github.com/AstralVixen/GeForce-Infinity/issues')
+      }
+    },
+    {
+      label: 'Donate',
+      click: () => {
+        shell.openExternal('https://www.patreon.com/c/astralvixen/membership')
+      }
+    },
+    {
+      label: 'Join my discord',
+      click: () => {
+        shell.openExternal('https://discord.gg/p5vRgQwZ9K')
+      }
+    },
+    {
       label: 'Quit',
       click: () => {
         app.quit();
       }
     }
+    
   ]);
 
   tray.setToolTip('GeForce Infinity'); 
