@@ -487,10 +487,18 @@ app.whenReady().then(() => {
     createWindow();
     createTray();
 
+    const { globalShortcut } = require('electron');
+
     const shortcutRegistered = globalShortcut.register("Control+I", () => {
+        mainWindow.webContents.sendInputEvent({ type: 'keyDown', keyCode: 'Escape' });
+        
+        setTimeout(() => {
+            mainWindow.webContents.sendInputEvent({ type: 'keyUp', keyCode: 'Escape' });
+        }, 3000); 
+    
         mainWindow.webContents.executeJavaScript("toggleSidebar();");
     });
-
+    
     if (shortcutRegistered) {
         console.log("Global shortcut registered successfully");
 
