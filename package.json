@@ -1,7 +1,7 @@
 {
   "name": "geforce-infinity",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
@@ -32,9 +32,9 @@
     "files": [
       "node_modules/**/*",
       "resources/**/*",
-      "main.js",
-      "preload.js",
-      "infinity-styles.css"
+      "src/main.js",
+      "src/preload.js",
+      "src/assets/infinity-styles.css"
     ],
     "extraResources": [
       {
