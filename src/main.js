@@ -328,12 +328,33 @@ function createWindow() {
 
     mainWindow.loadURL("https://play.geforcenow.com/");
 
-    // Handle new window events by opening URLs in the default browser
-    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-        shell.openExternal(url);
-        return { action: "deny" }; // Prevent electron from opening new instance for the url
-    });
-
+    // Handle new window events
+        mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+              if (url === 'about:blank') {
+                // Custom account connection login pop up
+                return {
+                  action: 'allow',
+                  overrideBrowserWindowOptions: {
+                    width: 800,
+                    height: 600,
+                    autoHideMenuBar: true,
+                    icon: path.join(__dirname, "assets/resources/infinitylogo.png"),
+                    title: 'Account Connection',
+                    webPreferences: {
+                      nodeIntegration: false,
+                      contextIsolation: true,
+                      sandbox: true,
+                      session: mainWindow.webContents.session
+                    }
+                  }
+                };
+              }
+            
+              // For everything else, open in default browser
+              shell.openExternal(url);
+                return { action: 'deny' };
+            });
+            
     session.defaultSession.webRequest.onBeforeRequest(
         { urls: ["wss://*/*"] },
         (details, callback) => {
