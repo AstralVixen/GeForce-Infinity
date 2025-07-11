@@ -1,13 +1,18 @@
 {
     "name": "geforce-infinity",
-    "version": "0.1.1",
-    "main": "dist/main.js",
+    "version": "1.1.0",
+    "main": "dist/electron/main.js",
     "scripts": {
         "lint": "eslint .",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc && cpx \"src/assets/**/*\" dist/assets",
-        "dev": "tsc --watch",
-        "start": "npm run build && electron . --trace-warnings",
+        "dev": "concurrently \"bun:dev:overlay\" \"bun:dev:electron\"",
+        "dev:overlay": "bun bun:dev",
+        "dev:electron": "tsc -w -p tsconfig.json",
+        "build": "bun run build:css && bun run build:overlay && bun run build:electron && cpx \"src/assets/**/*\" dist/assets",
+        "build:css": "bunx tailwindcss -i ./src/overlay/index.css -o ./dist/overlay/index.css --minify",
+        "build:electron": "tsc -p tsconfig.electron.json",
+        "build:overlay": "bun build src/overlay/index.tsx --config tsconfig.overlay.json --outdir=dist/overlay --format=esm --target=browser --external=electron --external=fs --external=path --external=os --splitting",
+        "start": "bun run build && electron dist/electron/main.js",
         "pack": "electron-builder --dir",
         "dist": "electron-builder --win --linux",
         "rebuild": "electron-rebuild",
@@ -25,9 +30,15 @@
         "@eslint/js": "^9.30.1",
         "@eslint/json": "^0.12.0",
         "@eslint/markdown": "^6.6.0",
+        "@types/bun": "latest",
         "@types/discord-rpc": "^4.0.9",
+        "@types/react": "^19.1.8",
+        "@types/react-dom": "^19.1.6",
         "@typescript-eslint/eslint-plugin": "^8.36.0",
         "@typescript-eslint/parser": "^8.36.0",
+        "@vitejs/plugin-react": "^4.0.0",
+        "autoprefixer": "^10.4.21",
+        "concurrently": "^9.2.0",
         "copyfiles": "^2.4.1",
         "cpx": "^1.5.0",
         "electron": "^37.2.0",
@@ -37,19 +48,30 @@
         "eslint-config-prettier": "^10.1.5",
         "eslint-plugin-react": "^7.37.5",
         "globals": "^16.3.0",
+        "postcss": "^8.5.6",
         "prettier": "^3.6.2",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "shx": "^0.4.0",
-        "typescript-eslint": "^8.36.0"
+        "tailwindcss": "3.4.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.36.0",
+        "vite": "^7.0.3"
     },
     "dependencies": {
+        "caniuse-lite": "^1.0.30001727",
         "discord-rpc": "^4.0.1",
-        "electron-updater": "^6.6.2"
+        "electron-updater": "^6.6.2",
+        "react-icons": "^5.5.0"
     },
     "build": {
         "appId": "net.astralvixen.geforceinfinity",
+        "version": "1.1.0",
         "productName": "GeForceInfinity",
         "files": [
             "node_modules/**/*",
+            "package.json",
             "resources/**/*",
             "src/main.js",
             "src/preload.js",
@@ -109,5 +131,6 @@
                 "repo": "GeForce-Infinity"
             }
         ]
-    }
+    },
+    "private": true
 }

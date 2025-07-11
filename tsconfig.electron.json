@@ -2,15 +2,21 @@
     "compilerOptions": {
         "outDir": "dist",
         "rootDir": "src",
-        "target": "es2024",
         "module": "Node16",
+        "target": "ESNext",
         "moduleResolution": "node16",
         "esModuleInterop": true,
         "strict": true,
+        "jsx": "react-jsx",
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
     },
     "exclude": ["node_modules"],
-    "include": ["src"],
+    "include": [
+        "src/electron/**/*",
+        "src/overlay/**/*",
+        "postcss.config.js",
+        "tailwind.config.js"
+    ],
     "assets": ["src/assets/**/*"]
 }

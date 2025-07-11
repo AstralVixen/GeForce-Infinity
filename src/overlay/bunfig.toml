@@ -1,0 +1,6 @@
+entrypoint = "index.tsx"
+outdir = "../../dist/overlay"
+target = "browser"
+sourcemap = true
+minify = false
+format = "iife"

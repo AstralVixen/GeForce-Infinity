@@ -1,0 +1,7 @@
+[32mBundled 24 modules in 37ms[0m
+
+  [34msrc/overlay/index.js[33m  0.99 MB    [2m(entry point)[0m
+  [34mtsconfig.overlay.js[0m   446 bytes  [2m(entry point)[0m
+  [36mindex-v8mgrsvs.js[0m     0.76 KB    [2m(chunk)[0m
+  [35msrc/overlay/index.css[0m  0.66 KB    [2m(asset)[0m
+

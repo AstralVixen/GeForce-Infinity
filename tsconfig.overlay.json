@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "outDir": "dist/overlay",
+        "rootDir": "src/overlay",
+        "module": "ESNext",
+        "target": "ESNext",
+        "jsx": "react-jsx",
+        "moduleResolution": "bundler",
+        "esModuleInterop": true,
+        "strict": true
+    },
+    "include": ["src/overlay/**/*"]
+}
