@@ -1,84 +1,136 @@
 {
-  "name": "geforce-infinity",
-  "version": "1.0.0",
-  "main": "src/main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder --win --linux",
-    "rebuild": "electron-rebuild",
-    "postinstall": "electron-builder install-app-deps"
-  },
-  "keywords": [],
-  "author": {
-    "name": "AstralVixen",
-    "email": "astral.vixen.hu@gmail.com"
-  },
-  "license": "MIT",
-  "description": "Enhance your GeForce NOW application experience!",
-  "devDependencies": {
-    "electron": "^31.3.1",
-    "electron-builder": "^25.1.8",
-    "electron-rebuild": "^3.2.9"
-  },
-  "dependencies": {
-    "discord-rpc": "^4.0.1",
-    "electron-updater": "^6.3.9"
-  },
-  "build": {
-    "appId": "net.astralvixen.geforceinfinity",
-    "productName": "GeForceInfinity",
-    "files": [
-      "node_modules/**/*",
-      "resources/**/*",
-      "src/main.js",
-      "src/preload.js",
-      "src/assets/infinity-styles.css"
-    ],
-    "extraResources": [
-      {
-        "from": "resources/",
-        "to": "."
-      }
-    ],
-    "directories": {
-      "output": "builds"
+    "name": "geforce-infinity",
+    "version": "1.1.0",
+    "main": "dist/electron/main.js",
+    "scripts": {
+        "lint": "eslint .",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "concurrently \"bun:dev:overlay\" \"bun:dev:electron\"",
+        "dev:overlay": "bun bun:dev",
+        "dev:electron": "tsc -w -p tsconfig.json",
+        "build": "bun run build:css && bun run build:overlay && bun run build:electron && cpx \"src/assets/**/*\" dist/assets",
+        "build:css": "npx tailwindcss -i ./src/overlay/index.css -o ./dist/assets/tailwind.bundle.css --minify",
+        "build:electron": "tsc -p tsconfig.electron.json",
+        "build:overlay": "bun build src/overlay/index.tsx --config tsconfig.overlay.json --outdir=dist/overlay --format=esm --target=browser --external=electron --external=fs --external=path --external=os --splitting --root src/overlay",
+        "start": "bun run build && electron dist/electron/main.js",
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder --win --linux",
+        "rebuild": "electron-rebuild",
+        "postinstall": "electron-builder install-app-deps"
     },
-    "win": {
-      "target": [
-        "nsis",
-        "zip"
-      ],
-      "artifactName": "${productName}-${version}-${arch}.${ext}",
-      "icon": "resources/infinitylogo.png"
+    "keywords": [],
+    "author": {
+        "name": "AstralVixen",
+        "email": "astral.vixen.hu@gmail.com"
     },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb",
-        "rpm"
-      ],
-      "artifactName": "${productName}-${version}-${arch}.${ext}",
-      "icon": "resources/infinitylogo.png",
-      "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>",
-      "category": "Game",
-      "desktop": {
-        "Name": "GeForce Infinity",
-        "Comment": "Enhance your GeForce NOW application experience!",
-        "GenericName": "GeForceInfinity",
-        "Terminal": "false",
-        "Type": "Application",
-        "StartupNotify": "false",
-        "Icon": "/opt/GeForceInfinity/resources/infinitylogo.ico",
-        "MimeType": "x-scheme-handler/geforceinfinity"
-      }
+    "license": "MIT",
+    "description": "Enhance your GeForce NOW application experience!",
+    "devDependencies": {
+        "@eslint/css": "^0.9.0",
+        "@eslint/js": "^9.30.1",
+        "@eslint/json": "^0.12.0",
+        "@eslint/markdown": "^6.6.0",
+        "@types/bun": "latest",
+        "@types/discord-rpc": "^4.0.9",
+        "@types/react": "^19.1.8",
+        "@types/react-dom": "^19.1.6",
+        "@typescript-eslint/eslint-plugin": "^8.36.0",
+        "@typescript-eslint/parser": "^8.36.0",
+        "@vitejs/plugin-react": "^4.0.0",
+        "autoprefixer": "^10.4.21",
+        "concurrently": "^9.2.0",
+        "copyfiles": "^2.4.1",
+        "cpx": "^1.5.0",
+        "electron": "^37.2.0",
+        "electron-builder": "^26.0.12",
+        "electron-rebuild": "^3.2.9",
+        "eslint": "^9.30.1",
+        "eslint-config-prettier": "^10.1.5",
+        "eslint-plugin-react": "^7.37.5",
+        "globals": "^16.3.0",
+        "postcss": "^8.5.6",
+        "prettier": "^3.6.2",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "shx": "^0.4.0",
+        "tailwindcss": "3.4.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.36.0",
+        "vite": "^7.0.3"
     },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "AstralVixen",
-        "repo": "GeForce-Infinity"      }
-    ]
-  }
+    "dependencies": {
+        "caniuse-lite": "^1.0.30001727",
+        "discord-rpc": "^4.0.1",
+        "electron-updater": "^6.6.2",
+        "node-abi": "^4.12.0",
+        "react-icons": "^5.5.0"
+    },
+    "build": {
+        "appId": "net.astralvixen.geforceinfinity",
+        "productName": "GeForceInfinity",
+        "files": [
+            "node_modules/**/*",
+            "package.json",
+            "resources/**/*",
+            "src/main.js",
+            "src/preload.js",
+            "src/assets/infinity-styles.css",
+            "src/assets/**",
+            "dist/**/*"
+        ],
+        "extraResources": [
+            {
+                "from": "resources/",
+                "to": "."
+            },
+            {
+                "from": "src/assets",
+                "to": "assets",
+                "filter": [
+                    "**/*"
+                ]
+            }
+        ],
+        "directories": {
+            "output": "builds"
+        },
+        "win": {
+            "target": [
+                "nsis",
+                "zip"
+            ],
+            "artifactName": "${productName}-${version}-${arch}.${ext}",
+            "icon": "resources/infinitylogo.png"
+        },
+        "linux": {
+            "target": [
+                "AppImage",
+                "deb",
+                "rpm"
+            ],
+            "artifactName": "${productName}-${version}-${arch}.${ext}",
+            "icon": "resources/infinitylogo.png",
+            "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>",
+            "category": "Game",
+            "desktop": {
+                "Name": "GeForce Infinity",
+                "Comment": "Enhance your GeForce NOW application experience!",
+                "GenericName": "GeForceInfinity",
+                "Terminal": "false",
+                "Type": "Application",
+                "StartupNotify": "false",
+                "Icon": "/opt/GeForceInfinity/resources/infinitylogo.ico",
+                "MimeType": "x-scheme-handler/geforceinfinity"
+            }
+        },
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "AstralVixen",
+                "repo": "GeForce-Infinity"
+            }
+        ]
+    },
+    "private": true
 }

@@ -1,8 +1,14 @@
 # GeForce Infinity
-![Logo](src/assets/resources/infinity_promoimg.png)
 
+<p align="center">
+  <img src="src/assets/resources/infinity_promoimg.png" alt="Logo" />
+</p>
 
 **GeForce Infinity** is a work-in-progress application designed to enhance the GeForce NOW experience. Originally created to address the lack of native GeForce NOW support on Linux, this app also provides functionality for macOS and Windows users. Our goal is to refine the user interface and offer custom features for an improved experience.
+
+## **Screenshot**
+
+![Screenshot](src/assets/resources/Screenshot.png)
 
 ## 🚀 **Features**
 
@@ -16,11 +22,9 @@
 We have several exciting features planned to further enhance your experience:
 
 - **Game Icon in Discord RPC**: Display a small icon representing the game you’re playing in Discord Rich Presence.
-  
 - **Account Switching**: Easily switch between different GeForce NOW accounts within the app.
-  
 - **Automatic Game Startup**: Customize which game starts automatically when the app launches.
-  
+
 ## ⚠️ **Disclaimer**
 
 GeForce Infinity is an independent project and is not affiliated with, sponsored by, or endorsed by Nvidia or GeForce NOW. All trademarks and logos used are the property of their respective owners. The app is provided as-is, and the developers are not responsible for any issues or damages that may arise from its use.
@@ -30,25 +34,31 @@ GeForce Infinity is an independent project and is not affiliated with, sponsored
 To get started with GeForce Infinity, follow these steps:
 
 1. Clone the repository:
+
     ```bash
     git clone https://github.com/AstralVixen/GeForce-Infinity.git
     ```
 
 2. Navigate to the project directory:
+
     ```bash
     cd GeForce-Infinity
     ```
 
 3. Install dependencies:
+
     ```bash
-    npm install electron
-    npm install discord-rpc
+    bun install
     ```
 
 4. Run the application:
     ```bash
     npm start
     ```
+
+## 🎮 **Usage**
+
+Press `Ctrl+I` to open sidebar to access GeForce Infinity features.
 
 ## 💬 **Contributing**
 
