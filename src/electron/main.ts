@@ -5,6 +5,7 @@ import {
     BrowserWindow,
     shell,
     protocol,
+    session,
 } from "electron";
 import path from "path";
 import fs from "fs";
@@ -15,6 +16,7 @@ import { createMainWindow } from "./managers/window";
 import { getConfig, saveConfig, loadConfig } from "./managers/config";
 import { createTray } from "./managers/tray";
 import { clientId, initRpcClient, updateActivity } from "./managers/discord";
+import { config } from "process";
 
 function overrideVersionInDev() {
     if (!app.isPackaged) {
@@ -163,6 +165,47 @@ function setupWindowEvents(mainWindow: BrowserWindow) {
         replaceColorInCSS(mainWindow, config.accentColor);
         mainWindow.webContents.send("config-loaded", config);
     });
+
+    let notified = false;
+    session.defaultSession.webRequest.onBeforeRequest(
+        { urls: ["wss://*/*"] },
+        (details, callback) => {
+            // Check if the request matches the specific Nvidia Cloudmatch endpoint
+            const config = getConfig();
+            const url = details.url;
+            const isNvidiaRequest =
+                url.includes("nvidiagrid.net") &&
+                url.includes("/sign_in") &&
+                url.includes("peer_id");
+
+            if (isNvidiaRequest) {
+                console.log(
+                    "Detected Nvidia Cloudmatch WebSocket upgrade request:"
+                );
+                if (!notified) {
+                    if (config.autofocus) {
+                        mainWindow.maximize();
+                    } else if (config.notify) {
+                        new Notification({
+                            title: "GeForce Infinity",
+                            body: "Your gaming rig is ready!",
+                            icon: path.join(
+                                __dirname,
+                                "assets/resources/infinitylogo.png"
+                            ),
+                        }).show();
+                    }
+                    notified = true;
+
+                    // Reset notification flag
+                    setTimeout(() => {
+                        notified = false;
+                    }, 10000);
+                }
+            }
+            callback({ cancel: false });
+        }
+    );
 
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         if (url === "about:blank") {
