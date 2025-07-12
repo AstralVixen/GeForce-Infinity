@@ -190,25 +190,24 @@ function setupWindowEvents(mainWindow: BrowserWindow) {
 
 app.setName("GeForce Infinity");
 app.commandLine.appendSwitch("enable-media-stream");
-app.commandLine.appendSwitch(
-    "enable-features",
-    "VaapiVideoDecoder,WaylandWindowDecorations,RawDraw"
-);
+app.commandLine.appendSwitch("ignore-gpu-blocklist");
+app.commandLine.appendSwitch("enable-accelerated-video");
+app.commandLine.appendSwitch("enable-gpu-rasterization");
+app.commandLine.appendSwitch("enable-zero-copy");
+app.commandLine.appendSwitch("enable-native-gpu-memory-buffers");
+app.commandLine.appendSwitch("enable-gpu-memory-buffer-video-frames");
 app.commandLine.appendSwitch(
     "disable-features",
     "UseChromeOSDirectVideoDecoder"
 );
 app.commandLine.appendSwitch(
     "enable-features",
-    "AcceleratedVideoDecodeLinuxGL"
+    [
+        "WaylandWindowDecorations",
+        "AcceleratedVideoDecodeLinuxGL",
+        "VaapiVideoDecoder",
+    ].join(",")
 );
-app.commandLine.appendSwitch("enable-accelerated-mjpeg-decode");
-app.commandLine.appendSwitch("enable-accelerated-video");
-app.commandLine.appendSwitch("ignore-gpu-blocklist");
-app.commandLine.appendSwitch("enable-native-gpu-memory-buffers");
-app.commandLine.appendSwitch("enable-gpu-rasterization");
-app.commandLine.appendSwitch("enable-zero-copy");
-app.commandLine.appendSwitch("enable-gpu-memory-buffer-video-frames");
 
 overrideVersionInDev();
 registerCustomProtocols();
