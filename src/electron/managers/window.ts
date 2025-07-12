@@ -16,7 +16,7 @@ export function createMainWindow(): BrowserWindow {
             contextIsolation: true,
             nodeIntegration: false,
             sandbox: false,
-            devTools: true, //!app.isPackaged,
+            devTools: !app.isPackaged,
             webSecurity: true,
         },
         autoHideMenuBar: true,
@@ -33,7 +33,7 @@ export function createMainWindow(): BrowserWindow {
         console.log("[UserAgent] Using default");
     }
 
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
     mainWindow.loadURL(GFN_WEBSITE);
     return mainWindow;
 }
