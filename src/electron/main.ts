@@ -162,6 +162,27 @@ function setupWindowEvents(mainWindow: BrowserWindow) {
     });
 
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        if (url === "about:blank") {
+            return {
+                action: "allow",
+                overrideBrowserWindowOptions: {
+                    width: 800,
+                    height: 600,
+                    autoHideMenuBar: true,
+                    icon: path.join(
+                        __dirname,
+                        "assets/resources/infinitylogo.png"
+                    ),
+                    title: "Account Connection",
+                    webPreferences: {
+                        nodeIntegration: false,
+                        contextIsolation: true,
+                        sandbox: true,
+                        session: mainWindow.webContents.session,
+                    },
+                },
+            };
+        }
         shell.openExternal(url);
         return { action: "deny" };
     });
