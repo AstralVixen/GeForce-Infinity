@@ -38,6 +38,9 @@ function registerCustomProtocols() {
     ]);
 }
 
+//TODO: in future we could greate "theme" CSS files, which will be overriding default nvidia styles,
+// so it would be less buggy, more stable, easier to maintain, debug and customizable, instead of
+// dynamically replacing it and running obbserver on top of DOM
 function replaceColorInCSS(mainWindow: BrowserWindow, accentColor: string) {
     if (!accentColor || accentColor == "") {
         return;
