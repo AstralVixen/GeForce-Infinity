@@ -1,5 +1,7 @@
 import { contextBridge, ipcRenderer, clipboard, shell } from "electron";
 import { Config } from "../shared/types";
+import path from "path";
+import fs from "fs";
 
 declare global {
     interface Window {
@@ -7,18 +9,36 @@ declare global {
     }
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "app://overlay/index.js";
+    document.body.appendChild(script);
+});
+
+const cssPath = path.join(__dirname, "../assets/tailwind.bundle.css");
+let tailwindCss = "";
+try {
+    tailwindCss = fs.readFileSync(cssPath, "utf-8");
+} catch (err) {
+    console.error("❌ Failed to read Tailwind CSS:", err);
+}
+
 contextBridge.exposeInMainWorld("electronAPI", {
+    getTailwindCss: () => tailwindCss,
     onSidebarToggle: (callback: () => void) => {
         ipcRenderer.on("sidebar-toggle", (_event, ...args) => {
-            console.log("sidebar-toggle event received in preload");
             callback();
         });
     },
     saveConfig: (config: Partial<Config>) =>
         ipcRenderer.send("save-config", config),
+    getCurrentConfig: () => ipcRenderer.invoke("get-config"),
     onConfigLoaded: (callback: (config: Config) => void) => {
-        console.log("Setting up config loaded listener");
         ipcRenderer.on("config-loaded", (event, config) => callback(config));
+    },
+    reloadGFN: () => {
+        ipcRenderer.send("reload-gfn");
     },
     copyToClipboard: (text: string) => clipboard.writeText(text),
     openExternal: (url: string) => shell.openExternal(url),

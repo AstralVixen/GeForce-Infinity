@@ -6,93 +6,95 @@ import {
     shell,
     protocol,
 } from "electron";
+import path from "path";
+import fs from "fs";
 import { promises as fsPromises } from "fs";
+
 import { registerIpcHandlers } from "./ipc";
 import { createMainWindow } from "./managers/window";
 import { getConfig, saveConfig, loadConfig } from "./managers/config";
 import { createTray } from "./managers/tray";
 import { clientId, initRpcClient, updateActivity } from "./managers/discord";
-import path from "path";
-import fs from "fs";
 
-if (!app.isPackaged) {
-    const pkgPath = path.join(__dirname, "../../package.json");
-    if (fs.existsSync(pkgPath)) {
-        const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
-        app.getVersion = () => pkg.version;
-        console.log("[DEV] Overridden app.getVersion():", pkg.version);
-    } else {
-        console.warn("[DEV] Cannot find package.json to get version");
+function overrideVersionInDev() {
+    if (!app.isPackaged) {
+        const pkgPath = path.join(__dirname, "../../package.json");
+        if (fs.existsSync(pkgPath)) {
+            const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+            app.getVersion = () => pkg.version;
+            console.log("[DEV] Overridden app.getVersion():", pkg.version);
+        } else {
+            console.warn("[DEV] Cannot find package.json to get version");
+        }
     }
 }
 
-protocol.registerSchemesAsPrivileged([
-    {
-        scheme: "geforce-resource",
-        privileges: { standard: true, secure: true },
-    },
-]);
-
-function injectOverlay(mainWindow: BrowserWindow) {
-    const { pathToFileURL } = require("url");
-    const overlayScriptPath = path.join(__dirname, "../overlay/index.js");
-    const overlayScriptUrl = pathToFileURL(overlayScriptPath).href;
-
-    mainWindow.webContents.executeJavaScript(`
-  const s = document.createElement("script");
-  s.type = "module";
-  s.src = "${overlayScriptUrl}";
-  document.body.appendChild(s);
-`);
-
-    /* mainWindow.webContents
-        .executeJavaScript(
-            `
-            const s = document.createElement("script");
-            s.src = "file://${overlayScriptPath}";
-            document.body.appendChild(s);
-        `
-        )
-        .catch((err) => console.error("❌ Overlay inject failed:", err));*/
+function registerCustomProtocols() {
+    protocol.registerSchemesAsPrivileged([
+        {
+            scheme: "geforce-resource",
+            privileges: { standard: true, secure: true },
+        },
+    ]);
 }
 
 function replaceColorInCSS(mainWindow: BrowserWindow, accentColor: string) {
-    console.log("vstupujem do replaceColorInCSS");
-    if (accentColor == "") {
-        console.log("umrel som v replaceColorInCSS, accentColor je prazdny");
+    if (!accentColor || accentColor == "") {
         return;
     }
-    console.log("pokracujem v accentColor replace je: ", accentColor);
-    const safeColor = accentColor || "#76b900";
-    console.log("safeColor pre replace je: ", safeColor);
-
     mainWindow.webContents.executeJavaScript(`
-    const styles = document.querySelectorAll('style');
-    styles.forEach(style => {
-      style.innerHTML = style.innerHTML.replace(/#76b900/g, '${safeColor}');
-    });
+    (function applyColorPatch() {
+      let observer;
 
-    const links = document.querySelectorAll('link[rel="stylesheet"]');
-    links.forEach(link => {
-      fetch(link.href)
-        .then(response => response.text())
-        .then(css => {
-          css = css.replace(/#76b900/g, '${safeColor}');
-          const blob = new Blob([css], { type: 'text/css' });
-          const newUrl = URL.createObjectURL(blob);
-          link.href = newUrl;
+      function replaceColors() {
+        if (observer) observer.disconnect();
+
+        const styles = document.querySelectorAll('style');
+        styles.forEach(style => {
+          style.innerHTML = style.innerHTML.replace(/#76b900/gi, '${accentColor} !important');
         });
-    });
+
+        const links = document.querySelectorAll('link[rel="stylesheet"]');
+        links.forEach(link => {
+          if (!link.__patched) {
+            link.removeAttribute("integrity");
+            link.removeAttribute("crossorigin");
+
+            fetch(link.href)
+              .then(response => response.text())
+              .then(css => {
+                const patchedCSS = css.replace(/#76b900/gi, '${accentColor} !important');
+                const blob = new Blob([patchedCSS], { type: 'text/css' });
+                const newUrl = URL.createObjectURL(blob);
+                link.href = newUrl;
+                link.__patched = true;
+              })
+              .catch(err => {
+                console.error("Failed to fetch/replace CSS for", link.href, err);
+              });
+          }
+        });
+
+        if (observer) {
+          observer.observe(document.documentElement || document.body, { childList: true, subtree: true });
+        }
+      }
+
+      observer = new MutationObserver(() => {
+        replaceColors();
+      });
+
+      replaceColors();
+      observer.observe(document.documentElement || document.body, { childList: true, subtree: true });
+    })();
   `);
 }
 
-app.setName("GeForce Infinity");
-app.commandLine.appendSwitch("enable-media-stream");
-
-app.whenReady().then(() => {
+async function registerAppProtocols() {
     protocol.handle("geforce-resource", async (request) => {
-        const url = request.url.replace("geforce-resource://", "");
-        const cleanPath = url.endsWith("/") ? url.slice(0, -1) : url;
+        const cleanPath = request.url
+            .replace("geforce-resource://", "")
+            .replace(/\/$/, "");
         const filePath = path.join(__dirname, "../assets/resources", cleanPath);
 
         try {
@@ -105,11 +107,10 @@ app.whenReady().then(() => {
                 ".svg": "image/svg+xml",
                 ".webp": "image/webp",
             };
-            const mimeType = mimeTypes[ext] || "application/octet-stream";
-
             return new Response(data, {
                 headers: {
-                    "Content-Type": mimeType,
+                    "Content-Type":
+                        mimeTypes[ext] || "application/octet-stream",
                 },
             });
         } catch (err) {
@@ -118,11 +119,66 @@ app.whenReady().then(() => {
         }
     });
 
+    protocol.handle("app", async (request) => {
+        const url = new URL(request.url);
+        const filePath = path.join(__dirname, "../overlay", url.pathname);
+
+        try {
+            const data = await fsPromises.readFile(filePath);
+            return new Response(data, {
+                status: 200,
+                headers: { "Content-Type": "application/javascript" },
+            });
+        } catch (e) {
+            console.error("Failed to serve file", filePath, e);
+            return new Response("Not Found", { status: 404 });
+        }
+    });
+}
+
+function registerShortcuts(mainWindow: BrowserWindow) {
+    const success = globalShortcut.register("Control+I", () => {
+        mainWindow.webContents.send("sidebar-toggle");
+    });
+
+    console.log("[Shortcuts] Sidebar shortcut registered?", success);
+
+    if (success && !getConfig().informed) {
+        mainWindow.once("ready-to-show", () => {
+            new Notification({
+                title: "GeForce Infinity",
+                body: "Press Ctrl+I to open the sidebar!",
+            }).show();
+        });
+        saveConfig({ informed: true });
+    }
+}
+
+function setupWindowEvents(mainWindow: BrowserWindow) {
+    mainWindow.webContents.on("did-finish-load", () => {
+        const config = getConfig();
+        replaceColorInCSS(mainWindow, config.accentColor);
+        mainWindow.webContents.send("config-loaded", config);
+    });
+
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url);
+        return { action: "deny" };
+    });
+}
+
+app.setName("GeForce Infinity");
+app.commandLine.appendSwitch("enable-media-stream");
+
+overrideVersionInDev();
+registerCustomProtocols();
+
+app.whenReady().then(async () => {
+    await registerAppProtocols();
     loadConfig();
 
     const mainWindow = createMainWindow();
-
-    const tray = createTray(mainWindow);
+    createTray(mainWindow);
 
     registerIpcHandlers({
         saveConfig,
@@ -140,31 +196,8 @@ app.whenReady().then(() => {
         updateActivity(title || null);
     }, 15_000);
 
-    const shortcutRegistered = globalShortcut.register("Control+X", () => {
-        console.log("shortcut pressed");
-        mainWindow.webContents.send("sidebar-toggle");
-    });
-    console.log("Shortcut registered?", shortcutRegistered);
-    if (shortcutRegistered && !getConfig().informed) {
-        new Notification({
-            title: "GeForce Infinity",
-            body: "Press Ctrl+I to open the sidebar!",
-        }).show();
-
-        saveConfig({ informed: true });
-    }
-
-    mainWindow.webContents.on("did-finish-load", () => {
-        replaceColorInCSS(mainWindow, getConfig().accentColor);
-        injectOverlay(mainWindow);
-        console.log("Config loaded in main process:", getConfig());
-        mainWindow.webContents.send("config-loaded", getConfig());
-    });
-
-    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-        shell.openExternal(url);
-        return { action: "deny" };
-    });
+    registerShortcuts(mainWindow);
+    setupWindowEvents(mainWindow);
 });
 
 app.on("will-quit", () => {

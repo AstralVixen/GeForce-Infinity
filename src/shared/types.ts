@@ -1,4 +1,5 @@
 export const defaultConfig: Config = {
+    userAgent: "",
     autofocus: false,
     notify: true,
     rpcEnabled: true,
@@ -7,6 +8,7 @@ export const defaultConfig: Config = {
 };
 
 export interface Config {
+    userAgent: string;
     autofocus: boolean;
     notify: boolean;
     rpcEnabled: boolean;

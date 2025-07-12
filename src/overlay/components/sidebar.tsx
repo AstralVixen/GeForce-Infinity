@@ -14,10 +14,9 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ config, setConfig, visible }) => {
-    console.log("Sidebar visible:", visible);
     return (
         <div
-            className={`fixed top-0 right-0 bottom-0 w-[450px] bg-[#23272b] text-[#babec4] z-[9999] font-sans
+            className={`fixed top-0 right-0 bottom-0 w-[450px] bg-[#23272b] text-[#babec4] z-[99999] font-sans
         transform transition-transform duration-300 ease-in-out
         ${visible ? "translate-x-0" : "translate-x-full"}
       `}
