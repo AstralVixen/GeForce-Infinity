@@ -165,6 +165,24 @@ function setupWindowEvents(mainWindow: BrowserWindow) {
         mainWindow.webContents.send("config-loaded", config);
     });
 
+    mainWindow.on("page-title-updated", (event, title) => {
+        event.preventDefault();
+        let gameName = title
+            .replace(/^GeForce NOW - /, "")
+            .replace(/ on GeForce NOW$/, "");
+        if (
+            title === "GeForce Infinity | GeForce NOW" ||
+            title === "GeForce NOW"
+        ) {
+            mainWindow.setTitle("GeForce Infinity");
+        } else {
+            const modifiedTitle = `GeForce Infinity${
+                gameName ? " | " + gameName : ""
+            }`;
+            mainWindow.setTitle(modifiedTitle);
+        }
+    });
+
     let notified = false;
     session.defaultSession.webRequest.onBeforeRequest(
         { urls: ["wss://*/*"] },
@@ -276,8 +294,11 @@ app.whenReady().then(async () => {
     }
 
     setInterval(() => {
-        const title = mainWindow.getTitle().replace(/^.*\| /, "");
-        updateActivity(title || null);
+        const title = mainWindow.getTitle();
+        const gameTitle = title.startsWith("GeForce Infinity | ")
+            ? title.replace("GeForce Infinity | ", "")
+            : "";
+        updateActivity(gameTitle || null);
     }, 15_000);
 
     registerShortcuts(mainWindow);
