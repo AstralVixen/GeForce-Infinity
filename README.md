@@ -47,7 +47,7 @@ To get started with GeForce Infinity, follow these steps:
 
 4. Run the application:
     ```bash
-    bun start
+    npm start
     ```
 
 ## 💬 **Contributing**
