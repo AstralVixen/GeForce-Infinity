@@ -56,6 +56,10 @@ To get started with GeForce Infinity, follow these steps:
     npm start
     ```
 
+## 🎮 **Usage**
+
+Press `Ctrl+I` to open sidebar to access GeForce Infinity features.
+
 ## 💬 **Contributing**
 
 I welcome contributions from the community! I will soon publish a contribution guide
