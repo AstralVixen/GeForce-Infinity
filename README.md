@@ -4,6 +4,8 @@
 
 **GeForce Infinity** is a work-in-progress application designed to enhance the GeForce NOW experience. Originally created to address the lack of native GeForce NOW support on Linux, this app also provides functionality for macOS and Windows users. Our goal is to refine the user interface and offer custom features for an improved experience.
 
+![Screenshot](src/assets/resources/Screenshot.png)
+
 ## 🚀 **Features**
 
 - **Enhanced UI**: GeForce Infinity aims to improve the user interface of GeForce NOW, providing a more intuitive and enjoyable experience.
