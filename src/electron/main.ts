@@ -16,7 +16,6 @@ import { createMainWindow } from "./managers/window";
 import { getConfig, saveConfig, loadConfig } from "./managers/config";
 import { createTray } from "./managers/tray";
 import { clientId, initRpcClient, updateActivity } from "./managers/discord";
-import { config } from "process";
 
 function overrideVersionInDev() {
     if (!app.isPackaged) {
