@@ -120,7 +120,7 @@
                 "Terminal": "false",
                 "Type": "Application",
                 "StartupNotify": "false",
-                "Icon": "/opt/GeForceInfinity/resources/infinitylogo.ico",
+                "Icon": "/opt/GeForceInfinity/resources/infinitylogo.png",
                 "MimeType": "x-scheme-handler/geforceinfinity"
             }
         },
