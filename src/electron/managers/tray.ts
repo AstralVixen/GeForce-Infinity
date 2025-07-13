@@ -1,18 +1,20 @@
-import { Tray, Menu, app, BrowserWindow, nativeImage } from "electron";
+import { Tray, Menu, app, BrowserWindow, nativeImage, NativeImage } from "electron";
 import path from "path";
 import fs from "fs";
 
-export function createTray(mainWindow: BrowserWindow): Tray {
-    const iconPath = path.join(
-        __dirname,
-        "..",
-        "..",
-        "assets",
-        "resources",
-        "infinitylogo.png"
-    );
+const getIconPath = () => {
+  if (process.platform === "win32") {
+    return path.join(__dirname, "..", "..", "assets", "resources", "infinitylogo.ico");
+  } else {
+    // both mac and linux use PNG
+    return path.join(__dirname, "..", "..", "assets", "resources", "infinitylogo.png");
+  }
+};
 
-    let trayIcon: Electron.NativeImage | undefined;
+export function createTray(mainWindow: BrowserWindow): Tray {
+    const iconPath = getIconPath();
+
+    let trayIcon: NativeImage | undefined;
 
     if (fs.existsSync(iconPath)) {
         trayIcon = nativeImage.createFromPath(iconPath);
