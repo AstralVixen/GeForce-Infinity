@@ -101,7 +101,7 @@
                 "zip"
             ],
             "artifactName": "${productName}-${version}-${arch}.${ext}",
-            "icon": "resources/infinitylogo.png"
+            "icon": "resources/infinitylogo.ico"
         },
         "linux": {
             "target": [
