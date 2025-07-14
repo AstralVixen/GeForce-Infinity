@@ -103,3 +103,5 @@ archive
 test.js
 builds
 bun.lockb
+.flatpak-builder
+build
