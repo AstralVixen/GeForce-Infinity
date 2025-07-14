@@ -1,0 +1,77 @@
+id: net.astralvixen.geforceinfinity
+app-id: net.astralvixen.geforceinfinity
+runtime: org.freedesktop.Platform
+runtime-version: "24.08"
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+    - org.freedesktop.Sdk.Extension.node20
+
+command: run.sh
+
+finish-args:
+    - --share=network
+    - --socket=x11
+    - --socket=wayland
+    - --filesystem=home
+    - --device=dri
+    - --socket=system-bus
+    # Add sandbox permissions
+    - --allow=devel
+    - --talk-name=org.freedesktop.Flatpak
+    - --env=ELECTRON_DISABLE_SANDBOX=1
+    - --filesystem=xdg-run/discord-ipc-0
+    - --filesystem=xdg-run/discord
+
+modules:
+    - name: geforce-infinity
+      buildsystem: simple
+      build-commands:
+          - |
+              export PATH=/usr/lib/sdk/node20/bin:$PATH
+
+              # Create directory structure
+              mkdir -p /app/bin
+              mkdir -p /app/share/geforce-infinity
+              mkdir -p /app/share/icons/hicolor/512x512/apps
+              mkdir -p /app/share/applications
+
+              # Copy application files
+              cp -r package.json node_modules dist /app/share/geforce-infinity/
+
+              # Install icon if available
+              if [ -f dist/assets/resources/infinitylogo.png ]; then 
+                  cp dist/assets/resources/infinitylogo.png /app/share/icons/hicolor/512x512/apps/net.astralvixen.geforceinfinity.png;
+              fi
+
+              # Create run script with sandbox workaround
+              cat > /app/bin/run.sh <<EOF
+              #!/bin/sh
+              cd /app/share/geforce-infinity
+
+              # Fix sandbox permissions
+              chmod 4755 ./node_modules/electron/dist/chrome-sandbox || true
+
+              # Run with sandbox disabled
+              exec ./node_modules/electron/dist/electron --no-sandbox dist/electron/main.js "\$@"
+              EOF
+              chmod +x /app/bin/run.sh
+
+              # Create desktop file
+              cat > /app/share/applications/net.astralvixen.geforceinfinity.desktop <<EOF
+              [Desktop Entry]
+              Encoding=UTF-8
+              Name=GeForce Infinity
+              Comment=Enhance your GeForce NOW application experience!
+              Terminal=false
+              Type=Application
+              Exec=run.sh
+              Icon=net.astralvixen.geforceinfinity
+              StartupWMClass=geforce infinity
+              Categories=Network;Game;
+              StartupNotify=false
+              Keywords=Game;Streaming;Nvidia;GeForce;NOW;GFN;Infinity;
+              MimeType=x-scheme-handler/geforceinfinity;
+              EOF
+      sources:
+          - type: dir
+            path: ./
