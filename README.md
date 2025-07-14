@@ -11,8 +11,8 @@
 ![Screenshot](src/assets/resources/Screenshot1.png)
 
 <p align="center">
-  <img src="src/assets/resources/Screenshot3.png" width="45%">
-  <img src="src/assets/resources/Screenshot4.png" width="45%">
+  <img src="src/assets/resources/Screenshot3.png" width="49%">
+  <img src="src/assets/resources/Screenshot4.png" width="49%">
 </p>
 
 ## 🚀 **Features**
