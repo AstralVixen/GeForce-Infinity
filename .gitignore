@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 bun.lock
 
+.flatpak-builder
+
 # Runtime data
 pids
 *.pid
