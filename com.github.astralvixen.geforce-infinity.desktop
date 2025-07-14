@@ -1,10 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=GeForce Infinity
-Comment=Stream games using the Nvidia GeForce NOW game streaming service
+Comment=Enhance your GeForce NOW application experience!
+Terminal=false
 Type=Application
 Exec=/opt/geforce-infinity/geforce-infinity
-Icon=/src/assets/resources/infinitylogo.png
+Icon=net.astralvixen.geforceinfinity
 StartupWMClass=geforce infinity
 Categories=Network;Game;
+StartupNotify=false
 Keywords=Game;Streaming;Nvidia;GeForce;NOW;GFN;Infinity;
+MimeType=x-scheme-handler/geforceinfinity;
