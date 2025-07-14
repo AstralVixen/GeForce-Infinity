@@ -21,6 +21,7 @@ finish-args:
     - --env=ELECTRON_DISABLE_SANDBOX=1
     - --filesystem=xdg-run/discord-ipc-0
     - --filesystem=xdg-run/discord
+    - --env=GTK_DISABLE_SHM=1
 
 modules:
     - name: geforce-infinity
@@ -47,9 +48,6 @@ modules:
               cat > /app/bin/run.sh <<EOF
               #!/bin/sh
               cd /app/share/geforce-infinity
-
-              # Fix sandbox permissions
-              chmod 4755 ./node_modules/electron/dist/chrome-sandbox || true
 
               # Run with sandbox disabled
               exec ./node_modules/electron/dist/electron --no-sandbox dist/electron/main.js "\$@"
