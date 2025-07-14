@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=GeForce Infinity
+Comment=Stream games using the Nvidia GeForce NOW game streaming service
+Type=Application
+Exec=/opt/geforce-infinity/geforce-infinity
+Icon=/src/assets/resources/infinitylogo.png
+StartupWMClass=geforce infinity
+Categories=Network;Game;
+Keywords=Game;Streaming;Nvidia;GeForce;NOW;GFN;Infinity;
