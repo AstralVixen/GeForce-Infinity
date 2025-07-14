@@ -23,8 +23,8 @@ modules:
               export PATH=/usr/lib/sdk/node20/bin:$PATH
               npm install
               npm run build-flatpak
-          - chmod +x flatpak-run
-          - install -Dm755 flatpak-run /app/bin/electron-sample-app
+          - chmod +x flatpak-run.sh
+          - install -Dm755 flatpak-run.sh /app/bin/electron-sample-app
           - mkdir -p /app/share/electron-sample-app
           - cp -r dist/* /app/share/electron-sample-app/
       sources:
