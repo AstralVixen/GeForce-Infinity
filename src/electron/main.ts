@@ -152,6 +152,7 @@ function registerShortcuts(mainWindow: BrowserWindow) {
             new Notification({
                 title: "GeForce Infinity",
                 body: "Press Ctrl+I to open the sidebar!",
+                icon: path.join(__dirname, "..", "..", "assets", "resources", "infinitylogo.png"),
             }).show();
         });
         saveConfig({ informed: true });

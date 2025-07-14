@@ -6,11 +6,24 @@ export const GFN_WEBSITE = "https://play.geforcenow.com/";
 
 const preloadPath = path.resolve(__dirname, "..", "preload.js");
 
+const getIconPath = () => {
+  if (process.platform === "win32") {
+    return path.join(__dirname, "..", "..", "assets", "resources", "infinitylogo.ico");
+  } else {
+    // both mac and linux use PNG
+    return path.join(__dirname, "..", "..", "assets", "resources", "infinitylogo.png");
+  }
+};
+
 export function createMainWindow(): BrowserWindow {
+
+    const iconPath = getIconPath();
+
     const mainWindow = new BrowserWindow({
         width: 1400,
         height: 1000,
         title: "GeForce Infinity",
+        icon: iconPath || undefined,
         webPreferences: {
             preload: preloadPath,
             contextIsolation: true,

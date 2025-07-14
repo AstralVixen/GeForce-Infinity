@@ -1,6 +1,6 @@
 {
     "name": "geforce-infinity",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "main": "dist/electron/main.js",
     "scripts": {
         "lint": "eslint .",
@@ -74,7 +74,6 @@
         "files": [
             "node_modules/**/*",
             "package.json",
-            "resources/**/*",
             "src/main.js",
             "src/preload.js",
             "src/assets/infinity-styles.css",
@@ -82,10 +81,6 @@
             "dist/**/*"
         ],
         "extraResources": [
-            {
-                "from": "resources/",
-                "to": "."
-            },
             {
                 "from": "src/assets",
                 "to": "assets",
@@ -103,29 +98,31 @@
                 "zip"
             ],
             "artifactName": "${productName}-${version}-${arch}.${ext}",
-            "icon": "resources/infinitylogo.png"
+            "icon": "src/assets/resources/infinitylogo.ico"
         },
         "linux": {
             "target": [
-                "AppImage",
-                "deb",
-                "rpm"
+            "AppImage", 
+            "deb"
             ],
             "artifactName": "${productName}-${version}-${arch}.${ext}",
-            "icon": "resources/infinitylogo.png",
+            "icon": "src/assets/resources/infinitylogo.png",
             "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>",
             "category": "Game",
             "desktop": {
+            "entry": {
                 "Name": "GeForce Infinity",
                 "Comment": "Enhance your GeForce NOW application experience!",
                 "GenericName": "GeForceInfinity",
                 "Terminal": "false",
                 "Type": "Application",
                 "StartupNotify": "false",
-                "Icon": "/opt/GeForceInfinity/resources/infinitylogo.ico",
+                "Icon": "/opt/GeForceInfinity/resources/assets/resources/infinitylogo.png",
                 "MimeType": "x-scheme-handler/geforceinfinity"
-            }
-        },
+    }
+  }
+}
+,
         "publish": [
             {
                 "provider": "github",
