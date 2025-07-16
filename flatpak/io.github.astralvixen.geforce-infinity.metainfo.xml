@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-	<id>net.astralvixen.geforceinfinity</id>
+	<id>io.github.astralvixen.geforce-infinity</id>
 	<name>GeForce Infinity</name>
 	<summary>Next-gen GeForce NOW client for Linux</summary>
 	<url type="homepage">https://geforce-infinity.xyz/</url>
@@ -23,7 +23,7 @@
             <li>🔄 Ability to reload GeForce NOW without restarting application</li>
         </ul>
 	</description>
-	<launchable type="desktop-id">net.astralvixen.geforceinfinity.desktop</launchable>
+	<launchable type="desktop-id">io.github.astralvixen.geforce-infinity.desktop</launchable>
 	<screenshots>
 		<screenshot type="default">
 			<caption>Welcome Screen</caption>
