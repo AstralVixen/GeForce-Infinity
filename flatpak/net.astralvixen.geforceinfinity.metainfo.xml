@@ -22,12 +22,6 @@
             <li>🎨 Ability to change theme colors of GeForce NOW</li>
             <li>🔄 Ability to reload GeForce NOW without restarting application</li>
         </ul>
-        <p>Coming soon:</p>
-        <ul>
-            <li>🔑 Account switching</li>
-            <li>🎮 Automatic Game Startup</li>
-            <li>📊 FPS, Connection metrics inside GeForce Infinity</li>
-        </ul>
 	</description>
 	<launchable type="desktop-id">net.astralvixen.geforceinfinity.desktop</launchable>
 	<screenshots>
