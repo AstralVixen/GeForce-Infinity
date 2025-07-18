@@ -10,7 +10,7 @@
         "dev:electron": "tsc -w -p tsconfig.json",
         "build": "bun run build:css && bun run build:overlay && bun run build:electron && cpx \"src/assets/**/*\" dist/assets",
         "build-flatpak": "npm run build:css && npm run build:overlay:flatpak && npm run build:electron && cpx \"src/assets/**/*\" dist/assets",
-        "build:overlay:flatpak": "esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --define:process.env.NODE_ENV=\"production\" --inject:src/overlay/react-shim.js",
+        "build:overlay:flatpak": "esbuild src/overlay/index.tsx --bundle --outdir=dist/overlay --format=esm --target=esnext --external:electron --splitting --minify --define:process.env.NODE_ENV=\"production\"",
         "build:css": "npx tailwindcss -i ./src/overlay/index.css -o ./dist/assets/tailwind.bundle.css --minify",
         "build:electron": "tsc -p tsconfig.electron.json",
         "build:overlay": "bun build src/overlay/index.tsx --config tsconfig.overlay.json --outdir=dist/overlay --format=esm --target=browser --external=electron --external=fs --external=path --external=os --splitting --root src/overlay",
@@ -102,28 +102,27 @@
         },
         "linux": {
             "target": [
-            "AppImage", 
-            "deb",
-            "zip"
+                "AppImage",
+                "deb",
+                "zip"
             ],
             "artifactName": "${productName}-linux-${version}-${arch}.${ext}",
             "icon": "src/assets/resources/infinitylogo.png",
             "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>",
             "category": "Game",
             "desktop": {
-            "entry": {
-                "Name": "GeForce Infinity",
-                "Comment": "Enhance your GeForce NOW application experience!",
-                "GenericName": "GeForceInfinity",
-                "Terminal": "false",
-                "Type": "Application",
-                "StartupNotify": "false",
-                "Icon": "/opt/GeForceInfinity/resources/assets/resources/infinitylogo.png",
-                "MimeType": "x-scheme-handler/geforceinfinity"
-    }
-  }
-}
-,
+                "entry": {
+                    "Name": "GeForce Infinity",
+                    "Comment": "Enhance your GeForce NOW application experience!",
+                    "GenericName": "GeForceInfinity",
+                    "Terminal": "false",
+                    "Type": "Application",
+                    "StartupNotify": "false",
+                    "Icon": "/opt/GeForceInfinity/resources/assets/resources/infinitylogo.png",
+                    "MimeType": "x-scheme-handler/geforceinfinity"
+                }
+            }
+        },
         "publish": [
             {
                 "provider": "github",
