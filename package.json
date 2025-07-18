@@ -44,7 +44,7 @@
         "copyfiles": "^2.4.1",
         "cpx": "^1.5.0",
         "electron": "^37.2.0",
-        "electron-builder": "^26.0.12",
+        "electron-builder": "^25.1.8",
         "electron-rebuild": "^3.2.9",
         "eslint": "^9.30.1",
         "eslint-config-prettier": "^10.1.5",
@@ -97,15 +97,16 @@
                 "nsis",
                 "zip"
             ],
-            "artifactName": "${productName}-${version}-${arch}.${ext}",
+            "artifactName": "${productName}-windows-${version}-${arch}.${ext}",
             "icon": "src/assets/resources/infinitylogo.ico"
         },
         "linux": {
             "target": [
             "AppImage", 
-            "deb"
+            "deb",
+            "zip"
             ],
-            "artifactName": "${productName}-${version}-${arch}.${ext}",
+            "artifactName": "${productName}-linux-${version}-${arch}.${ext}",
             "icon": "src/assets/resources/infinitylogo.png",
             "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>",
             "category": "Game",
