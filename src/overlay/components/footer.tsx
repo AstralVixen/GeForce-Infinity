@@ -10,7 +10,7 @@ const websiteUrl = "https://geforce-infinity.xyz";
 const patreonUrl = "https://www.patreon.com/AstralVixen";
 const updatesUrl = "https://github.com/AstralVixen/GeForce-Infinity/releases";
 
-const version = "1.1.1";
+const version = "1.1.2";
 
 export const Footer = () => {
     return (
