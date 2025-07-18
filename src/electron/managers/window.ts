@@ -7,16 +7,29 @@ export const GFN_WEBSITE = "https://play.geforcenow.com/";
 const preloadPath = path.resolve(__dirname, "..", "preload.js");
 
 const getIconPath = () => {
-  if (process.platform === "win32") {
-    return path.join(__dirname, "..", "..", "assets", "resources", "infinitylogo.ico");
-  } else {
-    // both mac and linux use PNG
-    return path.join(__dirname, "..", "..", "assets", "resources", "infinitylogo.png");
-  }
+    if (process.platform === "win32") {
+        return path.join(
+            __dirname,
+            "..",
+            "..",
+            "assets",
+            "resources",
+            "infinitylogo.ico"
+        );
+    } else {
+        // both mac and linux use PNG
+        return path.join(
+            __dirname,
+            "..",
+            "..",
+            "assets",
+            "resources",
+            "infinitylogo.png"
+        );
+    }
 };
 
 export function createMainWindow(): BrowserWindow {
-
     const iconPath = getIconPath();
 
     const mainWindow = new BrowserWindow({
@@ -29,7 +42,7 @@ export function createMainWindow(): BrowserWindow {
             contextIsolation: true,
             nodeIntegration: false,
             sandbox: false,
-            devTools: !app.isPackaged,
+            devTools: true, //!app.isPackaged,
             webSecurity: true,
         },
         autoHideMenuBar: true,
@@ -46,7 +59,7 @@ export function createMainWindow(): BrowserWindow {
         console.log("[UserAgent] Using default");
     }
 
-    //mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
     mainWindow.loadURL(GFN_WEBSITE);
     return mainWindow;
 }
