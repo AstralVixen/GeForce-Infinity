@@ -28,6 +28,7 @@ const App = () => {
         });
 
         const handler = (e: KeyboardEvent) => {
+            console.log("KEYDOWN:", e.ctrlKey, e.key);
             if (e.ctrlKey && e.key === "i") {
                 e.preventDefault();
                 setVisible((v) => !v);
