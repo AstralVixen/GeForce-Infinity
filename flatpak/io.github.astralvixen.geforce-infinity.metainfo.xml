@@ -40,6 +40,11 @@
 		</screenshot>
 	</screenshots>
 	<releases>
+		<release version="v1.1.2" date="2025-07-18">
+			<description>
+				<p>added flatpak support</p>
+			</description>
+		</release>
 		<release version="v1.1.1" date="2025-07-14">
 			<description>
 				<p>General</p>
