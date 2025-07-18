@@ -34,8 +34,8 @@ const App = () => {
             }
         };
 
-        window.addEventListener("keydown", handler);
-        return () => window.removeEventListener("keydown", handler);
+        document.addEventListener("keydown", handler);
+        return () => document.removeEventListener("keydown", handler);
     }, []);
 
     return <Sidebar config={config} setConfig={setConfig} visible={visible} />;
