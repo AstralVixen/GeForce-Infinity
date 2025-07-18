@@ -141,18 +141,25 @@ async function registerAppProtocols() {
 }
 
 function registerShortcuts(mainWindow: BrowserWindow) {
-    const success = globalShortcut.register("Control+I", () => {
+    /*const success = globalShortcut.register("Control+I", () => {
         mainWindow.webContents.send("sidebar-toggle");
     });
 
-    console.log("[Shortcuts] Sidebar shortcut registered?", success);
+    console.log("[Shortcuts] Sidebar shortcut registered?", success);*/
 
-    if (success && !getConfig().informed) {
+    if (!getConfig().informed) {
         mainWindow.once("ready-to-show", () => {
             new Notification({
                 title: "GeForce Infinity",
                 body: "Press Ctrl+I to open the sidebar!",
-                icon: path.join(__dirname, "..", "..", "assets", "resources", "infinitylogo.png"),
+                icon: path.join(
+                    __dirname,
+                    "..",
+                    "..",
+                    "assets",
+                    "resources",
+                    "infinitylogo.png"
+                ),
             }).show();
         });
         saveConfig({ informed: true });

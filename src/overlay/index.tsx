@@ -26,10 +26,16 @@ const App = () => {
             console.log("Config loaded in overlay:", config);
             setConfig(config);
         });
-        window.electronAPI.onSidebarToggle(() => {
-            console.log("sidebar-toggle event received");
-            setVisible((v) => !v);
-        });
+
+        const handler = (e: KeyboardEvent) => {
+            if (e.ctrlKey && e.key === "i") {
+                e.preventDefault();
+                setVisible((v) => !v);
+            }
+        };
+
+        window.addEventListener("keydown", handler);
+        return () => window.removeEventListener("keydown", handler);
     }, []);
 
     return <Sidebar config={config} setConfig={setConfig} visible={visible} />;
