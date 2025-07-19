@@ -2,7 +2,7 @@
 <component type="desktop-application">
 	<id>io.github.astralvixen.geforce-infinity</id>
 	<name>GeForce Infinity</name>
-	<summary>Next-gen GeForce NOW client for Linux</summary>
+	<summary>Next-gen GeForce NOW application</summary>
 	<url type="homepage">https://geforce-infinity.xyz/</url>
 	<url type="bugtracker">https://github.com/AstralVixen/GeForce-Infinity/issues</url>
 	<url type="donation">https://www.patreon.com/AstralVixen</url>
@@ -10,6 +10,10 @@
     <developer_name>AstralVixen</developer_name>
     <project_license>MIT</project_license>
     <metadata_license>CC0-1.0</metadata_license>
+	<branding>
+		<color type="primary" scheme_preference="light">#2981db</color>
+		<color type="primary" scheme_preference="dark">#0454a4</color>
+	</branding>
 	<description>
 		<p>GeForce Infinity is a next-gen application designed to enhance the GeForce NOW experience. Originally created to address the lack of native GeForce NOW support on Linux, this app also provides functionality for Windows users. My goal is to refine the user interface and offer custom features for an improved experience.</p>
         <p>Key features:</p>
