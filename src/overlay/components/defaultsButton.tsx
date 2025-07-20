@@ -35,7 +35,7 @@ export const DefaultsButton: React.FC<DefaultsButtonProps> = ({
                             Load defaults settings?
                             <br />
                             <small>
-                                Restart application to apply all changes
+                                Restart application to apply all changes.
                             </small>
                         </h2>
                         <div className="flex justify-center space-x-4 py-4">
