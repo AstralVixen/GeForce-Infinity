@@ -27,11 +27,9 @@ const Sidebar: React.FC<SidebarProps> = ({ config, setConfig, visible }) => {
         >
             <Header />
             <SettingsSection config={config} setConfig={setConfig} />
-            <hr className="mx-8 my-4 border-gray-700" />
-            <ShortcutSection />
-            <hr className="mx-8 my-4 border-gray-700" />
             <AuthSection />
             <hr className="mx-8 my-4 border-gray-700" />
+            <ShortcutSection />
             <div className="flex justify-evenly w-full py-20">
                 <ReloadButton />
                 <DefaultsButton config={config} setConfig={setConfig} />
