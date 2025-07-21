@@ -5,7 +5,6 @@ export const getIconPath = () => {
         return path.join(
             __dirname,
             "..",
-            "..",
             "assets",
             "resources",
             "infinitylogo.ico"
@@ -14,7 +13,6 @@ export const getIconPath = () => {
         // both mac and linux use PNG
         return path.join(
             __dirname,
-            "..",
             "..",
             "assets",
             "resources",
