@@ -6,6 +6,7 @@ import { Footer } from "./footer";
 import { SettingsSection } from "./settingsSection";
 import { ShortcutSection } from "./shortcutSection";
 import { ReloadButton } from "./reloadButton";
+import { DefaultsButton } from "./defaultsButton";
 
 interface SidebarProps {
     config: Config;
@@ -26,7 +27,10 @@ const Sidebar: React.FC<SidebarProps> = ({ config, setConfig, visible }) => {
             <SettingsSection config={config} setConfig={setConfig} />
             <hr className="mx-8 my-4 border-gray-700" />
             <ShortcutSection />
-            <ReloadButton />
+            <div className="flex justify-evenly w-full py-20">
+                <ReloadButton />
+                <DefaultsButton config={config} setConfig={setConfig} />
+            </div>
             <Footer />
         </div>
     );
