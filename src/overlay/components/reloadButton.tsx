@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Dialog } from "./dialog";
 
 export const ReloadButton = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,29 +18,14 @@ export const ReloadButton = () => {
                 Reload GFN
             </button>
 
-            {isOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-[#0c1015] text-[#babec4] rounded-lg p-6 max-w-sm w-full shadow-xl text-center border border-gray-600">
-                        <h2 className="text-lg mb-4">
-                            This action will kick you out of the running game.
-                        </h2>
-                        <div className="flex justify-center space-x-4 py-4">
-                            <button
-                                onClick={handleConfirm}
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-                            >
-                                OK
-                            </button>
-                            <button
-                                onClick={() => setIsOpen(false)}
-                                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <Dialog
+                title="This action will kick you out of the running game."
+                confirmText="OK"
+                cancelText="Cancel"
+                setIsOpen={setIsOpen}
+                isOpen={isOpen}
+                handleConfirm={handleConfirm}
+            ></Dialog>
         </div>
     );
 };
