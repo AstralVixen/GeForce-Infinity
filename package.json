@@ -60,6 +60,7 @@
         "caniuse-lite": "^1.0.30001727",
         "discord-rpc": "^4.0.1",
         "electron-updater": "^6.6.2",
+        "firebase": "^12.0.0",
         "node-abi": "^4.12.0",
         "react-icons": "^5.5.0"
     },
