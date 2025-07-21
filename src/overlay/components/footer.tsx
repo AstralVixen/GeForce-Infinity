@@ -10,7 +10,7 @@ const websiteUrl = "https://geforce-infinity.xyz";
 const patreonUrl = "https://www.patreon.com/AstralVixen";
 const updatesUrl = "https://github.com/AstralVixen/GeForce-Infinity/releases";
 
-const version = "1.1.2";
+declare const __APP_VERSION__: string;
 
 export const Footer = () => {
     return (
@@ -59,7 +59,7 @@ export const Footer = () => {
             </div>
 
             <div className="text-sm text-gray-400 text-left mt-4">
-                Version: {version}
+                Version: {__APP_VERSION__ || "0.0.0"}
             </div>
         </footer>
     );
