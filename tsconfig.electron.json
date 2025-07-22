@@ -12,6 +12,6 @@
         "forceConsistentCasingInFileNames": true
     },
     "exclude": ["node_modules"],
-    "include": ["src/electron/**/*", "postcss.config.js", "tailwind.config.js"],
+    "include": ["src/electron/**/*", "src/overlay/global.d.ts", "postcss.config.js", "tailwind.config.js"],
     "assets": ["src/assets/**/*"]
 }

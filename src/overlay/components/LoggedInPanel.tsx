@@ -8,13 +8,6 @@ interface Props {
   user: User;
 }
 
-declare global {
-  interface Window {
-    electronAPI: {
-      getCurrentConfig: () => Promise<any>;
-    };
-  }
-}
 
 export const LoggedInPanel: React.FC<Props> = ({ user }) => {
   const [syncing, setSyncing] = useState(false);
