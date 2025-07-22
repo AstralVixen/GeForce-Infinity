@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ config, setConfig, visible }) => {
             <ShortcutSection />
             <div className="flex justify-evenly w-full py-20">
                 <ReloadButton />
-                <DefaultsButton config={config} setConfig={setConfig} />
+                <DefaultsButton setConfig={setConfig} />
             </div>
             <Footer />
         </div>
