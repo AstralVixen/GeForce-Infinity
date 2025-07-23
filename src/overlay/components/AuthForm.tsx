@@ -33,7 +33,7 @@ export const AuthForm: React.FC = () => {
       await syncFromCloud();
       window.electronAPI.reloadGFN();
     } catch (err: any) {
-      setError(err.message || "Authentication failed");
+      setError("Incorrect email or password, or account doesn't exist.");
     } finally {
       setLoading(false);
       setPendingSubmitEvent(null);
@@ -54,7 +54,21 @@ export const AuthForm: React.FC = () => {
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(userCred.user, { displayName: username });
       } catch (err: any) {
-        setError(err.message || "Authentication failed");
+        let message = "An error occurred";
+
+        switch (err.code) {
+        case "auth/email-already-in-use":
+            message = "An account with this email already exists.";
+        break;
+        case "auth/invalid-email":
+            message = "Please enter a valid email address.";
+        break;
+        default:
+            message = "Password is too weak. Use at least 8 characters, including uppercase, lowercase, numbers, and symbols.";
+        break;
+        
+     }
+        setError(message);
       } finally {
         setLoading(false);
       }
