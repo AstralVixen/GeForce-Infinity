@@ -55,24 +55,21 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
             : "";
     };
 
-    console.log(getColor);
+    //console.log(getColor);
 
     const handleToggle = (key: keyof Config) => {
         const updatedConfig = { ...config, [key]: !config[key] };
         setConfig(updatedConfig);
-        window.electronAPI.saveConfig(updatedConfig);
     };
 
     const handleAccentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const updated = { ...config, accentColor: e.target.value };
         setConfig(updated);
-        window.electronAPI.saveConfig(updated);
     };
 
     const handleUserAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const updated = { ...config, userAgent: e.target.value };
         setConfig(updated);
-        window.electronAPI.saveConfig(updated);
     };
 
     /*const onToggle = (key: keyof Config, value: boolean) => {
