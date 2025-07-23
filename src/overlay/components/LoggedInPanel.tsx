@@ -3,6 +3,8 @@ import { User, signOut } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { FaSync } from "react-icons/fa";
 import { syncToCloud } from "../../utils/SyncToCloud";
+import { Dialog } from "./dialog";
+import { AlertDialog } from "./AlertDialog";
 
 interface Props {
   user: User;
@@ -11,6 +13,8 @@ interface Props {
 
 export const LoggedInPanel: React.FC<Props> = ({ user }) => {
   const [syncing, setSyncing] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -21,7 +25,7 @@ export const LoggedInPanel: React.FC<Props> = ({ user }) => {
       setSyncing(true);
       const config = await window.electronAPI.getCurrentConfig();
       await syncToCloud(config);
-      alert("Sync complete ✅");
+      setAlertOpen(true);
     } catch (err) {
       console.error("Sync failed:", err);
       alert("Sync failed, see console.");
@@ -48,12 +52,32 @@ export const LoggedInPanel: React.FC<Props> = ({ user }) => {
           <span>{syncing ? "Syncing..." : "Sync to Cloud"}</span>
         </button>
         <button
-          onClick={handleLogout}
+          onClick={() => setIsDialogOpen(true)}
           className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold"
         >
           Log out
         </button>
       </div>
+
+      <AlertDialog
+        title="Sync complete ✅"
+        isOpen={alertOpen}
+        setIsOpen={setAlertOpen}
+        onOk={() => setAlertOpen(false)}
+      />
+
+      <Dialog
+        title="Are you sure you want to log out?"
+        confirmText="Yes"
+        cancelText="No"
+        setIsOpen={setIsDialogOpen}
+        isOpen={isDialogOpen}
+        handleConfirm={async () => {
+            setIsDialogOpen(false);
+            await handleLogout();
+        }}
+        >
+    </Dialog>
     </div>
   );
 };

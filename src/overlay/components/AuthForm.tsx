@@ -16,11 +16,9 @@ export const AuthForm: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
-  // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  // We hold the event so we can submit after confirmation
+  // Hold the event to submit after confirmation
   const [pendingSubmitEvent, setPendingSubmitEvent] = useState<React.FormEvent | null>(null);
 
   const handleConfirmLogin = async () => {
