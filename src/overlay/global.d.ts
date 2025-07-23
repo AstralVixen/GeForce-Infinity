@@ -1,7 +1,5 @@
 import type { Config } from "../shared/types";
 
-export {};
-
 declare global {
     interface Window {
         electronAPI: {

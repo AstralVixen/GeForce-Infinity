@@ -7,6 +7,8 @@ import { SettingsSection } from "./settingsSection";
 import { ShortcutSection } from "./shortcutSection";
 import { ReloadButton } from "./reloadButton";
 import { DefaultsButton } from "./defaultsButton";
+import { AuthSection } from "./AuthSection";
+
 
 interface SidebarProps {
     config: Config;
@@ -25,6 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({ config, setConfig, visible }) => {
         >
             <Header />
             <SettingsSection config={config} setConfig={setConfig} />
+            <AuthSection />
             <hr className="mx-8 my-4 border-gray-700" />
             <ShortcutSection />
             <div className="flex justify-evenly w-full py-20">
