@@ -195,6 +195,7 @@ function setupWindowEvents(mainWindow: BrowserWindow) {
     session.defaultSession.webRequest.onBeforeRequest(
         { urls: ["wss://*/*"] },
         (details, callback) => {
+            console.log("WebSocket request:", details);
             // Check if the request matches the specific Nvidia Cloudmatch endpoint
             const config = getConfig();
             const url = details.url;

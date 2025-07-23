@@ -154,6 +154,16 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="toggle toggle-primary"
                     />
                 </label>
+
+                <label className="flex items-center justify-between">
+                    <span>Inactivity notification</span>
+                    <input
+                        type="checkbox"
+                        checked={config.inactivityNotification}
+                        onChange={() => handleToggle("inactivityNotification")}
+                        className="toggle toggle-primary"
+                    />
+                </label>
             </div>
         </section>
     );
