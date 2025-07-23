@@ -4,7 +4,7 @@ export const defaultConfig: Config = {
     notify: true,
     rpcEnabled: true,
     informed: false,
-    accentColor: "#76b900",
+    accentColor: "",
 };
 
 export interface Config {

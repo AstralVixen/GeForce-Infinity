@@ -4,7 +4,7 @@ type DialogProps = {
     title: string;
     children?: ReactNode;
     confirmText: string;
-    cancelText: string;
+    cancelText?: string;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     isOpen?: boolean;
     handleConfirm: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -28,12 +28,14 @@ export const Dialog = (props: DialogProps) => {
                             >
                                 {props.confirmText}
                             </button>
-                            <button
-                                onClick={() => props.setIsOpen(false)}
-                                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded"
-                            >
-                                {props.cancelText}
-                            </button>
+                            {props.cancelText && (
+                                <button
+                                    onClick={() => props.setIsOpen(false)}
+                                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded"
+                                >
+                                    {props.cancelText}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

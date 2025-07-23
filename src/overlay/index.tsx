@@ -38,6 +38,10 @@ const App = () => {
         return () => window.removeEventListener("keydown", handler);
     }, []);
 
+    useEffect(() => {
+        window.electronAPI.saveConfig(config);
+    }, [config]);
+
     return <Sidebar config={config} setConfig={setConfig} visible={visible} />;
 };
 
