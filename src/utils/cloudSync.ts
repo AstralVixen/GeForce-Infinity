@@ -26,7 +26,7 @@ export async function syncFromCloud() {
         const configUpdate = {
             rpcEnabled: data.gfirpc ?? true,
             userAgent: data.gfiuseragent ?? "",
-            accentColor: data.gfiaccent ?? "#000000",
+            accentColor: data.gfiaccent ?? "",
             notify: data.gfinotificaitons ?? true,
             autofocus: data.gfiautofocus ?? true,
             informed: data.gfinformed ?? false,
