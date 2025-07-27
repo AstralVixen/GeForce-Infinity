@@ -37,7 +37,7 @@ export function createMainWindow(): BrowserWindow {
         console.log("[UserAgent] Using default");
     }
 
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
     mainWindow.loadURL(GFN_WEBSITE);
     return mainWindow;
 }
