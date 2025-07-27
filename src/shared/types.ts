@@ -1,3 +1,5 @@
+import { User } from "firebase/auth";
+
 export const defaultConfig: Config = {
     userAgent: "",
     autofocus: false,
@@ -14,4 +16,11 @@ export interface Config {
     rpcEnabled: boolean;
     informed: boolean;
     accentColor: string;
+}
+
+export interface UserContext {
+    user: User | null;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
