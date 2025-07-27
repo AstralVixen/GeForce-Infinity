@@ -1,5 +1,7 @@
 import React from "react";
 import type { Config } from "../../shared/types";
+import { ReloadButton } from "./reloadButton";
+import { DefaultsButton } from "./defaultsButton";
 
 type SettingsSectionProps = {
     config: Config;
@@ -151,6 +153,10 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="toggle toggle-primary"
                     />
                 </label>
+            </div>
+            <div className="flex justify-evenly w-full mt-10 mb-2">
+                <ReloadButton />
+                <DefaultsButton setConfig={setConfig} />
             </div>
         </section>
     );
