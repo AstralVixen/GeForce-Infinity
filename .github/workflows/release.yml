@@ -37,7 +37,7 @@ jobs:
             - name: 🔧 Install system dependencies
               run: |
                   sudo apt update
-                  sudo apt install -y libarchive-tools libgtk-3-dev libnss3 libxss1 libasound2-plugins xvfb fakeroot dpkg rpm fakeroot rpmbuild
+                  sudo apt install -y libarchive-tools libgtk-3-dev libnss3 libxss1 libasound2-plugins xvfb fakeroot dpkg rpm fakeroot
 
             - name: Install Wine
               run: |
