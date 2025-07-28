@@ -102,6 +102,7 @@
             "target": [
                 "AppImage",
                 "deb",
+                "rpm",
                 "zip"
             ],
             "artifactName": "${productName}-linux-${version}-${arch}.${ext}",
