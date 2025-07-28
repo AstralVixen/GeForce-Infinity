@@ -37,12 +37,14 @@ jobs:
             - name: ➕ Add standard-version
               run: bun add -d standard-version
 
-            - name: 🔼 Bump version with standard-version
+            - name: 🔼 Bump version without tag
               run: |
-                  bunx standard-version --release-as ${{ github.event.inputs.release_type }}
+                  bunx standard-version --release-as ${{ github.event.inputs.release_type }} --skip.tag --skip.changelog
 
-            - name: 🚀 Push commit and tag
+            - name: ✅ Commit updated files
               run: |
-                  git push --follow-tags origin release
+                  git add package.json package-lock.json
+                  git commit -m "chore(release): bumped to ${{ github.event.inputs.release_type }} version"
+                  git push origin release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
