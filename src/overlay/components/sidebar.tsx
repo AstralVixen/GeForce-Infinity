@@ -26,7 +26,6 @@ const Sidebar: React.FC<SidebarProps> = ({ config, setConfig, visible }) => {
         >
             <Header />
             <AuthSection />
-            <hr className="mx-8 my-4 border-gray-700" />
             <SettingsSection config={config} setConfig={setConfig} />
             <hr className="mx-8 my-4 border-gray-700" />
             <ShortcutSection />
