@@ -63,6 +63,7 @@ jobs:
                   files: |
                       builds/*.AppImage
                       builds/*.deb
+                      builds/*.rpm
                       builds/*.zip
                       builds/*.exe
               env:
