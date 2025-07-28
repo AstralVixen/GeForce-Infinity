@@ -39,6 +39,9 @@ jobs:
                   sudo apt update
                   sudo apt install -y libarchive-tools libgtk-3-dev libnss3 libxss1 libasound2-plugins xvfb fakeroot dpkg rpm
 
+            - name: 🏗️ Build application
+              run: bun run build
+
             - name: 🔨 Build & package with Electron Builder
               run: bun run dist
               env:
