@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import Sidebar from "./components/sidebar";
 import type { Config } from "../shared/types";
 import { defaultConfig } from "../shared/types";
+import { User } from "firebase/auth";
+import { UserProvider } from "./contexts/UserContext";
 
 const css = window.electronAPI.getTailwindCss();
 
@@ -42,7 +44,11 @@ const App = () => {
         window.electronAPI.saveConfig(config);
     }, [config]);
 
-    return <Sidebar config={config} setConfig={setConfig} visible={visible} />;
+    return (
+        <UserProvider>
+            <Sidebar config={config} setConfig={setConfig} visible={visible} />
+        </UserProvider>
+    );
 };
 
 createRoot(mount).render(<App />);
