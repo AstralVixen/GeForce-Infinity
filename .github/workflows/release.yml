@@ -1,0 +1,57 @@
+name: Build & Release
+
+on:
+    push:
+        tags:
+            - "v*"
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+
+        strategy:
+            matrix:
+                os: [ubuntu-latest]
+
+        steps:
+            - name: 🧾 Checkout repository
+              uses: actions/checkout@v4
+
+            - name: 🛠️ Setup Bun
+              uses: oven-sh/setup-bun@v1
+
+            - name: 🧰 Install dependencies
+              run: bun install
+
+            - name: ⚙️ Set up Node.js (needed for Electron Builder)
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+                  cache: "bun"
+
+            - name: 🔧 Install system dependencies
+              run: |
+                  sudo apt update
+                  sudo apt install -y libarchive-tools libgtk-3-dev libnss3 libxss1 libasound2 xvfb fakeroot dpkg rpm
+
+            - name: 🔨 Build & package with Electron Builder
+              run: bun run dist
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: 📦 Upload release assets to GitHub
+              uses: softprops/action-gh-release@v2
+              with:
+                  name: "Release v${{ github.ref_name }}"
+                  tag_name: ${{ github.ref_name }}
+                  draft: false
+                  prerelease: false
+                  files: |
+                      builds/*.AppImage
+                      builds/*.deb
+                      builds/*.zip
+                      builds/*.exe
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,5 +1,7 @@
 import React from "react";
 import type { Config } from "../../shared/types";
+import { ReloadButton } from "./reloadButton";
+import { DefaultsButton } from "./defaultsButton";
 
 type SettingsSectionProps = {
     config: Config;
@@ -55,24 +57,21 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
             : "";
     };
 
-    console.log(getColor);
+    //console.log(getColor);
 
     const handleToggle = (key: keyof Config) => {
         const updatedConfig = { ...config, [key]: !config[key] };
         setConfig(updatedConfig);
-        window.electronAPI.saveConfig(updatedConfig);
     };
 
     const handleAccentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const updated = { ...config, accentColor: e.target.value };
         setConfig(updated);
-        window.electronAPI.saveConfig(updated);
     };
 
     const handleUserAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const updated = { ...config, userAgent: e.target.value };
         setConfig(updated);
-        window.electronAPI.saveConfig(updated);
     };
 
     /*const onToggle = (key: keyof Config, value: boolean) => {
@@ -154,6 +153,16 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="toggle toggle-primary"
                     />
                 </label>
+              
+                <label className="flex items-center justify-between">
+                    <span>Automute</span>
+                    <input
+                        type="checkbox"
+                        checked={config.automute}
+                        onChange={() => handleToggle("automute")}
+                        className="toggle toggle-primary"
+                    />
+                </label>
 
                 <label className="flex items-center justify-between">
                     <span>Inactivity notification</span>
@@ -164,6 +173,11 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="toggle toggle-primary"
                     />
                 </label>
+
+            </div>
+            <div className="flex justify-evenly w-full mt-10 mb-2">
+                <ReloadButton />
+                <DefaultsButton setConfig={setConfig} />
             </div>
         </section>
     );

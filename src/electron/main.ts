@@ -173,6 +173,18 @@ function setupWindowEvents(mainWindow: BrowserWindow) {
         mainWindow.webContents.send("config-loaded", config);
     });
 
+    mainWindow.on("blur", () => {
+        if (getConfig().automute === true) {
+            mainWindow.webContents.setAudioMuted(true);
+        }
+    });
+
+    mainWindow.on("focus", () => {
+        if (getConfig().automute === true) {
+            mainWindow.webContents.setAudioMuted(false);
+        }
+    });
+
     mainWindow.on("page-title-updated", (event, title) => {
         event.preventDefault();
 
