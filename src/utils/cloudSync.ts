@@ -30,7 +30,7 @@ export async function syncFromCloud() {
             notify: data.gfinotificaitons ?? true,
             inactivityNotification: data.gfiinactivitynotification ?? false,
             autofocus: data.gfiautofocus ?? false,
-            automute: data.gfiautofocus ?? false,
+            automute: data.gfiautomute ?? false,
             informed: data.gfinformed ?? false,
         };
 
