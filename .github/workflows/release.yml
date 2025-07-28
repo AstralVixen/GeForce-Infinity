@@ -58,7 +58,7 @@ jobs:
               with:
                   name: "Release v${{ github.ref_name }}"
                   tag_name: ${{ github.ref_name }}
-                  draft: false
+                  draft: true
                   prerelease: false
                   files: |
                       builds/*.AppImage
