@@ -43,6 +43,7 @@ jobs:
 
             - name: 🚀 Push commit and tag
               run: |
-                  git push --follow-tags origin release
+                  git push origin release
+                  git push origin --tags
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
