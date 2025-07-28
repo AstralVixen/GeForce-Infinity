@@ -34,7 +34,7 @@ We have several exciting features planned to further enhance your experience:
 
 GeForce Infinity is an independent project and is not affiliated with, sponsored by, or endorsed by Nvidia or GeForce NOW. All trademarks and logos used are the property of their respective owners. The app is provided as-is, and the developers are not responsible for any issues or damages that may arise from its use.
 
-## 🛠️ **Installation**
+## 🛠️ **Build**
 
 To get started with GeForce Infinity, follow these steps:
 
@@ -53,12 +53,12 @@ To get started with GeForce Infinity, follow these steps:
 3. Install dependencies:
 
     ```bash
-    bun install
+    yarn install
     ```
 
 4. Run the application:
     ```bash
-    npm start
+    yarn start
     ```
 
 ## 🎮 **Usage**
