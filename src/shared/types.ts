@@ -8,6 +8,7 @@ export const defaultConfig: Config = {
     rpcEnabled: true,
     informed: false,
     accentColor: "",
+    inactivityNotification: false,
 };
 
 export interface Config {
@@ -18,6 +19,7 @@ export interface Config {
     rpcEnabled: boolean;
     informed: boolean;
     accentColor: string;
+    inactivityNotification: boolean;
 }
 
 export interface UserContext {

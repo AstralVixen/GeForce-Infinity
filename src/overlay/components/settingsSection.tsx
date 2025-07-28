@@ -153,7 +153,7 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="toggle toggle-primary"
                     />
                 </label>
-
+              
                 <label className="flex items-center justify-between">
                     <span>Automute</span>
                     <input
@@ -163,6 +163,17 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="toggle toggle-primary"
                     />
                 </label>
+
+                <label className="flex items-center justify-between">
+                    <span>Inactivity notification</span>
+                    <input
+                        type="checkbox"
+                        checked={config.inactivityNotification}
+                        onChange={() => handleToggle("inactivityNotification")}
+                        className="toggle toggle-primary"
+                    />
+                </label>
+
             </div>
             <div className="flex justify-evenly w-full mt-10 mb-2">
                 <ReloadButton />

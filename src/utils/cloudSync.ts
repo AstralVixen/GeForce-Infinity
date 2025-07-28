@@ -28,6 +28,7 @@ export async function syncFromCloud() {
             userAgent: data.gfiuseragent ?? "",
             accentColor: data.gfiaccent ?? "",
             notify: data.gfinotificaitons ?? true,
+            inactivityNotification: data.gfiinactivitynotification ?? false,
             autofocus: data.gfiautofocus ?? false,
             automute: data.gfiautofocus ?? false,
             informed: data.gfinformed ?? false,
@@ -59,6 +60,7 @@ export async function syncToCloud(config: Config) {
             gfitheme: "", // TODO: theme system later
             gfiaccent: config.accentColor,
             gfinotificaitons: config.notify,
+            gfiinactivitynotification: config.inactivityNotification,
             gfiautofocus: config.autofocus,
             gfiautomute: config.automute,
             gfinformed: config.informed,
