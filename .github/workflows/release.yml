@@ -4,6 +4,7 @@ on:
     push:
         tags:
             - "v*"
+    workflow_dispatch:
 
 permissions:
     contents: write
@@ -28,7 +29,7 @@ jobs:
             - name: 🧰 Install dependencies
               run: bun install
 
-            - name: ⚙️ Set up Node.js (needed for Electron Builder)
+            - name: ⚙️ Set up Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: "22"
