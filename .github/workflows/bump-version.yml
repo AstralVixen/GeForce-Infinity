@@ -43,7 +43,7 @@ jobs:
 
             - name: ✅ Commit updated files
               run: |
-                  git add package.json package-lock.json
+                  git add package.json
                   git commit -m "chore(release): bumped to ${{ github.event.inputs.release_type }} version"
                   git push origin release
               env:
