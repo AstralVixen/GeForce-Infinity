@@ -1,0 +1,45 @@
+name: Bump Version
+
+on:
+    workflow_dispatch:
+        inputs:
+            release_type:
+                description: "Release type"
+                required: true
+                default: "patch"
+                type: choice
+                options:
+                    - patch
+                    - minor
+                    - major
+
+jobs:
+    bump:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 🧾 Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: 🛠️ Setup Bun
+              uses: oven-sh/setup-bun@v1
+
+            - name: 🔧 Setup Git
+              run: |
+                  git config user.name "GitHub Actions"
+                  git config user.email "actions@github.com"
+
+            - name: ➕ Add standard-version
+              run: bun add -d standard-version
+
+            - name: 🔼 Bump version with standard-version
+              run: |
+                  bunx standard-version --release-as ${{ github.event.inputs.release_type }}
+
+            - name: 🚀 Push commit and tag
+              run: |
+                  git push --follow-tags origin release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

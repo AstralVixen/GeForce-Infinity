@@ -1,6 +1,6 @@
 {
     "name": "geforce-infinity",
-    "version": "1.1.0",
+    "version": "1.1.2",
     "main": "dist/electron/main.js",
     "scripts": {
         "lint": "eslint .",
@@ -8,15 +8,13 @@
         "dev": "concurrently \"bun:dev:overlay\" \"bun:dev:electron\"",
         "dev:overlay": "bun bun:dev",
         "dev:electron": "tsc -w -p tsconfig.json",
-        "build": "bun run build:css && bun run build:overlay && bun run build:electron && cpx \"src/assets/**/*\" dist/assets",
-        "build:css": "npx tailwindcss -i ./src/overlay/index.css -o ./dist/assets/tailwind.bundle.css --minify",
-        "build:electron": "tsc -p tsconfig.electron.json",
-        "build:overlay": "bun build src/overlay/index.tsx --config tsconfig.overlay.json --outdir=dist/overlay --format=esm --target=browser --external=electron --external=fs --external=path --external=os --splitting --root src/overlay",
+        "build": "bun run scripts/build-css.ts && bun run scripts/build-overlay.ts && bun run scripts/build-electron.ts && cpx \"src/assets/**/*\" dist/assets",
         "start": "bun run build && electron dist/electron/main.js",
         "pack": "electron-builder --dir",
         "dist": "electron-builder --win --linux",
         "rebuild": "electron-rebuild",
-        "postinstall": "electron-builder install-app-deps"
+        "postinstall": "electron-builder install-app-deps",
+        "release": "standard-version"
     },
     "keywords": [],
     "author": {
@@ -42,7 +40,7 @@
         "copyfiles": "^2.4.1",
         "cpx": "^1.5.0",
         "electron": "^37.2.0",
-        "electron-builder": "^26.0.12",
+        "electron-builder": "^25.1.8",
         "electron-rebuild": "^3.2.9",
         "eslint": "^9.30.1",
         "eslint-config-prettier": "^10.1.5",
@@ -53,6 +51,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "shx": "^0.4.0",
+        "standard-version": "^9.5.0",
         "tailwindcss": "3.4.1",
         "ts-node": "^10.9.2",
         "typescript": "^5.8.3",
@@ -63,6 +62,7 @@
         "caniuse-lite": "^1.0.30001727",
         "discord-rpc": "^4.0.1",
         "electron-updater": "^6.6.2",
+        "firebase": "^12.0.0",
         "node-abi": "^4.12.0",
         "react-icons": "^5.5.0"
     },
@@ -95,15 +95,16 @@
                 "nsis",
                 "zip"
             ],
-            "artifactName": "${productName}-${version}-${arch}.${ext}",
+            "artifactName": "${productName}-windows-${version}-${arch}.${ext}",
             "icon": "src/assets/resources/infinitylogo.ico"
         },
         "linux": {
             "target": [
                 "AppImage",
-                "deb"
+                "deb",
+                "zip"
             ],
-            "artifactName": "${productName}-${version}-${arch}.${ext}",
+            "artifactName": "${productName}-linux-${version}-${arch}.${ext}",
             "icon": "src/assets/resources/infinitylogo.png",
             "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>",
             "category": "Game",
@@ -115,7 +116,7 @@
                     "Terminal": "false",
                     "Type": "Application",
                     "StartupNotify": "false",
-                    "Icon": "/opt/GeForceInfinity/assets/resources/infinitylogo.png",
+                    "Icon": "/opt/GeForceInfinity/resources/assets/resources/infinitylogo.png",
                     "MimeType": "x-scheme-handler/geforceinfinity"
                 }
             }

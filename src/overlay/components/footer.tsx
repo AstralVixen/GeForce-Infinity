@@ -10,11 +10,11 @@ const websiteUrl = "https://geforce-infinity.xyz";
 const patreonUrl = "https://www.patreon.com/AstralVixen";
 const updatesUrl = "https://github.com/AstralVixen/GeForce-Infinity/releases";
 
-const version = "1.1.0";
+declare const __APP_VERSION__: string;
 
 export const Footer = () => {
     return (
-        <footer className="w-full bg-[#0c1015] text-gray-300 p-4 font-sans fixed bottom-0 left-0">
+        <footer className="w-full bg-[#0c1015] text-gray-300 p-4 font-sans bottom-0 left-0">
             <div className="flex justify-evenly m-4">
                 <a
                     onClick={() => window.electronAPI.openExternal(githubUrl)}
@@ -59,7 +59,7 @@ export const Footer = () => {
             </div>
 
             <div className="text-sm text-gray-400 text-left mt-4">
-                Version: {version}
+                Version: {__APP_VERSION__ || "0.0.0"}
             </div>
         </footer>
     );
