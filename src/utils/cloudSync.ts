@@ -28,7 +28,8 @@ export async function syncFromCloud() {
             userAgent: data.gfiuseragent ?? "",
             accentColor: data.gfiaccent ?? "",
             notify: data.gfinotificaitons ?? true,
-            autofocus: data.gfiautofocus ?? true,
+            autofocus: data.gfiautofocus ?? false,
+            automute: data.gfiautofocus ?? false,
             informed: data.gfinformed ?? false,
         };
 
@@ -59,6 +60,7 @@ export async function syncToCloud(config: Config) {
             gfiaccent: config.accentColor,
             gfinotificaitons: config.notify,
             gfiautofocus: config.autofocus,
+            gfiautomute: config.automute,
             gfinformed: config.informed,
             patreonSub: false,
         };
