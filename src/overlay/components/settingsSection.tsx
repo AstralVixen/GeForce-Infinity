@@ -2,6 +2,7 @@ import React from "react";
 import type { Config } from "../../shared/types";
 import { ReloadButton } from "./reloadButton";
 import { DefaultsButton } from "./defaultsButton";
+import { FaInfoCircle } from "react-icons/fa";
 
 type SettingsSectionProps = {
     config: Config;
@@ -87,6 +88,14 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                 <label className="flex items-center justify-between">
                     <span>
                         Accent Color
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Sets a custom accent color
+                                <br />
+                                for GeForce NOW.
+                            </div>
+                        </div>
                         <br />
                         <small>Reload GFN to apply changes</small>
                     </span>
@@ -109,6 +118,16 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                 <label className="flex items-center justify-between">
                     <span>
                         User Agent
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Changes the User Agent — use this
+                                <br />
+                                if you experience issues
+                                <br />
+                                launching or playing games.
+                            </div>
+                        </div>
                         <br />
                         <small>Restart application to apply changes</small>
                     </span>
@@ -125,7 +144,17 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                     </select>
                 </label>
                 <label className="flex items-center justify-between">
-                    <span>Discord Rich Presence</span>
+                    <span>
+                        Discord Rich Presence
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Enables Discord Rich Presence, which displays
+                                <br />
+                                your current game in your Discord status.
+                            </div>
+                        </div>
+                    </span>
                     <input
                         type="checkbox"
                         checked={config.rpcEnabled}
@@ -135,7 +164,17 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                 </label>
 
                 <label className="flex items-center justify-between">
-                    <span>Notifications</span>
+                    <span>
+                        Game Ready Notification
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Enables a notification when the gaming rig is
+                                <br />
+                                ready.
+                            </div>
+                        </div>
+                    </span>
                     <input
                         type="checkbox"
                         checked={config.notify}
@@ -145,7 +184,23 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                 </label>
 
                 <label className="flex items-center justify-between">
-                    <span>Autofocus</span>
+                    <span>
+                        Autofocus
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Enables autofocus on the window
+                                <br />
+                                when the gaming rig is ready
+                                <br />
+                                or when you're about to be kicked
+                                <br />
+                                due to inactivity (Inactivity Notification
+                                <br />
+                                must be enabled).
+                            </div>
+                        </div>
+                    </span>
                     <input
                         type="checkbox"
                         checked={config.autofocus}
@@ -153,9 +208,19 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="toggle toggle-primary"
                     />
                 </label>
-              
+
                 <label className="flex items-center justify-between">
-                    <span>Automute</span>
+                    <span>
+                        Automute
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Automatically mutes the game
+                                <br />
+                                when the window is not focused.
+                            </div>
+                        </div>
+                    </span>
                     <input
                         type="checkbox"
                         checked={config.automute}
@@ -165,7 +230,17 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                 </label>
 
                 <label className="flex items-center justify-between">
-                    <span>Inactivity notification</span>
+                    <span>
+                        Inactivity Notification
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Enables a notification when you're about to be
+                                <br />
+                                kicked due to inactivity.
+                            </div>
+                        </div>
+                    </span>
                     <input
                         type="checkbox"
                         checked={config.inactivityNotification}
@@ -173,7 +248,6 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="toggle toggle-primary"
                     />
                 </label>
-
             </div>
             <div className="flex justify-evenly w-full mt-10 mb-2">
                 <ReloadButton />
