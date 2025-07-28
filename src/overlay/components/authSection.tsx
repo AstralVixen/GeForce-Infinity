@@ -13,13 +13,13 @@ export const AuthSection: React.FC = () => {
     }, []);
 
     return (
-        <section className="p-4 max-w-md mx-auto text-sm">
+        <>
             {!user ? (
-                <>
+                <section className="p-4 max-w-md mx-auto text-sm">
                     <AuthForm />
                     <hr className="mx-8 my-4 border-gray-700" />
-                </>
+                </section>
             ) : null}
-        </section>
+        </>
     );
 };
