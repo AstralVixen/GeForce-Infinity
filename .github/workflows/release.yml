@@ -39,6 +39,12 @@ jobs:
                   sudo apt update
                   sudo apt install -y libarchive-tools libgtk-3-dev libnss3 libxss1 libasound2-plugins xvfb fakeroot dpkg rpm
 
+            - name: Install Wine
+              run: |
+                  sudo dpkg --add-architecture i386
+                  sudo apt update
+                  sudo apt install -y wine32 wine64
+
             - name: 🏗️ Build application
               run: bun run build
 
