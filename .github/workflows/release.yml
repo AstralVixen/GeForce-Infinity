@@ -37,7 +37,7 @@ jobs:
             - name: 🔧 Install system dependencies
               run: |
                   sudo apt update
-                  sudo apt install -y libarchive-tools libgtk-3-dev libnss3 libxss1 libasound2 xvfb fakeroot dpkg rpm
+                  sudo apt install -y libarchive-tools libgtk-3-dev libnss3 libxss1 libasound2-plugins xvfb fakeroot dpkg rpm
 
             - name: 🔨 Build & package with Electron Builder
               run: bun run dist
