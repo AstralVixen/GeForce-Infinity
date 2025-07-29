@@ -43,7 +43,7 @@ If this is your first time contributing:
 We use **Prettier** for formatting. You **must format your code** before submitting a PR.
 
 **Prettier Settings:**
-- Mostly default but indentation must be set to 4 spaces.
+- Mostly default but indentation **must** be set to 4 spaces.
 
 ## 🧠 Code Quality Guidelines
 1. ✅ Write clean, modular, and dynamic code
