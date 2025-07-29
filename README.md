@@ -80,7 +80,7 @@ Press `Ctrl+I` to open sidebar to access GeForce Infinity features.
 
 ## 💬 **Contributing**
 
-I welcome contributions from the community! I will soon publish a contribution guide
+We welcome contributions from the community! For the contribution guide please see: [Contributing](CONTRIBUTING.md)
 
 ## 📜 **License**
 
