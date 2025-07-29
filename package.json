@@ -30,6 +30,7 @@
         "@eslint/markdown": "^6.6.0",
         "@types/bun": "latest",
         "@types/discord-rpc": "^4.0.9",
+        "@types/node": "^24.1.0",
         "@types/react": "^19.1.8",
         "@types/react-dom": "^19.1.6",
         "@typescript-eslint/eslint-plugin": "^8.36.0",
