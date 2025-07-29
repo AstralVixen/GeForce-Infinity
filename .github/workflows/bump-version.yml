@@ -41,10 +41,9 @@ jobs:
               run: |
                   bunx standard-version --release-as ${{ github.event.inputs.release_type }} --skip.tag --skip.changelog
 
-            - name: ✅ Commit updated files
+            - name: 🚀 Push commit
               run: |
-                  git add package.json package-lock.json
-                  git commit -m "chore(release): bumped to ${{ github.event.inputs.release_type }} version"
                   git push origin release
+
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
