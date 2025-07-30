@@ -47,6 +47,20 @@ We have several exciting features planned to further enhance your experience:
 
 GeForce Infinity is an independent project and is not affiliated with, sponsored by, or endorsed by Nvidia or GeForce NOW. All trademarks and logos used are the property of their respective owners. The app is provided as-is, and the developers are not responsible for any issues or damages that may arise from its use.
 
+## 📦 **Installation**
+
+Visit our [Release](https://github.com/AstralVixen/GeForce-Infinity/releases) page, where you can find newest builds of GeForce Infinity in packages like: **zip** (binary version), **deb**, **AppImage**, **rpm** and **exe**.
+
+You can also download it from our [website](https://geforce-infinity.xyz/).
+
+We also provide installation via **Flatpak** (hosted at Flathub) and **AUR**.
+
+[![Get it from the AUR](src/assets/resources/aur.png)](https://aur.archlinux.org/packages?O=0&K=geforce-infinity) [![Get it from FlatHub](src/assets/resources/flathub.png)](https://flathub.org/apps/io.github.astralvixen.geforce-infinity)
+
+## 🎮 **Usage**
+
+Press `Ctrl+I` to open sidebar to access GeForce Infinity features.
+
 ## 🛠️ **Build**
 
 To get started with GeForce Infinity, follow these steps:
@@ -73,10 +87,6 @@ To get started with GeForce Infinity, follow these steps:
     ```bash
     yarn start
     ```
-
-## 🎮 **Usage**
-
-Press `Ctrl+I` to open sidebar to access GeForce Infinity features.
 
 ## 💬 **Contributing**
 
