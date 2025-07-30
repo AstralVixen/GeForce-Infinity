@@ -49,9 +49,9 @@ GeForce Infinity is an independent project and is not affiliated with, sponsored
 
 ## 📦 **Installation**
 
-Visit our [Release](https://github.com/AstralVixen/GeForce-Infinity/releases) page, where you can find newest builds of GeForce Infinity in packages like: zip (binary version), deb, AppImage, rpm and exe.
+Visit our [Release](https://github.com/AstralVixen/GeForce-Infinity/releases) page, where you can find newest builds of GeForce Infinity in packages like: **zip** (binary version), **deb**, **AppImage**, **rpm** and **exe**.
 
-We also provide installation via Flatpak (hosted at Flathub) and AUR.
+We also provide installation via **Flatpak** (hosted at Flathub) and **AUR**.
 
 [![Get it from the AUR](src/assets/resources/aur.png)](https://aur.archlinux.org/packages?O=0&K=geforce-infinity) [![Get it from FlatHub](src/assets/resources/flathub.png)](https://flathub.org/apps/io.github.astralvixen.geforce-infinity)
 
