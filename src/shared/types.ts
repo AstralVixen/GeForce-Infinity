@@ -9,6 +9,7 @@ export const defaultConfig: Config = {
     informed: false,
     accentColor: "",
     inactivityNotification: false,
+    selectedPlatform: "",
 };
 
 export interface Config {
@@ -20,6 +21,7 @@ export interface Config {
     informed: boolean;
     accentColor: string;
     inactivityNotification: boolean;
+    selectedPlatform: string,
 }
 
 export interface UserContext {

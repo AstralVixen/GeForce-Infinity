@@ -36,6 +36,15 @@ function registerCustomProtocols() {
             scheme: "geforce-resource",
             privileges: { standard: true, secure: true },
         },
+        {
+        scheme: "infinity-launcher",
+        privileges: {
+            standard: true,
+            secure: true,
+            supportFetchAPI: true,
+            corsEnabled: true,
+        },
+    },
     ]);
 }
 
@@ -138,6 +147,40 @@ async function registerAppProtocols() {
             return new Response("Not Found", { status: 404 });
         }
     });
+
+    protocol.handle("infinity-launcher", async (request) => {
+    const url = new URL(request.url);
+    const filePath = path.join(
+        __dirname,
+        "../../dist/launcher", 
+        url.pathname === "/" ? "index.html" : url.pathname,
+    );
+
+    try {
+        const data = await fsPromises.readFile(filePath);
+        const ext = path.extname(filePath).toLowerCase();
+        const mimeTypes: Record<string, string> = {
+            ".html": "text/html",
+            ".js": "application/javascript",
+            ".css": "text/css",
+            ".json": "application/json",
+            ".png": "image/png",
+            ".jpg": "image/jpeg",
+            ".svg": "image/svg+xml",
+            ".woff": "font/woff",
+            ".woff2": "font/woff2",
+        };
+
+        return new Response(data, {
+            status: 200,
+            headers: { "Content-Type": mimeTypes[ext] || "application/octet-stream" },
+        });
+    } catch (e) {
+        console.error("Failed to load launcher file:", filePath, e);
+        return new Response("Not Found", { status: 404 });
+    }
+});
+
 }
 
 function registerShortcuts(mainWindow: BrowserWindow) {

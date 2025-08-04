@@ -51,4 +51,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
         callback: (event: Electron.IpcRendererEvent, ...args: unknown[]) => void
     ) => ipcRenderer.on("update-downloaded", callback),
     downloadUpdate: () => ipcRenderer.invoke("download-update"),
+    launchPlatform: (url: string) => ipcRenderer.send("launch-platform", url),
+    rememberPlatform: (platform: string) => ipcRenderer.send("remember-platform", platform),
 });

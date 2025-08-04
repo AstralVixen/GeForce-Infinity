@@ -9,7 +9,7 @@ export const Header = () => {
             <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-4">
                     <img
-                        src="geforce-resource://infinitylogo.png"
+                        src="https://geforce-infinity.xyz/resources/geforce-infinity.png"
                         alt="Logo"
                         className="w-8 h-8 object-contain"
                     />
