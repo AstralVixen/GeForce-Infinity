@@ -13,7 +13,7 @@ export function createMainWindow(): BrowserWindow {
     const mainWindow = new BrowserWindow({
         width: 1400,
         height: 1000,
-        title: "GeForce Infinity",
+        title: "XForce Infinity",
         icon: iconPath || undefined,
         webPreferences: {
             preload: preloadPath,
@@ -37,7 +37,12 @@ export function createMainWindow(): BrowserWindow {
         console.log("[UserAgent] Using default");
     }
 
-    //mainWindow.webContents.openDevTools();
-    mainWindow.loadURL(GFN_WEBSITE);
+    // Load saved platform URL or fallback to launcher
+    const urlToLoad = (config.selectedPlatform && config.selectedPlatform.trim() !== "")
+        ? config.selectedPlatform
+        : 'infinity-launcher://index.html';
+
+    mainWindow.loadURL(urlToLoad);
+
     return mainWindow;
 }

@@ -10,6 +10,8 @@ declare global {
             onConfigLoaded: (callback: (config: Config) => void) => void;
             getTailwindCss: () => string;
             reloadGFN: () => void;
+            launchPlatform: (url: string) => void;
+            rememberPlatform: (url: string) => void;
         };
     }
 }
