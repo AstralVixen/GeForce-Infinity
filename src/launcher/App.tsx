@@ -18,13 +18,6 @@ const options = [
     logo: "https://cdn.dribbble.com/userupload/25385567/file/original-652994e7de7cb6f4881bde606af2b01f.png",
   },
   {
-    id: "blacknut",
-    name: "Blacknut",
-    url: "https://blacknut.com/",
-    color: "bg-red-600 hover:bg-red-700",
-    logo: "https://play-lh.googleusercontent.com/Lp8_TTzD_vAIc417a8LeDr4qsbOAlB7_t9EqaKhIHLhbHXK0RZCaltRCoPV98qfSa0M",
-  },
-  {
     id: "luna",
     name: "Amazon Luna",
     url: "https://luna.amazon.com/",
@@ -35,8 +28,8 @@ const options = [
 
 // News items
 const newsItems = [
-  "🚀 XForce Infinity v2.0 released with new UI improvements and many more features.",
-  "🎉 Added multi-platform support: Choose from GeForce NOW, XCloud, Blacknut, Amazon Luna!",
+  "🚀 Fusio Infinity v2.0 released with new UI improvements and many more features.",
+  "🎉 Added multi-platform support: Choose from GeForce NOW, XCloud, Amazon Luna!",
   "📢 Follow us on GitHub, Our Website and Patreon for updates and support!",
 ];
 
@@ -63,11 +56,11 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#23272b] text-[rgb(37 99 235)] flex flex-col px-8">
+    <div className="h-screen w-full bg-[#23272b] text-[rgb(37 99 235)] flex flex-col px-8 overflow-y-auto scrollbar">
       {/* Title */}
       <header className="py-8 flex-shrink-0">
         <h1 className="text-6xl font-bold select-none text-center">
-          Welcome to XForce Infinity
+          Welcome to Fusio Infinity
         </h1>
       </header>
 
@@ -130,6 +123,36 @@ export default function App() {
         </label>
       </main>
 
+      {/* Sponsor and Member Call-to-Action */}
+      <div className="mt-12 max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-6 text-white">
+      {/* Sponsored by */}
+      <div className="bg-[#2f3640] rounded-xl p-6 border border-blue-500 shadow-md">
+        <h3 className="text-2xl font-bold mb-3 text-[#90caf9]">Sponsored by</h3>
+      <div className="flex items-center space-x-4">
+     
+        <span className="text-gray-300 italic">
+          Looking for sponsors..
+        </span>
+      </div>
+    </div>
+
+    {/* Become a member */}
+    <div className="bg-[#2f3640] rounded-xl p-6 border border-purple-600 shadow-md text-right">
+      <h3 className="text-2xl font-bold mb-3 text-[#e0b0ff]">Become a Fusio Member</h3>
+      <p className="text-gray-300 mb-4">
+        Support development & unlock special perks.
+      </p>
+      <a
+        href="https://patreon.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block px-5 py-3 rounded-full bg-purple-600 hover:bg-purple-700 transition text-white font-semibold text-lg"
+      >
+        Join on Patreon
+      </a>
+    </div>
+  </div>
+
       {/* News section */}
       <section
         className="mt-12 max-w-5xl mx-auto w-full
@@ -143,7 +166,7 @@ export default function App() {
                      text-[#90caf9] drop-shadow-md
                      border-b-4 border-purple-600 pb-3"
         >
-          XForce Infinity News
+          Fusio Infinity News
         </h2>
         <ul className="list-disc list-inside space-y-4 text-lg text-[#babec4]">
           {newsItems.map((item, idx) => (
