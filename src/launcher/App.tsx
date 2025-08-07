@@ -24,12 +24,20 @@ const options = [
     color: "bg-purple-600 hover:bg-purple-700",
     logo: "https://m.media-amazon.com/images/I/51N11v0-CQL.png",
   },
+  {
+    id: "blacknut",
+    name: "Blacknut",
+    url: "",
+    color: "bg-red-600 hover:bg-red-700",
+    logo: "https://play-lh.googleusercontent.com/Lp8_TTzD_vAIc417a8LeDr4qsbOAlB7_t9EqaKhIHLhbHXK0RZCaltRCoPV98qfSa0M",
+    warning: "⚠️ Not accessible! We wanted to implement but due to severe platform resrictions we cannot for now. ",
+  },
 ];
 
 // News items
 const newsItems = [
   "🚀 Fusio Infinity v2.0 released with new UI improvements and many more features.",
-  "🎉 Added multi-platform support: Choose from GeForce NOW, XCloud, Amazon Luna!",
+  "🎉 Added multi-platform support: Choose from GeForce NOW, XCloud, Blacknut, Amazon Luna!",
   "📢 Follow us on GitHub, Our Website and Patreon for updates and support!",
 ];
 
@@ -70,6 +78,7 @@ export default function App() {
         <div className="flex flex-wrap justify-center gap-8 max-w-full max-h-full">
           {options.map((opt) => {
             const isSelected = selected === opt.id;
+            const hasWarning = !!opt.warning;
             return (
               <button
                 key={opt.id}
@@ -83,6 +92,7 @@ export default function App() {
                   bg-gray-800
                   select-none
                   shadow-lg
+                  ${hasWarning ? "opacity-60 hover:opacity-75" : ""}
                 `}
               >
                 <img
@@ -92,19 +102,35 @@ export default function App() {
                   style={{ maxHeight: 112 }}
                 />
                 <span className="font-semibold text-2xl">{opt.name}</span>
+
+                 {hasWarning && (
+                  <div className="absolute top-2 right-2 bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded">
+                    Future candidate
+                  </div>
+                )}
               </button>
             );
           })}
         </div>
 
+        {selectedOption?.warning && (
+          <div className="text-yellow-400 mt-4 text-center max-w-md">
+          {selectedOption.warning}
+          </div>
+        )}
+
         {/* Launch button */}
         <button
           onClick={onLaunch}
-          disabled={!selected}
+          disabled={!selected || selectedOption?.id === "blacknut"}
           className="flex items-center justify-center space-x-3 px-16 py-5 rounded-full text-white font-bold uppercase text-xl bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           <FaRocket className="w-6 h-6" />
-          <span>Launch {selectedOption?.name || ""}</span>
+           <span>
+            {selectedOption?.id === "blacknut"
+            ? "Future Candidate"
+            : `Launch ${selectedOption?.name || ""}`}
+          </span>
         </button>
 
         {/* Remember toggle */}

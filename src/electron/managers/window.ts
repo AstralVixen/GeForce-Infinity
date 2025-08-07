@@ -3,8 +3,6 @@ import path from "path";
 import { getConfig } from "./config";
 import { getIconPath } from "../utils";
 
-export const GFN_WEBSITE = "https://play.geforcenow.com/";
-
 const preloadPath = path.resolve(__dirname, "..", "preload.js");
 
 export function createMainWindow(): BrowserWindow {
