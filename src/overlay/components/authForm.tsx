@@ -38,7 +38,7 @@ export const AuthForm: React.FC = () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             await syncFromCloud();
-            window.electronAPI.reloadGFN();
+            window.electronAPI.reloadPlatform();
         } catch (err: any) {
             setError("Incorrect email or password, or account doesn't exist.");
         } finally {

@@ -64,7 +64,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#23272b] text-[rgb(37 99 235)] flex flex-col px-8 overflow-y-auto scrollbar">
+    <div className="h-screen bg-[#23272b] text-[rgb(37 99 235)] flex flex-col px-8 overflow-y-auto scrollbar">
       {/* Title */}
       <header className="py-8 flex-shrink-0">
         <h1 className="text-6xl font-bold select-none text-center">

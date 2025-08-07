@@ -5,57 +5,6 @@
 
 /* Optional minimal reset */
 body {
-  @apply m-0 bg-gray-900 text-blue-500 font-sans;
-}
-html, body, #root {
-  height: 100%;
+  @apply text-blue-500;
 }
 
-
-
-/* Simple toggle switch style (vložiť do CSS alebo global styles) */
-
-input[type="checkbox"].toggle {
-    appearance: none;
-    width: 40px;
-    height: 20px;
-    background: #374151; /* gray-700 */
-    border-radius: 9999px;
-    position: relative;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-input[type="checkbox"].toggle:checked {
-    background: #3b82f6; /* blue-500 */
-}
-
-input[type="checkbox"].toggle::before {
-    content: "";
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background: white;
-    border-radius: 9999px;
-    top: 1px;
-    left: 1px;
-    transition: transform 0.2s;
-}
-
-input[type="checkbox"].toggle:checked::before {
-    transform: translateX(20px);
-}
-
-.scrollbar::-webkit-scrollbar {
-    width: 8px;
-}
-
-.scrollbar::-webkit-scrollbar-track {
-    background: #555;
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgb(37 99 235);
-    border-radius: 10px;
-    border: 2px solid rgb(37 99 235);
-}

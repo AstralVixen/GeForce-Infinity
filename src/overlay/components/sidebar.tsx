@@ -23,11 +23,11 @@ const Sidebar: React.FC<SidebarProps> = ({ config, setConfig, visible }) => {
             style={{ pointerEvents: visible ? "auto" : "none" }}
         >
             <Header />
-            <div className="flex-1 overflow-y-auto px-8 py-4 min-h-0 scrollbar">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden px-8 py-4 min-h-0 scrollbar">
                 <AuthSection />
-                <SettingsSection config={config} setConfig={setConfig} />
                 <hr className="mx-8 my-4 border-gray-700" />
                 <ShortcutSection />
+                <SettingsSection config={config} setConfig={setConfig} />
             </div>
             <Footer />
         </div>

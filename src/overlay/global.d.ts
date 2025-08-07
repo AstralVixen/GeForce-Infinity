@@ -9,7 +9,7 @@ declare global {
             getCurrentConfig: () => Promise<Config>;
             onConfigLoaded: (callback: (config: Config) => void) => void;
             getTailwindCss: () => string;
-            reloadGFN: () => void;
+            reloadPlatform: () => void;
             launchPlatform: (url: string) => void;
             rememberPlatform: (url: string) => void;
         };

@@ -22,7 +22,7 @@ export const DefaultsButton: React.FC<DefaultsButtonProps> = ({
         <div className="flex">
             <button
                 onClick={() => setIsOpen(true)}
-                className="bg-gray-600 hover:bg-gray-700 w-48 text-white text-lg font-semibold py-2 px-4 rounded shadow"
+                className="bg-gray-600 hover:bg-gray-700 !py-1 !px-4 text-white font-semibold rounded shadow"
             >
                 Default Settings
             </button>

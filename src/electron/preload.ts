@@ -37,7 +37,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
     onConfigLoaded: (callback: (config: Config) => void) => {
         ipcRenderer.on("config-loaded", (event, config) => callback(config));
     },
-    reloadGFN: () => {
+    reloadPlatform: () => {
         ipcRenderer.send("reload-gfn");
     },
     copyToClipboard: (text: string) => clipboard.writeText(text),

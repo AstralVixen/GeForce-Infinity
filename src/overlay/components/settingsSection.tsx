@@ -165,13 +165,35 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
 
                 <label className="flex items-center justify-between">
                     <span>
+                        Automute
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Automatically mutes the game
+                                <br />
+                                when the window is not focused.
+                            </div>
+                        </div>
+                    </span>
+                    <input
+                        type="checkbox"
+                        checked={config.automute}
+                        onChange={() => handleToggle("automute")}
+                        className="toggle toggle-primary"
+                    />
+                </label>
+                
+                {/*GFN Settings begin here*/}
+                <h2 className="text-xl font-semibold mb-4">GFN Settings</h2>
+                <label className="flex items-center justify-between">
+                    <span>
                         Game Ready Notification
                         <div className="relative group inline-block">
                             <FaInfoCircle className="ml-2 cursor-pointer peer" />
                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
-                                Enables a notification when the gaming rig is
+                                Enables a notification when the gaming rig
                                 <br />
-                                ready.
+                                is ready.
                             </div>
                         </div>
                     </span>
@@ -209,25 +231,6 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                     />
                 </label>
 
-                <label className="flex items-center justify-between">
-                    <span>
-                        Automute
-                        <div className="relative group inline-block">
-                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
-                                Automatically mutes the game
-                                <br />
-                                when the window is not focused.
-                            </div>
-                        </div>
-                    </span>
-                    <input
-                        type="checkbox"
-                        checked={config.automute}
-                        onChange={() => handleToggle("automute")}
-                        className="toggle toggle-primary"
-                    />
-                </label>
 
                 <label className="flex items-center justify-between">
                     <span>
@@ -249,7 +252,8 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                     />
                 </label>
             </div>
-            <div className="flex justify-evenly w-full mt-10 mb-2">
+            {/*GFN Settings end here */}
+            <div className="!flex !gap-3 !justify-evenly !mt-10 !mb-2 !text-lg !text-base !font-semibold">
                 <ReloadButton />
                 <DefaultsButton setConfig={setConfig} />
             </div>
