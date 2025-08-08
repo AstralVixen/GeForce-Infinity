@@ -36,17 +36,19 @@ input[type="checkbox"].toggle:checked::before {
 }
 
 .scrollbar::-webkit-scrollbar {
-    all:unset !important;
     width: 8px !important;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-    all:unset !important;
     background: #555 !important; 
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-    all:unset !important;
+    background-color: rgb(37 99 235) !important;
+    border-radius: 10px !important;
+    border: 2px solid rgb(37 99 235) !important;
+}
+.scrollbar::-ms-thumb{
     background-color: rgb(37 99 235) !important;
     border-radius: 10px !important;
     border: 2px solid rgb(37 99 235) !important;

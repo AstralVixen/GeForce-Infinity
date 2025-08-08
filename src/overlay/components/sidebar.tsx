@@ -25,7 +25,6 @@ const Sidebar: React.FC<SidebarProps> = ({ config, setConfig, visible }) => {
             <Header />
             <div className="flex-1 overflow-y-auto overflow-x-hidden px-8 py-4 min-h-0 scrollbar">
                 <AuthSection />
-                <hr className="mx-8 my-4 border-gray-700" />
                 <ShortcutSection />
                 <SettingsSection config={config} setConfig={setConfig} />
             </div>
