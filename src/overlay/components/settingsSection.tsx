@@ -41,8 +41,7 @@ const resolutionOptions = [
 
 const fpsOptions = [
     { label: "60 FPS", value: 60 },
-    { label: "120 FPS", value: 120 },
-    { label: "240 FPS", value: 240 },
+    { label: "120 FPS", value: 120 }
 ];
 
 export const SettingsSection: React.FC<SettingsSectionProps> = ({
