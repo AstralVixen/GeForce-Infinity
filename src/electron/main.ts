@@ -341,6 +341,8 @@ app.commandLine.appendSwitch(
         "WaylandWindowDecorations",
         "AcceleratedVideoDecodeLinuxGL",
         "VaapiVideoDecoder",
+        "AcceleratedVideoDecodeLinuxZeroCopyGL",
+        "VaapiIgnoreDriverChecks",
     ].join(",")
 );
 

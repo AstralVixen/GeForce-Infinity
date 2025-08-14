@@ -35,13 +35,15 @@ const userAgentOptions = [
 
 // New options
 const resolutionOptions = [
-    { label: "1920 x 1080", value: "1920x1080" },
-    { label: "2560 x 1440", value: "2560x1440" },
+    { label: "1366 x 720 (30 FPS)", value: "1366x768" },
+    { label: "1920 x 1080 (60, 120 FPS)", value: "1920x1080" },
+    { label: "2560 x 1440 (60, 120 FPS)", value: "2560x1440" },
 ];
 
 const fpsOptions = [
+    { label: "30 FPS", value: 30 },
     { label: "60 FPS", value: 60 },
-    { label: "120 FPS", value: 120 }
+    { label: "120 FPS - Ultimate Only", value: 120 }
 ];
 
 export const SettingsSection: React.FC<SettingsSectionProps> = ({
@@ -101,8 +103,23 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
         const [wStr, hStr] = e.target.value.split("x");
         const w = Number(wStr);
         const h = Number(hStr);
+
         if (!Number.isNaN(w) && !Number.isNaN(h)) {
-            setConfig({ ...config, monitorWidth: w, monitorHeight: h });
+            const nextConfig: Config = {
+                ...config,
+                monitorWidth: w,
+                monitorHeight: h,
+            };
+            // Make sure user can't set wrong FPS to resolution.
+            if (w === 1366 && h === 768) {
+                nextConfig.framesPerSecond = 30;
+            } else {
+                if (config.framesPerSecond === 30) {
+                    nextConfig.framesPerSecond = 60;
+                }
+            }
+
+            setConfig(nextConfig);
         }
     };
 
