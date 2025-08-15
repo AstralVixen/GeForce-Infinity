@@ -61,8 +61,8 @@
         "vite": "^7.0.3"
     },
     "dependencies": {
+        "@t0msk/discord-rpc": "^4.0.2",
         "caniuse-lite": "^1.0.30001727",
-        "discord-rpc": "^4.0.1",
         "electron-updater": "^6.6.2",
         "firebase": "^12.0.0",
         "node-abi": "^4.12.0",

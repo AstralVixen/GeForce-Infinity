@@ -1,4 +1,4 @@
-import DiscordRPC from "discord-rpc";
+import DiscordRPC, { Client as DiscordRPCClient } from "@t0msk/discord-rpc";
 
 export type RpcClient = {
     login: (options: { clientId: string }) => Promise<void>;
@@ -11,13 +11,15 @@ export type RpcClient = {
 };
 
 export const clientId = "1270181852979789825";
-let rpcClient: DiscordRPC.Client | undefined;
+let rpcClient: DiscordRPCClient | undefined;
 let startTimestamp: Date;
 
 export function initRpcClient(start: Date, initialTitle: string) {
     startTimestamp = start;
     try {
         rpcClient = new DiscordRPC.Client({ transport: "ipc" });
+
+        if (!rpcClient) return;
 
         rpcClient.on("ready", () => {
             console.log("Discord RPC connected");

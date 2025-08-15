@@ -35,6 +35,19 @@ const userAgentOptions = [
 	},
 ];
 
+// New options
+const resolutionOptions = [
+    { label: "1366 x 768", value: "1366x768" },
+    { label: "1920 x 1080", value: "1920x1080" },
+    { label: "2560 x 1440", value: "2560x1440" },
+];
+
+const fpsOptions = [
+    { label: "30 FPS", value: 30 },
+    { label: "60 FPS", value: 60 },
+    { label: "120 FPS - Ultimate Only", value: 120 }
+];
+
 export const SettingsSection: React.FC<SettingsSectionProps> = ({
 	config,
 	setConfig,
@@ -67,11 +80,24 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
 			: "#23272b";
 	};
 
-	const getUserAgent = () => {
-		return userAgentOptions.find((o) => o.value === config.userAgent)
-			? config.userAgent
-			: "";
-	};
+    const getUserAgent = () => {
+        return userAgentOptions.find((o) => o.value === config.userAgent)
+            ? config.userAgent
+            : "";
+    };
+
+    const getResolutionValue = () => {
+        const current = `${config.monitorWidth}x${config.monitorHeight}`;
+        return resolutionOptions.some((r) => r.value === current)
+            ? current
+            : resolutionOptions[0].value;
+    };
+
+    const getFpsValue = () => {
+        return fpsOptions.some((f) => f.value === config.framesPerSecond)
+            ? config.framesPerSecond
+            : fpsOptions[0].value;
+    };
 
 	const handleToggle = (key: keyof Config) => {
 		setConfig({ ...config, [key]: !config[key] });
@@ -81,97 +107,167 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
 		setConfig({ ...config, accentColor: e.target.value });
 	};
 
-	const handleUserAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setConfig({ ...config, userAgent: e.target.value });
-	};
+    const handleUserAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const updated = { ...config, userAgent: e.target.value };
+        setConfig(updated);
+    };
 
-	return (
-		<section className="p-4 text-gray-200 max-w-md mx-auto">
-			<h2 className="text-xl font-semibold mb-4">Settings</h2>
-			<div className="space-y-4">
-				{/* Accent Color */}
-				<label className="flex items-center justify-between">
-					<span>
-						Accent Color
-						<div className="relative group inline-block">
-							<FaInfoCircle className="ml-2 cursor-pointer peer" />
-							<div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
-								Sets a custom accent color
-								<br />
-								for GeForce NOW.
-							</div>
-						</div>
-						<br />
-						<small>Reload GFN to apply changes</small>
-					</span>
-					<select
-						value={getColor()}
-						onChange={handleAccentChange}
-						className={`rounded p-2 bg-[${getColor()}] border border-gray-600 ml-4 ${getColorClass(
-							config.accentColor
-						)}`}>
-						{colorOptions.map((option) => (
-							<option
-								key={option.value}
-								value={option.value}
-								className={option.className}>
-								{option.label}
-							</option>
-						))}
-					</select>
-				</label>
+    const handleResolutionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const [wStr, hStr] = e.target.value.split("x");
+        const w = Number(wStr);
+        const h = Number(hStr);
 
-				{/* User Agent */}
-				<label className="flex items-center justify-between">
-					<span>
-						User Agent
-						<div className="relative group inline-block">
-							<FaInfoCircle className="ml-2 cursor-pointer peer" />
-							<div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
-								Changes the User Agent — use this
-								<br />
-								if you experience issues
-								<br />
-								launching or playing games.
-							</div>
-						</div>
-						<br />
-						<small>Restart application to apply changes</small>
-					</span>
-					<select
-						value={getUserAgent()}
-						onChange={handleUserAgentChange}
-						className="rounded p-2 bg-[#23272b] border border-gray-600 ml-4 text-white">
-						{userAgentOptions.map((option) => (
-							<option
-								key={option.value}
-								value={option.value}>
-								{option.label}
-							</option>
-						))}
-					</select>
-				</label>
+        if (!Number.isNaN(w) && !Number.isNaN(h)) {
+            const nextConfig: Config = {
+                ...config,
+                monitorWidth: w,
+                monitorHeight: h,
+            };
+            setConfig(nextConfig);
+        }
+    };
 
-				{/* Discord Rich Presence */}
-				<label className="flex items-center justify-between">
-					<span>
-						Discord Rich Presence
-						<div className="relative group inline-block">
-							<FaInfoCircle className="ml-2 cursor-pointer peer" />
-							<div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
-								Enables Discord Rich Presence, which displays
-								<br />
-								your current game in your Discord status.
-							</div>
-						</div>
-					</span>
-					<input
-						type="checkbox"
-						checked={config.rpcEnabled}
-						onChange={() => handleToggle("rpcEnabled")}
-						className="toggle toggle-primary"
-					/>
-				</label>
+    const handleFpsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const fps = Number(e.target.value);
+        if (!Number.isNaN(fps)) {
+            setConfig({ ...config, framesPerSecond: fps });
+        }
+    };
+
+    /*const onToggle = (key: keyof Config, value: boolean) => {
+        const update = { [key]: value };
+        window.electronAPI.saveConfig(update);
+        setConfig((prev) => ({ ...prev, ...update }));
+    };*/
+
+    return (
+        <section className="p-4 text-gray-200 max-w-md mx-auto">
+            <h2 className="text-xl font-semibold mb-4">Settings</h2>
+            <div className="space-y-4">
+                <label className="flex items-center justify-between">
+                    <span>
+                        Accent Color
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Sets a custom accent color
+                                <br />
+                                for GeForce NOW.
+                            </div>
+                        </div>
+                        <br />
+                        <small>Reload GFN to apply changes</small>
+                    </span>
+                    <select
+                        value={getColor()}
+                        onChange={handleAccentChange}
+                        className={`rounded p-2 bg-[${getColor()}] border border-gray-600 ml-4 ${getColorClass(config.accentColor)}`}
+                    >
+                        {colorOptions.map((option) => (
+                            <option
+                                key={option.value}
+                                value={option.value}
+                                className={option.className}
+                            >
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label className="flex items-center justify-between">
+                    <span>
+                        User Agent
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Changes the User Agent — use this
+                                <br />
+                                if you experience issues
+                                <br />
+                                launching or playing games.
+                            </div>
+                        </div>
+                        <br />
+                        <small>Restart application to apply changes</small>
+                    </span>
+                    <select
+                        value={getUserAgent()}
+                        onChange={handleUserAgentChange}
+                        className="rounded p-2 bg-[#23272b] border border-gray-600 ml-4 text-white"
+                    >
+                        {userAgentOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label className="flex items-center justify-between">
+                    <span>
+                        Resolution
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Select the target monitor resolution
+                                <br />
+                                used for streaming.
+                            </div>
+                        </div>
+                    </span>
+                    <select
+                        value={getResolutionValue()}
+                        onChange={handleResolutionChange}
+                        className="rounded p-2 bg-[#23272b] border border-gray-600 ml-4 text-white"
+                    >
+                        {resolutionOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label className="flex items-center justify-between">
+                    <span>
+                        FPS
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Select the target frame rate.
+                            </div>
+                        </div>
+                    </span>
+                    <select
+                        value={getFpsValue()}
+                        onChange={handleFpsChange}
+                        className="rounded p-2 bg-[#23272b] border border-gray-600 ml-4 text-white"
+                    >
+                        {fpsOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+
+                <label className="flex items-center justify-between">
+                    <span>
+                        Discord Rich Presence
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Enables Discord Rich Presence, which displays
+                                <br />
+                                your current game in your Discord status.
+                            </div>
+                        </div>
+                    </span>
+                    <input
+                        type="checkbox"
+                        checked={config.rpcEnabled}
+                        onChange={() => handleToggle("rpcEnabled")}
+                        className="toggle toggle-primary"
+                    />
+                </label>
 
 				{/* Automute */}
 				<label className="flex items-center justify-between">

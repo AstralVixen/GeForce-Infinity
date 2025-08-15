@@ -10,6 +10,9 @@ export const defaultConfig: Config = {
     accentColor: "",
     inactivityNotification: false,
     selectedPlatform: "",
+    monitorWidth: 1920,
+    monitorHeight: 1080,
+    framesPerSecond: 60
 };
 
 export interface Config {
@@ -22,6 +25,9 @@ export interface Config {
     accentColor: string;
     inactivityNotification: boolean;
     selectedPlatform: string,
+    monitorWidth: number;
+    monitorHeight: number;
+    framesPerSecond: number;
 }
 
 export interface UserContext {

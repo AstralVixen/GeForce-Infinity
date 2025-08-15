@@ -120,7 +120,7 @@ async function registerAppProtocols() {
                 ".svg": "image/svg+xml",
                 ".webp": "image/webp",
             };
-            return new Response(data, {
+            return new Response(new Uint8Array(data), {
                 headers: {
                     "Content-Type":
                         mimeTypes[ext] || "application/octet-stream",
@@ -138,7 +138,7 @@ async function registerAppProtocols() {
 
         try {
             const data = await fsPromises.readFile(filePath);
-            return new Response(data, {
+            return new Response(new Uint8Array(data), {
                 status: 200,
                 headers: { "Content-Type": "application/javascript" },
             });
@@ -307,6 +307,38 @@ function setupWindowEvents(mainWindow: BrowserWindow) {
         }
     );
 
+    session.defaultSession.webRequest.onBeforeSendHeaders(
+        { urls: ["*://*.nvidiagrid.net/v2/*"] },
+        (details, callback) => {
+            const headers = details.requestHeaders;
+
+            // Force nv-device-os and related platform headers
+            headers["nv-device-os"] = "WINDOWS";
+            headers["sec-ch-ua-platform"] = '"WINDOWS"';
+            headers["sec-ch-ua-platform-version"] = "14.0.0";
+
+           /* // Normalize and update the User-Agent if present
+            const uaKey =
+                "User-Agent" in headers
+                    ? "User-Agent"
+                    : "user-agent" in headers
+                        ? "user-agent"
+                        : null;
+
+            if (uaKey && typeof headers[uaKey] === "string") {
+                const ua = headers[uaKey] as string;
+                // (Mozilla/x.x) (...) -> Mozilla/x.x (Windows NT 10.0; Win64; x64)
+                const patched = ua.replace(
+                    /(Mozilla\/[\d.]+) \(.+?\)/,
+                    "$1 (Windows NT 10.0; Win64; x64)"
+                );
+                headers[uaKey] = patched;
+            }*/
+
+            callback({ requestHeaders: headers });
+        }
+    );
+
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         if (url === "about:blank") {
             return {
@@ -352,11 +384,94 @@ app.commandLine.appendSwitch(
         "WaylandWindowDecorations",
         "AcceleratedVideoDecodeLinuxGL",
         "VaapiVideoDecoder",
+        "AcceleratedVideoDecodeLinuxZeroCopyGL",
+        "VaapiIgnoreDriverChecks",
     ].join(",")
 );
 
 overrideVersionInDev();
 registerCustomProtocols();
+
+async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExports.BrowserWindow) {
+    await mainWindow.webContents.executeJavaScript(`(() => {
+      const originalFetch = window.fetch.bind(window);
+    
+      function isTarget(urlString) {
+        try {
+          const u = new URL(urlString, location.origin);
+          return /\\.nvidiagrid\\.net$/i.test(u.hostname) && /\\/v2\\/session/i.test(u.pathname);
+        } catch {
+          return false;
+        }
+      }
+    
+      async function tryPatchBody(initBody) {
+        if (!initBody) return undefined;
+    
+        const readText = () => {
+          if (typeof initBody === "string") return initBody;
+          if (initBody instanceof ArrayBuffer || ArrayBuffer.isView(initBody)) {
+            return new TextDecoder().decode(initBody);
+          }
+          // Other body types (Blob, FormData, URLSearchParams) are skipped here for brevity
+          return null;
+        };
+    
+        const text = readText();
+        if (!text) return undefined;
+    
+        const trimmed = text.trim();
+        if (!trimmed || (trimmed[0] !== "{" && trimmed[0] !== "[")) return undefined;
+    
+        let parsed;
+        try { parsed = JSON.parse(trimmed); } catch { return undefined; }
+    
+        const srd = parsed && parsed.sessionRequestData;
+        if (!srd || srd.clientRequestMonitorSettings == null) return undefined;
+        
+        const clientSettings = await electronAPI.getCurrentConfig();
+        
+        srd.clientRequestMonitorSettings = [
+          { 
+            widthInPixels: clientSettings.monitorWidth,  
+            heightInPixels: clientSettings.monitorHeight,
+            framesPerSecond: clientSettings.framesPerSecond, 
+            displayData: null, 
+            dpi: 0, 
+            hdr10PlusGamingData: null, 
+            monitorId: 0, 
+            positionX: 0, 
+            positionY: 0, 
+            sdrHdrMode: 0
+          }
+        ];
+    
+        return JSON.stringify(parsed);
+      }
+    
+      const wrappedFetch = Object.assign(async function fetch(input, init) {
+        const url = (typeof input === "string" || input instanceof URL) ? String(input) : input.url;
+        if (!isTarget(url)) {
+          return originalFetch(input, init);
+        }
+    
+        if (init && init.body != null) {
+          const patched = await tryPatchBody(init.body);
+          if (patched !== undefined) {
+            const newInit = {
+              ...init,
+              body: patched
+            };
+            return originalFetch(input, newInit);
+          }
+        }
+    
+        return originalFetch(input, init);
+      }, originalFetch);
+    
+      window.fetch = wrappedFetch;
+    })();`);
+}
 
 app.whenReady().then(async () => {
     await registerAppProtocols();
@@ -385,6 +500,9 @@ app.whenReady().then(async () => {
     }, 15_000);
 
     registerShortcuts(mainWindow);
+
+    await patchFetchForSessionRequest(mainWindow);
+
     setupWindowEvents(mainWindow);
 });
 
