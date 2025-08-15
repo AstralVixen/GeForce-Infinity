@@ -111,7 +111,7 @@ async function registerAppProtocols() {
                 ".svg": "image/svg+xml",
                 ".webp": "image/webp",
             };
-            return new Response(data, {
+            return new Response(new Uint8Array(data), {
                 headers: {
                     "Content-Type":
                         mimeTypes[ext] || "application/octet-stream",
@@ -129,7 +129,7 @@ async function registerAppProtocols() {
 
         try {
             const data = await fsPromises.readFile(filePath);
-            return new Response(data, {
+            return new Response(new Uint8Array(data), {
                 status: 200,
                 headers: { "Content-Type": "application/javascript" },
             });
