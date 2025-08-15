@@ -34,9 +34,12 @@ input[type="checkbox"].toggle::before {
 input[type="checkbox"].toggle:checked::before {
     transform: translateX(20px);
 }
-
+.scrollbar {
+  scrollbar-color: rgb(37 99 235) #555; 
+}
 .scrollbar::-webkit-scrollbar {
     width: 8px !important;
+    scrollbar-color: rgb(37 99 235) #555; 
 }
 
 .scrollbar::-webkit-scrollbar-track {

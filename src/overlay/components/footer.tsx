@@ -20,7 +20,7 @@ export const Footer = () => {
 					onClick={() => window.electronAPI.openExternal(githubUrl)}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="flex flex-col items-center text-sm text-gray-400 hover:text-white transition cursor-pointer">
+					className="flex flex-col items-center text-sm !text-gray-400 !hover:text-white transition cursor-pointer">
 					<FaGithub className="text-4xl mb-1" />
 					<span>GitHub</span>
 				</a>
@@ -28,7 +28,7 @@ export const Footer = () => {
 					onClick={() => window.electronAPI.openExternal(websiteUrl)}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="flex flex-col items-center text-sm text-gray-400 hover:text-white transition cursor-pointer">
+					className="flex flex-col items-center text-sm !text-gray-400 !hover:text-white transition cursor-pointer">
 					<FaGlobeAmericas className="text-4xl mb-1" />
 					<span>Web</span>
 				</a>
@@ -36,7 +36,7 @@ export const Footer = () => {
 					onClick={() => window.electronAPI.openExternal(patreonUrl)}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="flex flex-col items-center text-sm text-gray-400 hover:text-white transition cursor-pointer">
+					className="flex flex-col items-center text-sm !text-gray-400 !hover:text-white transition cursor-pointer">
 					<FaPatreon className="text-4xl mb-1" />
 					<span className="text-center">
 						Become a
@@ -48,7 +48,7 @@ export const Footer = () => {
 					onClick={() => window.electronAPI.openExternal(updatesUrl)}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="flex flex-col items-center text-sm text-gray-400 hover:text-white transition cursor-pointer">
+					className="flex flex-col items-center text-sm !text-gray-400 !hover:text-white !transition !cursor-pointer">
 					<FaCloudDownloadAlt className="text-4xl mb-1" />
 					<span className="flex flex-col items-center text-center">
 						Check for
