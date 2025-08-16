@@ -17,11 +17,15 @@
 
 ## 🚀 **Features**
 
+- **Up to 120 FPS support (GFN ultimate required)**
+- **Up to 2K resolution support (GFN performance or up required)**
+- **30FPS support (GFN performance or up required for some reason)**
+- **720p resolution support (GFN performance or up required for some reason)**
 - **Account system:** Users can now register and log in. After logging in, they are able to sync settings to and from the cloud.
 - **User dropdown menu in the header.**
 - **Inactivity notification:** Alerts you when you're about to be kicked due to inactivity.
 - **Automute:** Mutes the game when the window is not in focus.
-- **"Anti-kick" feature.** **⚠️Disclaimer:** This is not a real anti-kick. It does not prevent kicks and may violate NVIDIA's TOS. It simply alt-tabs you back into the game if you're unfocused. (both autofocus and inactivity notifications must be enabled)
+- **Auto refocus:** Alt-tabs you back into the game if you're unfocused when inactivity timer starts (both autofocus and inactivity notifications must be enabled).
 - **Button to reset all settings to their default values.**
 - **Support for smaller screens:** added scrollable areas.
 - **Info tooltips added in the settings section.**
@@ -34,13 +38,10 @@
 
 We have several exciting features planned to further enhance your experience:
 
-- **Higher resolution support**
-- **Higher FPS support**
 - **HDR support**
 - **Surround sound support**
 - **Ability to open sidebar during gameplay**
-- **Game Icon in Discord RPC**: Display a small icon representing the game you’re playing in Discord Rich Presence.
-- **Account Switching**: Easily switch between different GeForce NOW accounts within the app.
+- **Account Switching**: Easily switch between different connected accounts within GeForce NOW.
 - **Automatic Game Startup**: Customize which game starts automatically when the app launches.
 
 ## ⚠️ **Disclaimer**
