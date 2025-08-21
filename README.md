@@ -62,6 +62,11 @@ We also provide installation via **Flatpak** (hosted at Flathub) and **AUR**.
 
 Press `Ctrl+I` to open sidebar to access GeForce Infinity features.
 
+## 💻 **How to use 1440p & 120 FPS streaming**
+
+Press `Ctrl+I` to open sidebar and change **Resolution** and **FPS** to your liking.
+**DO NOT USE** native GeForce NOW settings for resolution and FPS, GeForce Infinity **doesn't** alter GeForce NOW settings, so you still see 1080p max resolution and 60 FPS. GeForce Infinity override these values.
+
 ## 🛠️ **Build**
 
 To get started with GeForce Infinity, follow these steps:
