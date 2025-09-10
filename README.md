@@ -53,7 +53,7 @@ GeForce Infinity is an independent project and is not affiliated with, sponsored
 
 ## 📦 **Installation**
 
-Visit our [Release](https://github.com/AstralVixen/GeForce-Infinity/releases) page, where you can find newest builds of GeForce Infinity in packages like: **zip** (binary version), **deb**, **AppImage**, **rpm** and **exe**.
+Visit our [Release](https://github.com/doublegate/GeForce-Infinity/releases) page, where you can find newest builds of GeForce Infinity in packages like: **zip** (binary version), **deb**, **AppImage**, **rpm** and **exe**.
 
 You can also download it from our [website](https://geforce-infinity.xyz/).
 
@@ -98,13 +98,17 @@ GeForce Infinity is built with modern web technologies and follows best practice
 - **React**: Component-based UI for the overlay interface
 - **Build System**: Modern build pipeline with esbuild, TypeScript compiler, and Tailwind CSS
 
-### **Recent Improvements (v1.2.0) - Updated September 10, 2025**
+### **Recent Improvements (v1.3.0) - Updated September 10, 2025**
 - **ES Module Compatibility**: Complete migration to ES modules with proper directory imports and extensions
 - **4K/AV1 Support**: Advanced codec selection with AV1 optimization for 4K streaming performance
 - **TypeScript Modernization**: Enhanced type safety with modern import/export syntax throughout codebase
 - **Build System Reliability**: Resolved Tailwind CSS compilation issues and all TypeScript errors
 - **Dependency Management**: Fixed corrupted yaml package dependency affecting build pipeline
 - **Development Experience**: Streamlined development workflow with reliable build processes
+- **Resolution Override Timing**: Fixed critical timing issue ensuring GeForce NOW API interception works correctly
+- **Discord RPC Stability**: Enhanced error handling preventing application crashes from RPC connection failures
+- **Renderer Reliability**: Improved overlay script loading with better error handling and timing optimization
+- **Repository Migration**: Complete transition from AstralVixen to doublegate GitHub account
 
 ## 🛠️ **Build**
 
@@ -113,7 +117,7 @@ To get started with GeForce Infinity, follow these steps:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/AstralVixen/GeForce-Infinity.git
+    git clone https://github.com/doublegate/GeForce-Infinity.git
     ```
 
 2. Navigate to the project directory:
@@ -145,6 +149,6 @@ GeForce Infinity is licensed under the [MIT License](LICENSE). See the [LICENSE]
 
 For questions, feedback, or suggestions, feel free to reach out to me:
 
-- [GitHub Issues](https://github.com/AstralVixen/GeForce-Infinity/issues)
-- Email: [astral.vixen.hu@gmail.com](mailto:astral.vixen.hu@gmail.com)
+- [GitHub Issues](https://github.com/doublegate/GeForce-Infinity/issues)
+- Email: [doublegate@users.noreply.github.com](mailto:doublegate@users.noreply.github.com)
 - Discord: [Join my discord](https://discord.gg/p5vRgQwZ9K)

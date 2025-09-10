@@ -14,10 +14,22 @@ declare global {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src = "app://overlay/index.js";
-    document.body.appendChild(script);
+    setTimeout(() => {
+        try {
+            const script = document.createElement("script");
+            script.type = "module";
+            script.src = "app://overlay/index.js";
+            script.onerror = (error) => {
+                console.error("Failed to load overlay script:", error);
+            };
+            script.onload = () => {
+                console.log("Overlay script loaded successfully");
+            };
+            document.body.appendChild(script);
+        } catch (error) {
+            console.error("Error creating overlay script:", error);
+        }
+    }, 100); // Small delay to ensure page is fully ready
 });
 
 const cssPath = path.join(__dirname, "../assets/tailwind.bundle.css");

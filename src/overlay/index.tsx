@@ -7,11 +7,18 @@ import { defaultConfig } from "../shared/types";
 import { User } from "firebase/auth";
 import { UserProvider } from "./contexts/UserContext";
 
-const css = window.electronAPI.getTailwindCss();
+let css = "";
+try {
+    css = window.electronAPI?.getTailwindCss() || "";
+} catch (error) {
+    console.error("Failed to get Tailwind CSS:", error);
+}
 
-const style = document.createElement("style");
-style.textContent = css;
-document.head.appendChild(style);
+if (css) {
+    const style = document.createElement("style");
+    style.textContent = css;
+    document.head.appendChild(style);
+}
 
 const mount = document.createElement("div");
 mount.id = "geforce-infinity-sidebar-root";
@@ -22,13 +29,20 @@ const App = () => {
     const [config, setConfig] = useState<Config>(defaultConfig);
 
     useEffect(() => {
-        window.electronAPI.getCurrentConfig().then((config) => {
-            setConfig(config);
-        });
-        window.electronAPI.onConfigLoaded((config: Config) => {
-            console.log("Config loaded in overlay:", config);
-            setConfig(config);
-        });
+        if (window.electronAPI) {
+            window.electronAPI.getCurrentConfig().then((config) => {
+                setConfig(config);
+            }).catch((error) => {
+                console.error("Failed to get current config:", error);
+            });
+            
+            window.electronAPI.onConfigLoaded((config: Config) => {
+                console.log("Config loaded in overlay:", config);
+                setConfig(config);
+            });
+        } else {
+            console.warn("electronAPI not available, using default config");
+        }
 
         const handler = (e: KeyboardEvent) => {
             if (e.ctrlKey && e.key === "i") {
@@ -42,7 +56,9 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        window.electronAPI.saveConfig(config);
+        if (window.electronAPI) {
+            window.electronAPI.saveConfig(config);
+        }
     }, [config]);
 
     return (

@@ -26,9 +26,18 @@ export function initRpcClient(start: Date, initialTitle: string) {
             updateActivity(initialTitle);
         });
 
-        rpcClient.login({ clientId }).catch(console.error);
+        rpcClient.on("error", (err) => {
+            console.error("Discord RPC connection error:", err);
+            rpcClient = undefined;
+        });
+
+        rpcClient.login({ clientId }).catch((err) => {
+            console.error("Discord RPC login failed:", err);
+            rpcClient = undefined;
+        });
     } catch (err) {
         console.error("RPC init error:", err);
+        rpcClient = undefined;
     }
 }
 
@@ -43,6 +52,8 @@ export function updateActivity(gameTitle: string | null) {
             startTimestamp,
         });
     } catch (err) {
-        console.error("Failed to set activity:", err);
+        console.error("Failed to set Discord activity:", err);
+        // Disable RPC client on failure to prevent repeated errors
+        rpcClient = undefined;
     }
 }

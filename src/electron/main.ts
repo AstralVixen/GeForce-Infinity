@@ -171,10 +171,14 @@ function registerShortcuts(mainWindow: BrowserWindow) {
 }
 
 function setupWindowEvents(mainWindow: BrowserWindow) {
-    mainWindow.webContents.on("did-finish-load", () => {
+    mainWindow.webContents.on("did-finish-load", async () => {
         const config = getConfig();
         replaceColorInCSS(mainWindow, config.accentColor);
         mainWindow.webContents.send("config-loaded", config);
+        
+        // Apply fetch patching after page loads to ensure it's available when needed
+        console.log("[GeForce Infinity] Page loaded, applying fetch patching...");
+        await patchFetchForSessionRequest(mainWindow);
     });
 
     mainWindow.on("blur", () => {
@@ -361,7 +365,10 @@ overrideVersionInDev();
 registerCustomProtocols();
 
 async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExports.BrowserWindow) {
-    await mainWindow.webContents.executeJavaScript(`(() => {
+    // Get current configuration from main process before injecting
+    const currentConfig = getConfig();
+    
+    await mainWindow.webContents.executeJavaScript(`((configData) => {
       const originalFetch = window.fetch.bind(window);
     
       function isTarget(urlString) {
@@ -397,7 +404,10 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
         const srd = parsed && parsed.sessionRequestData;
         if (!srd || srd.clientRequestMonitorSettings == null) return undefined;
         
-        const clientSettings = await electronAPI.getCurrentConfig();
+        // Use passed config data instead of trying to access electronAPI
+        const clientSettings = configData;
+        
+        console.log("[GeForce Infinity] Applying resolution override:", clientSettings.monitorWidth + "x" + clientSettings.monitorHeight, "FPS:", clientSettings.framesPerSecond, "Codec:", clientSettings.codecPreference);
         
         // Calculate appropriate DPI for high resolution displays
         const width = clientSettings.monitorWidth;
@@ -457,7 +467,7 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
       }, originalFetch);
     
       window.fetch = wrappedFetch;
-    })();`);
+    })(${JSON.stringify(currentConfig)});`);
 }
 
 app.whenReady().then(async () => {
@@ -487,8 +497,6 @@ app.whenReady().then(async () => {
     }, 15_000);
 
     registerShortcuts(mainWindow);
-
-    await patchFetchForSessionRequest(mainWindow);
 
     setupWindowEvents(mainWindow);
 });

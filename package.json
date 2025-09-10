@@ -1,6 +1,6 @@
 {
     "name": "geforce-infinity",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "main": "dist/electron/main.js",
     "scripts": {
         "lint": "eslint .",
@@ -18,8 +18,8 @@
     },
     "keywords": [],
     "author": {
-        "name": "AstralVixen",
-        "email": "astral.vixen.hu@gmail.com"
+        "name": "doublegate",
+        "email": "doublegate@users.noreply.github.com"
     },
     "license": "MIT",
     "description": "Enhance your GeForce NOW application experience!",
@@ -69,7 +69,7 @@
         "yaml": "^2.3.4"
     },
     "build": {
-        "appId": "net.astralvixen.geforceinfinity",
+        "appId": "net.doublegate.geforceinfinity",
         "productName": "GeForceInfinity",
         "files": [
             "node_modules/**/*",
@@ -109,7 +109,7 @@
             ],
             "artifactName": "${productName}-linux-${version}-${arch}.${ext}",
             "icon": "src/assets/resources/infinitylogo.png",
-            "maintainer": "AstralVixen <astral.vixen.hu@gmail.com>",
+            "maintainer": "doublegate <doublegate@users.noreply.github.com>",
             "category": "Game",
             "desktop": {
                 "entry": {
@@ -127,7 +127,7 @@
         "publish": [
             {
                 "provider": "github",
-                "owner": "AstralVixen",
+                "owner": "doublegate",
                 "repo": "GeForce-Infinity"
             }
         ]

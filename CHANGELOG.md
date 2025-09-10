@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### 1.2.0 (2025-09-10)
+### 1.3.0 (2025-09-10)
 
 #### Features
 
@@ -35,5 +35,9 @@ All notable changes to this project will be documented in this file. See [standa
 * **Application Startup**: Resolved build and runtime issues preventing application launch
 * **Dependency Corruption**: Fixed corrupted yaml package causing Tailwind CSS compilation failures
 * **Build Pipeline**: Stabilized build process with comprehensive error handling and recovery
+* **Resolution Override Timing**: Fixed critical issue where fetch patching was applied before GeForce NOW loaded
+* **Discord RPC Error Handling**: Added proper connection error management preventing application crashes
+* **Renderer Script Execution**: Enhanced overlay loading with improved error handling and timing optimization
+* **Repository References**: Complete migration from AstralVixen to doublegate GitHub account across all files
 
 ### 1.1.3 (2025-07-28)
