@@ -138,3 +138,8 @@ archive
 test.js
 bun.lockb
 .flatpak-builder
+
+# Claude Code documentation files
+CLAUDE.md
+CLAUDE.local.md
+WARP.md
