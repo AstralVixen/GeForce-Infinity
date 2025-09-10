@@ -39,5 +39,10 @@ All notable changes to this project will be documented in this file. See [standa
 * **Discord RPC Error Handling**: Added proper connection error management preventing application crashes
 * **Renderer Script Execution**: Enhanced overlay loading with improved error handling and timing optimization
 * **Repository References**: Complete migration from AstralVixen to doublegate GitHub account across all files
+* **IBUS Warnings**: Suppressed Linux GTK input method warnings with proper environment variable configuration
+* **Build Script Modernization**: Updated Node.js loader from deprecated --loader to modern --import syntax
+* **Request Monitoring Enhancement**: Added comprehensive debugging for GeForce NOW API interception patterns
+* **XHR Request Patching**: Extended network interception to handle XMLHttpRequest alongside fetch() for complete coverage
+* **Unhandled Promise Rejections**: Implemented proper error handling for Discord RPC connection failures
 
 ### 1.1.3 (2025-07-28)

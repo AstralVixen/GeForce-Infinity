@@ -20,14 +20,26 @@ window.addEventListener("DOMContentLoaded", () => {
             script.type = "module";
             script.src = "app://overlay/index.js";
             script.onerror = (error) => {
-                console.error("Failed to load overlay script:", error);
+                console.log("Overlay script failed to load (may be normal):", error);
+                // Don't throw error - this is expected if overlay files don't exist
             };
             script.onload = () => {
                 console.log("Overlay script loaded successfully");
             };
-            document.body.appendChild(script);
+            
+            // Add additional error handling for script execution
+            script.addEventListener('error', (event) => {
+                console.log("Overlay script error event:", event);
+            });
+            
+            // Wrap script append in additional try-catch
+            try {
+                document.body.appendChild(script);
+            } catch (appendError) {
+                console.log("Error appending overlay script (may be normal):", appendError);
+            }
         } catch (error) {
-            console.error("Error creating overlay script:", error);
+            console.log("Error creating overlay script (may be normal):", error);
         }
     }, 100); // Small delay to ensure page is fully ready
 });

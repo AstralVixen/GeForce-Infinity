@@ -8,7 +8,7 @@
         "dev": "concurrently \"bun:dev:overlay\" \"bun:dev:electron\"",
         "dev:overlay": "bun bun:dev",
         "dev:electron": "tsc -w -p tsconfig.json",
-        "build": "npx tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify && node --loader ts-node/esm scripts/build-overlay.ts && npx tsc -p tsconfig.electron.json && cpx \"src/assets/**/*\" dist/assets",
+        "build": "npx tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify && node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"));' scripts/build-overlay.ts && npx tsc -p tsconfig.electron.json && cpx \"src/assets/**/*\" dist/assets",
         "start": "yarn build && electron dist/electron/main.js",
         "pack": "electron-builder --dir",
         "dist": "electron-builder --win --linux",

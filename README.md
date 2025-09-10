@@ -109,6 +109,9 @@ GeForce Infinity is built with modern web technologies and follows best practice
 - **Discord RPC Stability**: Enhanced error handling preventing application crashes from RPC connection failures
 - **Renderer Reliability**: Improved overlay script loading with better error handling and timing optimization
 - **Repository Migration**: Complete transition from AstralVixen to doublegate GitHub account
+- **Runtime Error Resolution**: Eliminated IBUS warnings, Discord RPC crashes, and renderer script failures
+- **Network Interception Enhancement**: Added comprehensive XHR and fetch request monitoring for debugging
+- **Build Script Modernization**: Updated to modern Node.js --import syntax for future-proof compatibility
 
 ## 🛠️ **Build**
 

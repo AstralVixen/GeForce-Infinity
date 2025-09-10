@@ -21,6 +21,12 @@ import { getConfig, saveConfig, loadConfig } from "./managers/config.js";
 import { createTray } from "./managers/tray.js";
 import { clientId, initRpcClient, updateActivity } from "./managers/discord.js";
 
+// Suppress IBUS warnings on Linux
+if (process.platform === "linux") {
+    process.env.IBUS_USE_PORTAL = "0";
+    process.env.GTK_IM_MODULE = "gtk-im-context-simple";
+}
+
 function overrideVersionInDev() {
     if (!app.isPackaged) {
         const pkgPath = path.join(__dirname, "../../package.json");
@@ -275,6 +281,9 @@ function setupWindowEvents(mainWindow: BrowserWindow) {
     session.defaultSession.webRequest.onBeforeSendHeaders(
         { urls: ["*://*.nvidiagrid.net/v2/*"] },
         (details, callback) => {
+            // Debug: Log all nvidiagrid v2 requests to understand the pattern
+            console.log("[GeForce Infinity] WEBQUEST INTERCEPTED - nvidiagrid v2 request:", details.method, details.url);
+            
             const headers = details.requestHeaders;
 
             // Force nv-device-os and related platform headers
@@ -367,6 +376,7 @@ registerCustomProtocols();
 async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExports.BrowserWindow) {
     // Get current configuration from main process before injecting
     const currentConfig = getConfig();
+    console.log("[GeForce Infinity] Current config for fetch patching:", currentConfig);
     
     await mainWindow.webContents.executeJavaScript(`((configData) => {
       const originalFetch = window.fetch.bind(window);
@@ -374,7 +384,15 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
       function isTarget(urlString) {
         try {
           const u = new URL(urlString, location.origin);
-          return /\\.nvidiagrid\\.net$/i.test(u.hostname) && /\\/v2\\/session/i.test(u.pathname);
+          const isNvidiaGrid = /\\.nvidiagrid\\.net$/i.test(u.hostname);
+          const isV2Session = /\\/v2\\/session/i.test(u.pathname);
+          
+          // Debug: Log URL pattern matching
+          if (isNvidiaGrid) {
+            console.log("[GeForce Infinity] URL Pattern Check - Hostname matches:", u.hostname, "Path:", u.pathname, "V2Session:", isV2Session);
+          }
+          
+          return isNvidiaGrid && isV2Session;
         } catch {
           return false;
         }
@@ -407,6 +425,7 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
         // Use passed config data instead of trying to access electronAPI
         const clientSettings = configData;
         
+        console.log("[GeForce Infinity] Found session request, checking config...", clientSettings);
         console.log("[GeForce Infinity] Applying resolution override:", clientSettings.monitorWidth + "x" + clientSettings.monitorHeight, "FPS:", clientSettings.framesPerSecond, "Codec:", clientSettings.codecPreference);
         
         // Calculate appropriate DPI for high resolution displays
@@ -448,9 +467,17 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
     
       const wrappedFetch = Object.assign(async function fetch(input, init) {
         const url = (typeof input === "string" || input instanceof URL) ? String(input) : input.url;
+        
+        // Debug: Log all fetch requests to understand the pattern
+        if (url && url.includes('nvidiagrid')) {
+          console.log("[GeForce Infinity] Detected nvidiagrid request:", url);
+        }
+        
         if (!isTarget(url)) {
           return originalFetch(input, init);
         }
+        
+        console.log("[GeForce Infinity] TARGET SESSION REQUEST INTERCEPTED:", url);
     
         if (init && init.body != null) {
           const patched = await tryPatchBody(init.body);
@@ -467,6 +494,58 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
       }, originalFetch);
     
       window.fetch = wrappedFetch;
+      
+      // Also patch XMLHttpRequest in case GeForce NOW switched from fetch
+      const OriginalXHR = window.XMLHttpRequest;
+      window.XMLHttpRequest = function() {
+        const xhr = new OriginalXHR();
+        const originalOpen = xhr.open;
+        const originalSend = xhr.send;
+        
+        xhr.open = function(method, url, ...args) {
+          // Debug: Log all XHR requests to understand the pattern
+          if (url && url.includes('nvidiagrid')) {
+            console.log("[GeForce Infinity] Detected nvidiagrid XHR request:", method, url);
+          }
+          
+          if (isTarget(url)) {
+            console.log("[GeForce Infinity] TARGET SESSION XHR REQUEST INTERCEPTED:", method, url);
+            this._isTargetRequest = true;
+            this._originalUrl = url;
+            this._method = method;
+            this._async = args[1] !== false; // Third parameter is async flag
+          }
+          
+          return originalOpen.apply(this, [method, url, ...args]);
+        };
+        
+        xhr.send = function(data) {
+          if (this._isTargetRequest && data) {
+            console.log("[GeForce Infinity] Intercepting XHR request body:", data);
+            // tryPatchBody is async, so we need to handle it properly
+            tryPatchBody(data).then(patchedData => {
+              if (patchedData && patchedData !== data) {
+                console.log("[GeForce Infinity] XHR body patched successfully");
+                // Need to create new request with patched data
+                const newXhr = new OriginalXHR();
+                newXhr.open(this._method || 'POST', this._originalUrl, this._async || true);
+                // Copy headers if possible
+                originalSend.call(newXhr, patchedData);
+              } else {
+                originalSend.call(this, data);
+              }
+            }).catch(err => {
+              console.error("[GeForce Infinity] XHR patch error:", err);
+              originalSend.call(this, data);
+            });
+            return; // Don't call originalSend immediately
+          }
+          return originalSend.call(this, data);
+        };
+        
+        return xhr;
+      };
+      
     })(${JSON.stringify(currentConfig)});`);
 }
 

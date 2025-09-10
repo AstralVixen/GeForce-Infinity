@@ -27,16 +27,26 @@ export function initRpcClient(start: Date, initialTitle: string) {
         });
 
         rpcClient.on("error", (err) => {
-            console.error("Discord RPC connection error:", err);
+            console.log("Discord RPC connection error (Discord not running):", err.message);
             rpcClient = undefined;
         });
 
-        rpcClient.login({ clientId }).catch((err) => {
-            console.error("Discord RPC login failed:", err);
+        // Add unhandledRejection handling specifically for this promise
+        const loginPromise = rpcClient.login({ clientId });
+        loginPromise.catch((err) => {
+            console.log("Discord RPC login failed (Discord not running):", err.message);
             rpcClient = undefined;
         });
+
+        // Ensure any unhandled rejections from the RPC client are caught
+        process.on('unhandledRejection', (reason, promise) => {
+            if (promise === loginPromise) {
+                console.log("Discord RPC unhandled rejection caught (Discord not running)");
+                rpcClient = undefined;
+            }
+        });
     } catch (err) {
-        console.error("RPC init error:", err);
+        console.log("RPC init error (Discord not available):", err);
         rpcClient = undefined;
     }
 }
