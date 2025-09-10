@@ -9,9 +9,10 @@ export const defaultConfig: Config = {
     informed: false,
     accentColor: "",
     inactivityNotification: false,
-    monitorWidth: 1920,
-    monitorHeight: 1080,
-    framesPerSecond: 60
+    monitorWidth: 2560,
+    monitorHeight: 1440,
+    framesPerSecond: 60,
+    codecPreference: "auto"
 };
 
 export interface Config {
@@ -26,6 +27,7 @@ export interface Config {
     monitorWidth: number;
     monitorHeight: number;
     framesPerSecond: number;
+    codecPreference: "auto" | "h264" | "h265" | "av1";
 }
 
 export interface UserContext {

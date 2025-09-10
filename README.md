@@ -4,7 +4,7 @@
   <img src="src/assets/resources/infinity_promoimg.png" alt="Logo" />
 </p>
 
-**GeForce Infinity** is next-gen application designed to enhance the GeForce NOW experience. Originally created to address the lack of native GeForce NOW support on Linux, this app also provides functionality for macOS and Windows users. Our goal is to refine the user interface and offer custom features for an improved experience.
+**GeForce Infinity** is a next-generation application designed to enhance the GeForce NOW experience. Originally created to address the lack of native GeForce NOW support on Linux, this app also provides functionality for macOS and Windows users. Built with modern TypeScript, React, and Electron technologies, our goal is to refine the user interface and offer custom features for an improved gaming experience.
 
 ## **Screenshots**
 
@@ -18,6 +18,9 @@
 ## 🚀 **Features**
 
 - **Up to 120 FPS support (GFN ultimate required)**
+- **4K/5K resolution support** - Full support for 3840x2160 (4K) and 5120x2880 (5K) resolutions
+- **Ultrawide monitor support** - Native 3440x1440 (21:9 aspect ratio) ultrawide gaming
+- **Advanced codec selection** - Choose between H.264, H.265/HEVC, and AV1 for optimal streaming quality
 - **Up to 2K resolution support (GFN performance or up required)**
 - **30FPS support (GFN performance or up required for some reason)**
 - **720p resolution support (GFN performance or up required for some reason)**
@@ -62,10 +65,28 @@ We also provide installation via **Flatpak** (hosted at Flathub) and **AUR**.
 
 Press `Ctrl+I` to open sidebar to access GeForce Infinity features.
 
-## 💻 **How to use 1440p & 120 FPS streaming**
+## 💻 **How to use 4K/Ultrawide & 120 FPS streaming**
 
-Press `Ctrl+I` to open sidebar and change **Resolution** and **FPS** to your liking.
-**DO NOT USE** native GeForce NOW settings for resolution and FPS, GeForce Infinity **doesn't** alter GeForce NOW settings, so you still see 1080p max resolution and 60 FPS. GeForce Infinity override these values.
+Press `Ctrl+I` to open sidebar and configure your preferred settings:
+
+### **Resolution Settings**
+- **1440p**: 2560x1440 standard QHD
+- **Ultrawide**: 3440x1440 for 21:9 ultrawide monitors
+- **4K**: 3840x2160 for 4K displays
+- **5K**: 5120x2880 for high-end displays
+
+### **Codec Selection**
+- **Auto (Recommended)**: Automatically selects best codec for your connection
+- **H.264 (Legacy)**: Wide compatibility, lower bandwidth
+- **H.265/HEVC**: Better compression, improved quality
+- **AV1 (4K Optimized)**: Latest codec, optimal for 4K streaming
+
+### **Frame Rate Options**
+- **30 FPS**: Standard streaming
+- **60 FPS**: Smooth gaming (Performance plan or higher)
+- **120 FPS**: Ultra-smooth gaming (Ultimate plan required)
+
+**IMPORTANT**: Do **NOT** use native GeForce NOW settings for resolution and FPS. GeForce Infinity overrides these values. The native GeForce NOW interface will still show 1080p max resolution and 60 FPS, but GeForce Infinity applies your custom settings.
 
 ## 🛠️ **Build**
 

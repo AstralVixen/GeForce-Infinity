@@ -1,3 +1,4 @@
+/// <reference path="../global.d.ts" />
 import { useState } from "react";
 import { Dialog } from "./dialog";
 

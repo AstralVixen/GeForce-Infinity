@@ -1,4 +1,5 @@
-import React, { createContext, useEffect, useState } from "react";
+import * as React from "react";
+import { createContext, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import Sidebar from "./components/sidebar";
 import type { Config } from "../shared/types";

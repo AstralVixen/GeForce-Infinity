@@ -32,9 +32,10 @@ export async function syncFromCloud() {
             autofocus: data.gfiautofocus ?? false,
             automute: data.gfiautomute ?? false,
             informed: data.gfinformed ?? false,
-            monitorWidth: data.gfimonwidth ?? 1920,
-            monitorHeight: data.gfimonheight ?? 1080,
-            framesPerSecond: data.gfifps ?? 60
+            monitorWidth: data.gfimonwidth ?? 2560,
+            monitorHeight: data.gfimonheight ?? 1440,
+            framesPerSecond: data.gfifps ?? 60,
+            codecPreference: data.gficodec ?? "auto"
         };
 
         // Save to disk via exposed IPC
@@ -70,7 +71,8 @@ export async function syncToCloud(config: Config) {
             patreonSub: false,
             gfimonwidth: config.monitorWidth,
             gfimonheight: config.monitorHeight,
-            gfifps: config.framesPerSecond
+            gfifps: config.framesPerSecond,
+            gficodec: config.codecPreference
         };
 
         await setDoc(docRef, userData, { merge: true });

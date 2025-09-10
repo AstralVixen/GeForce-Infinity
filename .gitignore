@@ -99,11 +99,42 @@ dist
 # TernJS port file
 .tern-port
 
+# Electron/Node.js specific
+builds/
+build/
+out/
+dist/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.bak
+*.backup
+
 # others
 later
 archive
 test.js
-builds
 bun.lockb
 .flatpak-builder
-build

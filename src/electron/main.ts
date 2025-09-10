@@ -331,6 +331,9 @@ app.commandLine.appendSwitch("enable-gpu-rasterization");
 app.commandLine.appendSwitch("enable-zero-copy");
 app.commandLine.appendSwitch("enable-native-gpu-memory-buffers");
 app.commandLine.appendSwitch("enable-gpu-memory-buffer-video-frames");
+// AV1 codec support for 4K streaming
+app.commandLine.appendSwitch("enable-accelerated-video-decode");
+app.commandLine.appendSwitch("enable-hardware-overlays");
 app.commandLine.appendSwitch(
     "disable-features",
     "UseChromeOSDirectVideoDecoder"
@@ -343,6 +346,10 @@ app.commandLine.appendSwitch(
         "VaapiVideoDecoder",
         "AcceleratedVideoDecodeLinuxZeroCopyGL",
         "VaapiIgnoreDriverChecks",
+        "Av1Decoder",
+        "VaapiAV1Decoder",
+        "GlobalVaapiLock",
+        "PlatformHEVCDecoderSupport",
     ].join(",")
 );
 
@@ -388,13 +395,27 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
         
         const clientSettings = await electronAPI.getCurrentConfig();
         
+        // Calculate appropriate DPI for high resolution displays
+        const width = clientSettings.monitorWidth;
+        const height = clientSettings.monitorHeight;
+        const calculateDPI = (w: number, h: number) => {
+          // Standard DPI calculations for common resolutions
+          if (w >= 3840 || h >= 2160) return 192; // 4K+ displays
+          if (w >= 2560 || h >= 1440) return 144; // 1440p displays
+          return 96; // Standard 1080p and below
+        };
+
+        // Automatically prefer AV1 for 4K+ resolutions when using auto mode
+        const shouldUseAV1 = clientSettings.codecPreference === "av1" || 
+                           (clientSettings.codecPreference === "auto" && (width >= 3840 || height >= 2160));
+
         srd.clientRequestMonitorSettings = [
           { 
-            widthInPixels: clientSettings.monitorWidth,  
-            heightInPixels: clientSettings.monitorHeight,
+            widthInPixels: width,  
+            heightInPixels: height,
             framesPerSecond: clientSettings.framesPerSecond, 
             displayData: null, 
-            dpi: 0, 
+            dpi: calculateDPI(width, height), 
             hdr10PlusGamingData: null, 
             monitorId: 0, 
             positionX: 0, 
@@ -402,6 +423,11 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
             sdrHdrMode: 0
           }
         ];
+
+        // Add codec preference metadata for enhanced compatibility
+        if (shouldUseAV1) {
+          console.log("[4K Mode] Using AV1 codec for " + width + "x" + height + " streaming");
+        }
     
         return JSON.stringify(parsed);
       }

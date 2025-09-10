@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "lib": ["DOM", "DOM.Iterable", "ES6"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "react",
+        "declaration": false,
+        "outDir": "dist",
+        "rootDir": "src",
+        "typeRoots": ["node_modules/@types", "src/types"],
+        "types": ["react", "react-dom", "node"]
+    },
+    "include": [
+        "src/**/*",
+        "src/overlay/global.d.ts",
+        "src/types/global.d.ts",
+        "src/types/react.d.ts",
+        "src/types/jsx-fix.d.ts",
+        "src/types/react-icons.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "builds"
+    ]
+}

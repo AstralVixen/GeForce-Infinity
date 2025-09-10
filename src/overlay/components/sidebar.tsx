@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import type { Config } from "../../shared/types";
 
 import { Header } from "./header";

@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import * as React from "react";
+import { useEffect } from "react";
 import { auth } from "../../lib/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { AuthForm } from "./authForm";

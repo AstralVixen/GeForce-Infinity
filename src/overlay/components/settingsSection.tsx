@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import type { Config } from "../../shared/types";
 import { ReloadButton } from "./reloadButton";
 import { DefaultsButton } from "./defaultsButton";
@@ -33,17 +33,27 @@ const userAgentOptions = [
     },
 ];
 
-// New options
+// Resolution options including 4K and ultrawide support
 const resolutionOptions = [
     { label: "1366 x 768", value: "1366x768" },
     { label: "1920 x 1080", value: "1920x1080" },
     { label: "2560 x 1440", value: "2560x1440" },
+    { label: "3440 x 1440 (21:9 Ultrawide)", value: "3440x1440" },
+    { label: "3840 x 2160 (4K)", value: "3840x2160" },
+    { label: "5120 x 2880 (5K)", value: "5120x2880" },
 ];
 
 const fpsOptions = [
     { label: "30 FPS", value: 30 },
     { label: "60 FPS", value: 60 },
     { label: "120 FPS - Ultimate Only", value: 120 }
+];
+
+const codecOptions = [
+    { label: "Auto (Recommended)", value: "auto" },
+    { label: "H.264 (Legacy)", value: "h264" },
+    { label: "H.265/HEVC", value: "h265" },
+    { label: "AV1 (4K Optimized)", value: "av1" }
 ];
 
 export const SettingsSection: React.FC<SettingsSectionProps> = ({
@@ -84,6 +94,12 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
             : fpsOptions[0].value;
     };
 
+    const getCodecValue = () => {
+        return codecOptions.some((c) => c.value === config.codecPreference)
+            ? config.codecPreference
+            : codecOptions[0].value;
+    };
+
     const handleToggle = (key: keyof Config) => {
         const updatedConfig = { ...config, [key]: !config[key] };
         setConfig(updatedConfig);
@@ -119,6 +135,11 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
         if (!Number.isNaN(fps)) {
             setConfig({ ...config, framesPerSecond: fps });
         }
+    };
+
+    const handleCodecChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const codec = e.target.value as "auto" | "h264" | "h265" | "av1";
+        setConfig({ ...config, codecPreference: codec });
     };
 
     /*const onToggle = (key: keyof Config, value: boolean) => {
@@ -197,7 +218,9 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
                                 Select the target monitor resolution
                                 <br />
-                                used for streaming.
+                                used for streaming. 4K+ resolutions
+                                <br />
+                                require AV1 codec support and Ultimate tier.
                             </div>
                         </div>
                     </span>
@@ -229,6 +252,30 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="rounded p-2 bg-[#23272b] border border-gray-600 ml-4 text-white"
                     >
                         {fpsOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label className="flex items-center justify-between">
+                    <span>
+                        Video Codec
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Select preferred video codec.
+                                <br />
+                                AV1 is recommended for 4K+ streaming.
+                            </div>
+                        </div>
+                    </span>
+                    <select
+                        value={getCodecValue()}
+                        onChange={handleCodecChange}
+                        className="rounded p-2 bg-[#23272b] border border-gray-600 ml-4 text-white"
+                    >
+                        {codecOptions.map((option) => (
                             <option key={option.value} value={option.value}>
                                 {option.label}
                             </option>
