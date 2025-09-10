@@ -4,7 +4,7 @@
   <img src="src/assets/resources/infinity_promoimg.png" alt="Logo" />
 </p>
 
-**GeForce Infinity** is a next-generation application designed to enhance the GeForce NOW experience. Originally created to address the lack of native GeForce NOW support on Linux, this app also provides functionality for macOS and Windows users. Built with modern TypeScript, React, and Electron technologies, our goal is to refine the user interface and offer custom features for an improved gaming experience.
+**GeForce Infinity** is a next-generation application designed to enhance the GeForce NOW experience. Originally created to address the lack of native GeForce NOW support on Linux, this app also provides functionality for macOS and Windows users. Built with modern TypeScript, React, and Electron technologies with full ES module support, our goal is to refine the user interface and offer custom features for an improved gaming experience.
 
 ## **Screenshots**
 
@@ -87,6 +87,22 @@ Press `Ctrl+I` to open sidebar and configure your preferred settings:
 - **120 FPS**: Ultra-smooth gaming (Ultimate plan required)
 
 **IMPORTANT**: Do **NOT** use native GeForce NOW settings for resolution and FPS. GeForce Infinity overrides these values. The native GeForce NOW interface will still show 1080p max resolution and 60 FPS, but GeForce Infinity applies your custom settings.
+
+## 🔧 **Technical Architecture**
+
+GeForce Infinity is built with modern web technologies and follows best practices for cross-platform development:
+
+- **ES Module Architecture**: Full ES module support with modern import/export syntax
+- **TypeScript**: Strict type checking and modern language features
+- **Electron**: Cross-platform desktop application framework with secure IPC
+- **React**: Component-based UI for the overlay interface
+- **Build System**: Modern build pipeline with esbuild, TypeScript compiler, and Tailwind CSS
+
+### **Recent Improvements (v1.2.0)**
+- **ES Module Compatibility**: Complete migration to ES modules with proper directory imports
+- **4K/AV1 Support**: Advanced codec selection with AV1 optimization for 4K streaming
+- **TypeScript Modernization**: Enhanced type safety and modern import syntax
+- **Build Reliability**: Resolved all compilation issues and improved development experience
 
 ## 🛠️ **Build**
 

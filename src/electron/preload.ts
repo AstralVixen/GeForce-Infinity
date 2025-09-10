@@ -1,7 +1,11 @@
 import { contextBridge, ipcRenderer, clipboard, shell } from "electron";
-import { Config } from "../shared/types";
+import { Config } from "../shared/types.js";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 declare global {
     interface Window {

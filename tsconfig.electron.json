@@ -2,9 +2,9 @@
     "compilerOptions": {
         "outDir": "dist",
         "rootDir": "src",
-        "module": "Node16",
-        "target": "ESNext",
-        "moduleResolution": "node16",
+        "module": "ESNext",
+        "target": "ESNext", 
+        "moduleResolution": "bundler",
         "esModuleInterop": true,
         "strict": true,
         "jsx": "react-jsx",

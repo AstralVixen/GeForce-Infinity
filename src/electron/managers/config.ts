@@ -1,7 +1,7 @@
 import { app } from "electron";
 import fs from "fs";
 import path from "path";
-import { Config, defaultConfig } from "../../shared/types";
+import { Config, defaultConfig } from "../../shared/types.js";
 
 const configPath = path.join(app.getPath("userData"), "settings.json");
 

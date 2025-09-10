@@ -1,6 +1,6 @@
 import { ipcMain, BrowserWindow } from "electron";
-import { GFN_WEBSITE } from "../managers/window";
-import { getConfig } from "../managers/config";
+import { GFN_WEBSITE } from "../managers/window.js";
+import { getConfig } from "../managers/config.js";
 
 export function registerSidebarIpcHandlers(mainWindow: BrowserWindow) {
     ipcMain.on("toggle-sidebar", () => {

@@ -1,10 +1,13 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
-import { getConfig } from "./config";
-import { getIconPath } from "../utils";
+import { fileURLToPath } from "url";
+import { getConfig } from "./config.js";
+import { getIconPath } from "../utils.js";
 
 export const GFN_WEBSITE = "https://play.geforcenow.com/";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const preloadPath = path.resolve(__dirname, "..", "preload.js");
 
 export function createMainWindow(): BrowserWindow {

@@ -1,5 +1,5 @@
 import { BrowserWindow } from "electron";
-import { Config } from "../../shared/types";
+import { Config } from "../../shared/types.js";
 
 export interface AppContext {
     mainWindow: BrowserWindow;

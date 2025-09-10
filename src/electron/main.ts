@@ -10,12 +10,16 @@ import {
 import path from "path";
 import fs from "fs";
 import { promises as fsPromises } from "fs";
+import { fileURLToPath } from "url";
 
-import { registerIpcHandlers } from "./ipc";
-import { createMainWindow } from "./managers/window";
-import { getConfig, saveConfig, loadConfig } from "./managers/config";
-import { createTray } from "./managers/tray";
-import { clientId, initRpcClient, updateActivity } from "./managers/discord";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+import { registerIpcHandlers } from "./ipc/index.js";
+import { createMainWindow } from "./managers/window.js";
+import { getConfig, saveConfig, loadConfig } from "./managers/config.js";
+import { createTray } from "./managers/tray.js";
+import { clientId, initRpcClient, updateActivity } from "./managers/discord.js";
 
 function overrideVersionInDev() {
     if (!app.isPackaged) {

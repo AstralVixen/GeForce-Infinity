@@ -7,7 +7,7 @@ import {
     NativeImage,
 } from "electron";
 import fs from "fs";
-import { getIconPath } from "../utils";
+import { getIconPath } from "../utils.js";
 
 export function createTray(mainWindow: BrowserWindow): Tray {
     const iconPath = getIconPath();
