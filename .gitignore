@@ -143,3 +143,32 @@ bun.lockb
 CLAUDE.md
 CLAUDE.local.md
 WARP.md
+
+# Additional Electron build artifacts
+*.spec
+*.zip
+*.exe
+*.dmg
+*.AppImage
+*.deb
+*.rpm
+*.snap
+
+# Yarn v2+ files
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Development and build caches
+.esbuild/
+.turbo/
+.parcel-cache/
+.cache/
+
+# Local environment and config files
+.env.local
+.env.development
+.env.staging
+config.local.js

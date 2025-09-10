@@ -98,11 +98,13 @@ GeForce Infinity is built with modern web technologies and follows best practice
 - **React**: Component-based UI for the overlay interface
 - **Build System**: Modern build pipeline with esbuild, TypeScript compiler, and Tailwind CSS
 
-### **Recent Improvements (v1.2.0)**
-- **ES Module Compatibility**: Complete migration to ES modules with proper directory imports
-- **4K/AV1 Support**: Advanced codec selection with AV1 optimization for 4K streaming
-- **TypeScript Modernization**: Enhanced type safety and modern import syntax
-- **Build Reliability**: Resolved all compilation issues and improved development experience
+### **Recent Improvements (v1.2.0) - Updated September 10, 2025**
+- **ES Module Compatibility**: Complete migration to ES modules with proper directory imports and extensions
+- **4K/AV1 Support**: Advanced codec selection with AV1 optimization for 4K streaming performance
+- **TypeScript Modernization**: Enhanced type safety with modern import/export syntax throughout codebase
+- **Build System Reliability**: Resolved Tailwind CSS compilation issues and all TypeScript errors
+- **Dependency Management**: Fixed corrupted yaml package dependency affecting build pipeline
+- **Development Experience**: Streamlined development workflow with reliable build processes
 
 ## 🛠️ **Build**
 
