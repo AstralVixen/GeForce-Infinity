@@ -14,7 +14,6 @@
         "pack": "electron-builder --dir",
         "dist": "electron-builder --win --linux",
         "rebuild": "electron-rebuild",
-        "postinstall": "electron-builder install-app-deps",
         "release": "standard-version"
     },
     "keywords": [],

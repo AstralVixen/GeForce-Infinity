@@ -40,6 +40,9 @@ jobs:
             - name: 🧰 Install dependencies
               run: bun install
 
+            - name: 🔧 Install app dependencies
+              run: bunx electron-builder install-app-deps
+
             - name: 🔧 Install system dependencies
               run: |
                   sudo apt update
