@@ -10,9 +10,9 @@
         "dev:electron": "tsc -w -p tsconfig.json",
         "build": "bunx tsx scripts/build-overlay.ts && bunx tsc -p tsconfig.electron.json && bunx cpx \"src/assets/**/*\" dist/assets",
         "build:css": "npx tailwindcss -i src/overlay/index.css -o dist/assets/tailwind.bundle.css --minify",
-        "start": "yarn build && electron dist/electron/main.js",
-        "pack": "electron-builder --dir",
-        "dist": "electron-builder --win --linux",
+        "start": "yarn build && bunx electron dist/electron/main.js",
+        "pack": "bunx electron-builder --dir",
+        "dist": "bunx electron-builder --win --linux",
         "rebuild": "electron-rebuild",
         "release": "standard-version"
     },
