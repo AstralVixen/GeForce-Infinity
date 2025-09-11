@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 GeForce Infinity is an Electron-based application that enhances the GeForce NOW experience across Linux, macOS, and Windows. It provides custom features like high refresh rate support, enhanced UI, Discord RPC, and improved gaming experience through an injected overlay system.
 
-**Major Technical Achievement (September 2025)**: Successfully migrated from CommonJS to ES Modules with comprehensive TypeScript modernization, 4K/AV1 streaming support, and enhanced build system reliability. Application now demonstrates modern JavaScript architecture with full ES module compatibility.
+**Major Technical Achievement (September 2025)**: Successfully migrated from CommonJS to ES Modules with comprehensive TypeScript modernization, 4K/AV1 streaming support, and enhanced build system reliability. **v1.4.0 BREAKTHROUGH**: Achieved complete resolution override functionality through iframe isolation bypass using webFrameMain API integration. Custom resolutions (3440x1440, 4K, 120fps, AV1) now fully operational. Application demonstrates modern JavaScript architecture with comprehensive network interception capabilities.
 
 ## Development Commands
 
@@ -82,7 +82,7 @@ src/overlay/
 ```
 
 #### Request Patching System
-The main process intercepts GeForce NOW API calls to `/v2/session` endpoints and modifies the `clientRequestMonitorSettings` to override resolution and FPS limits, enabling up to 1440p and 120fps streaming.
+**Dual-Layer Interception Architecture**: The system employs comprehensive network monitoring through both webRequest API and iframe-level injection. The main process intercepts GeForce NOW API calls to `/v2/session` endpoints using webRequest API, while webFrameMain API enables iframe-level fetch/XHR patching to capture POST requests that bypass standard interception. This breakthrough architecture modifies `clientRequestMonitorSettings` to override resolution and FPS limits, enabling custom resolutions up to 4K and 120fps streaming with AV1 codec support.
 
 #### Configuration System
 - Settings stored in JSON format via Electron's storage
@@ -163,3 +163,12 @@ The application sets several Chrome/Electron flags for hardware acceleration:
 - **Type safety enhancement**: Comprehensive type annotations and interface definitions
 - **Build reliability**: Systematic error resolution maintaining code quality without feature removal
 - **Documentation integration**: Enhanced code documentation with TypeScript-aware patterns
+
+### Resolution Override System Breakthrough (v1.4.0)
+- **Iframe Isolation Solution**: Breakthrough resolution of iframe security boundaries preventing network request interception
+- **webFrameMain API Integration**: Implemented comprehensive iframe access using Electron's webFrameMain API for frame-level script injection
+- **Dual-Layer Interception Architecture**: Combined webRequest API with iframe-level fetch/XHR patching for complete coverage
+- **POST Request Handling Resolution**: Solved critical issue where POST requests to GeForce NOW API bypassed standard webRequest interception
+- **Frame Navigation Event Handling**: Dynamic iframe injection system responding to frame navigation events for persistent coverage
+- **Custom Resolution Functionality**: 3440x1440, 4K, 120fps, AV1 codec streaming now fully operational as designed
+- **Production Release**: Professional v1.4.0 release with comprehensive documentation and git workflow

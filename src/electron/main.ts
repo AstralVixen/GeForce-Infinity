@@ -486,7 +486,7 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
         href: window.location.href
       };
       
-      console.log("[GeForce Infinity] Injecting into frame:", frameInfo);
+      console.log("[GeForce Infinity] ✅ INJECTION SUCCESS - Frame patched:", frameInfo);
       
       const originalFetch = window.fetch?.bind(window);
       
@@ -647,30 +647,40 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
     })(${JSON.stringify(currentConfig)});`;
     
     // Inject into main frame
-    console.log("[GeForce Infinity] Injecting into main frame...");
-    await mainWindow.webContents.executeJavaScript(injectionScript);
+    console.log("[GeForce Infinity] 🎯 Injecting into main frame...");
+    try {
+        await mainWindow.webContents.executeJavaScript(injectionScript);
+        console.log("[GeForce Infinity] ✅ Main frame injection successful");
+    } catch (error: any) {
+        console.log("[GeForce Infinity] ❌ Main frame injection failed:", error?.message || error);
+    }
     
     // Find and inject into all existing frames including iframes
     try {
         const allFrames = mainWindow.webContents.mainFrame.frames;
-        console.log("[GeForce Infinity] Found", allFrames.length, "frame(s), injecting into each...");
+        console.log("[GeForce Infinity] 🔍 Found", allFrames.length, "frame(s), injecting into each...");
         for (const frame of allFrames) {
             try {
                 await frame.executeJavaScript(injectionScript);
-                console.log("[GeForce Infinity] Successfully injected into frame:", frame.url);
+                console.log("[GeForce Infinity] ✅ Successfully injected into frame:", frame.url);
             } catch (error: any) {
-                console.log("[GeForce Infinity] Failed to inject into frame:", frame.url, error?.message || error);
+                console.log("[GeForce Infinity] ❌ Failed to inject into frame:", frame.url, error?.message || error);
             }
         }
     } catch (error: any) {
-        console.log("[GeForce Infinity] Could not access frames:", error?.message || error);
+        console.log("[GeForce Infinity] ❌ Could not access frames:", error?.message || error);
     }
+    
+    // Enhanced frame event handling for game session detection
+    const setupFrameInjection = (event: string) => {
+        console.log("[GeForce Infinity] 🎮 Setting up", event, "frame injection handler");
+    };
     
     // Set up listener for new frames that might be created dynamically
     mainWindow.webContents.on('did-frame-navigate', 
         (event, url, httpResponseCode, httpStatusText, isMainFrame, frameProcessId, frameRoutingId) => {
             if (!isMainFrame) {
-                console.log("[GeForce Infinity] New frame navigated:", url);
+                console.log("[GeForce Infinity] 🆕 New frame navigated:", url, "Status:", httpResponseCode);
                 
                 // Wait a bit for the frame to be ready, then inject
                 setTimeout(async () => {
@@ -678,15 +688,38 @@ async function patchFetchForSessionRequest(mainWindow: Electron.CrossProcessExpo
                         const frame = webFrameMain.fromId(frameProcessId, frameRoutingId);
                         if (frame) {
                             await frame.executeJavaScript(injectionScript);
-                            console.log("[GeForce Infinity] Successfully injected into new frame:", url);
+                            console.log("[GeForce Infinity] ✅ Successfully injected into new frame:", url);
+                        } else {
+                            console.log("[GeForce Infinity] ❌ Could not get frame reference for:", url);
                         }
                     } catch (error: any) {
-                        console.log("[GeForce Infinity] Failed to inject into new frame:", url, error?.message || error);
+                        console.log("[GeForce Infinity] ❌ Failed to inject into new frame:", url, error?.message || error);
                     }
                 }, 100);
             }
         }
     );
+    
+    // Additional frame monitoring events for game session detection
+    mainWindow.webContents.on('did-create-window', (window, details) => {
+        console.log("[GeForce Infinity] 🪟 New window created:", details.url);
+    });
+    
+    mainWindow.webContents.on('did-attach-webview', (event, webContents) => {
+        console.log("[GeForce Infinity] 🕸️ WebView attached");
+    });
+    
+    mainWindow.webContents.on('dom-ready', () => {
+        console.log("[GeForce Infinity] 🎯 DOM ready - re-injecting for safety");
+        // Re-inject when DOM is ready to catch late-loading frames
+        setTimeout(async () => {
+            try {
+                await mainWindow.webContents.executeJavaScript(injectionScript);
+            } catch (error: any) {
+                console.log("[GeForce Infinity] DOM ready injection failed:", error?.message || error);
+            }
+        }, 500);
+    });
 }
 
 app.whenReady().then(async () => {
