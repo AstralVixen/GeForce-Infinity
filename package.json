@@ -13,8 +13,8 @@
         "start": "yarn build && bunx electron dist/electron/main.js",
         "pack": "bunx electron-builder --dir",
         "dist": "bunx electron-builder --win --linux",
-        "rebuild": "electron-rebuild",
-        "release": "standard-version"
+        "rebuild": "bunx electron-rebuild",
+        "release": "bunx standard-version"
     },
     "keywords": [],
     "author": {
