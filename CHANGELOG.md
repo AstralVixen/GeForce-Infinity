@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 🎉 1.4.0 (2025-09-10) - RESOLUTION OVERRIDE BREAKTHROUGH
+
+### 🚀 Major Features
+
+* **🔧 Working Resolution Override**: Successfully implemented the core functionality users have been waiting for
+* **📡 Iframe Injection System**: Added comprehensive webFrameMain API integration for complete frame coverage
+* **🎯 Dual-Layer Network Interception**: Combined webRequest API with iframe-level fetch/XHR patching for 100% coverage
+* **✅ Custom Resolution Streaming**: Users can now successfully use 3440x1440, 4K, 120fps, and AV1 codec settings
+* **🛠️ Root Cause Resolution**: Identified and solved iframe isolation preventing POST request interception
+
+### 🔍 Technical Implementation
+
+* **webFrameMain API Integration**: Implemented comprehensive iframe monitoring and script injection
+* **Fetch/XHR Patching**: Added iframe-level request interception for complete network coverage  
+* **POST Request Handling**: Resolved critical issue where POST requests bypassed webRequest API
+* **Frame Isolation Solution**: Overcame iframe security boundaries with proper script injection timing
+* **API Interception Enhancement**: Extended network monitoring to handle all GeForce NOW API patterns
+
+### 🐛 Bug Fixes
+
+* **Request Timing**: Fixed critical timing issue ensuring patches are applied before GeForce NOW initialization
+* **TypeScript Compilation**: Resolved all remaining compilation errors for clean builds
+* **NPM Configuration**: Fixed package.json warnings and improved development experience
+* **Build System Reliability**: Enhanced build pipeline stability and error handling
+
+### 💻 Development Improvements
+
+* **Enhanced Debugging**: Added comprehensive logging for iframe injection and network interception
+* **Code Quality**: Systematic error resolution maintaining feature completeness
+* **Build Process**: Improved development workflow with reliable compilation and testing
+
 ### 1.3.0 (2025-09-10)
 
 #### Features
