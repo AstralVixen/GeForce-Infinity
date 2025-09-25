@@ -40,6 +40,7 @@ const resolutionOptions = [
     { label: "2560x1440(16:9)  - QHD - Performance", value: "2560x1440" },
     { label: "2560x1080(21:9)  - UW FHD - Performance", value: "2560x1080" },
     { label: "1920x1080(16:9)  - FHD - Basic", value: "1920x1080" },
+    { label: "1366x768(16:9) - HD - Basic", value: "1366x768" },
 ];
 
 const fpsOptions = [
