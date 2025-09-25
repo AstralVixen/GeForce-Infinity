@@ -35,9 +35,11 @@ const userAgentOptions = [
 
 // New options
 const resolutionOptions = [
-    { label: "1366 x 768", value: "1366x768" },
-    { label: "1920 x 1080", value: "1920x1080" },
-    { label: "2560 x 1440", value: "2560x1440" },
+    { label: "3840x1080(32:9)  - UW FHD - Ultimate ", value: "3840x1080" },
+    { label: "2560x1600(16:10) - QHD - Ultimate", value: "2560x1600" },
+    { label: "2560x1440(16:9)  - QHD - Performance", value: "2560x1440" },
+    { label: "2560x1080(21:9)  - UW FHD - Performance", value: "2560x1080" },
+    { label: "1920x1080(16:9)  - FHD - Basic", value: "1920x1080" },
 ];
 
 const fpsOptions = [
