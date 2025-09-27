@@ -35,12 +35,17 @@ const userAgentOptions = [
 
 // New options
 const resolutionOptions = [
-    { label: "3840x1080(32:9)  - UW FHD - Ultimate ", value: "3840x1080" },
-    { label: "2560x1600(16:10) - QHD - Ultimate", value: "2560x1600" },
-    { label: "2560x1440(16:9)  - QHD - Performance", value: "2560x1440" },
-    { label: "2560x1080(21:9)  - UW FHD - Performance", value: "2560x1080" },
-    { label: "1920x1080(16:9)  - FHD - Basic", value: "1920x1080" },
-    { label: "1366x768(16:9) - HD - Basic", value: "1366x768" },
+    { label: "5120 x 2880 (16:9) - 5K", value: "5120x2880" },
+    { label: "3840 x 2160 (16:9) - 4K", value: "3840x2160" },
+    { label: "2560 x 1440 (16:9) - QHD", value: "2560x1440" },
+    { label: "1920 x 1080 (16:9) - FHD", value: "1920x1080" },
+    { label: "1366 x 768 (16:9) - HD", value: "1366x768" },
+    { label: "5120 x 2160 (21:9) - UW 5K", value: "5120x2160" },
+    { label: "3440 x 1440 (21:9) - UW QHD", value: "3440x1440" },
+    { label: "2560 x 1080 (21:9) - UW FHD", value: "2560x1080" },
+    { label: "1680 x 720 (21:9) - UW HD", value: "1680x720" },
+    { label: "5120 x 1440 (32:9) - SW QHD", value: "5120x1440" },
+    { label: "3840 x 1080 (32:9) - SW HD", value: "3840x1080" },
 ];
 
 const fpsOptions = [
@@ -192,6 +197,12 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         ))}
                     </select>
                 </label>
+
+                <label className="flex items-center justify-between">
+                    <span className="mt-2 text-xs text-grey-200"> Look at <a className="mt-2 text-xs text-blue-400 underline" href="https://nvidia.custhelp.com/app/answers/detail/a_id/5223"> GFN Knowledge Base </a> for suitable options for your Subscription
+                    </span>
+                </label>
+
                 <label className="flex items-center justify-between">
                     <span>
                         Resolution
@@ -201,6 +212,12 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                                 Select the target monitor resolution
                                 <br />
                                 used for streaming.
+                                <br />
+                                <br />
+                                NOTE: Resultions above FHD needs
+                                <br />
+                                Performance or Ultimate Subscription.
+                                <br />
                             </div>
                         </div>
                     </span>
@@ -216,6 +233,7 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         ))}
                     </select>
                 </label>
+
                 <label className="flex items-center justify-between">
                     <span>
                         FPS
