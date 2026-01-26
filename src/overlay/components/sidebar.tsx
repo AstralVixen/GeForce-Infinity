@@ -8,29 +8,31 @@ import { ShortcutSection } from "./shortcutSection";
 import { AuthSection } from "./authSection";
 
 interface SidebarProps {
-    config: Config;
-    setConfig: React.Dispatch<React.SetStateAction<Config>>;
-    visible: boolean;
+	config: Config;
+	setConfig: React.Dispatch<React.SetStateAction<Config>>;
+	visible: boolean;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ config, setConfig, visible }) => {
-    return (
-        <div
-            className={`fixed top-0 right-0 bottom-0 w-[450px] bg-[#23272b] text-[#babec4] z-[99999] font-sans
+	return (
+		<div
+			className={`fixed top-0 right-0 bottom-0 w-[450px] bg-[#23272b] text-[#babec4] z-[99999] font-sans
         transform transition-transform duration-300 ease-in-out flex flex-col
         ${visible ? "translate-x-0" : "translate-x-full"}
       `}
-            style={{ pointerEvents: visible ? "auto" : "none" }}
-        >
-            <Header />
-            <div className="flex-1 overflow-y-auto overflow-x-hidden px-8 py-4 min-h-0 scrollbar">
-                <AuthSection />
-                <ShortcutSection />
-                <SettingsSection config={config} setConfig={setConfig} />
-            </div>
-            <Footer />
-        </div>
-    );
+			style={{ pointerEvents: visible ? "auto" : "none" }}>
+			<Header />
+			<div className="flex-1 overflow-y-auto overflow-x-hidden px-8 py-4 min-h-0 scrollbar">
+				<AuthSection />
+				<ShortcutSection />
+				<SettingsSection
+					config={config}
+					setConfig={setConfig}
+				/>
+			</div>
+			<Footer />
+		</div>
+	);
 };
 
 export default Sidebar;
