@@ -25,6 +25,7 @@ export async function syncFromCloud() {
         // Map to local config
         const configUpdate = {
             rpcEnabled: data.gfirpc ?? true,
+            keyboardLayout: data.gfikbLayout ?? "",
             userAgent: data.gfiuseragent ?? "",
             accentColor: data.gfiaccent ?? "",
             notify: data.gfinotificaitons ?? true,
@@ -59,6 +60,7 @@ export async function syncToCloud(config: Config) {
         const userData = {
             username: user.displayName || user.email || "Unknown",
             gfirpc: config.rpcEnabled,
+            gfikbLayout: config.keyboardLayout,
             gfiuseragent: config.userAgent,
             gfitheme: "", // TODO: theme system later
             gfiaccent: config.accentColor,

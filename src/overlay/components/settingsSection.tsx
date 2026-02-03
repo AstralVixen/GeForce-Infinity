@@ -33,6 +33,39 @@ const userAgentOptions = [
     },
 ];
 
+const keyboardLayoutOptions = [
+    { label: "Default", value: "" },
+    { label: "Bulgarian", value: "bg-BG" },
+    { label: "Traditional Chinese", value: "zh-TW" },
+    { label: "Chinese", value: "zh-CN" },
+    { label: "Deutsch", value: "de-DE" },
+    { label: "English (Canada)", value: "en-CA" },
+    { label: "English (GB)", value: "en-GB" },
+    { label: "English (India)", value: "en-IN" },
+    { label: "English (USA)", value: "en-US" },
+    { label: "France", value: "fr-FR" },
+    { label: "Hebrew", value: "he-IL" },
+    { label: "Hungarian", value: "hu-HU" },
+    { label: "Italia", value: "it-IT" },
+    { label: "Japan 102", value: "ja-JP" },
+    { label: "Japan 106", value: "ja-106" },
+    { label: "Korea", value: "ko-KR" },
+    { label: "Croatia", alue: "hr-HR" },
+    { label: "Netherlands", value: "nl-NL" },
+    { label: "Poland", value: "pl-PL" }, 
+    { label: "Portuguese", value: "pt-PT" }, 
+    { label: "Portuguese (Brasilian)", value: "pt-BR" },
+    { label: "Romanian", value: "ro-RO" },
+    { label: "Russia", value: "ru-RU" },
+    { label: "Swedish", value: "sv-SE" },
+    { label: "Serbian", value: "sr-Latn-CS" },
+    { label: "Slovak", value: "sk-SK" },
+    { label: "Spain", value: "es-ES_tradnl" },
+    { label: "Mexican", value: "es-MX" },
+    { label: "Czech", value: "cs-CZ" },
+    { label: "Turkish", value: "tr-TR" },
+]
+
 // New options
 const resolutionOptions = [
     { label: "1366 x 768", value: "1366x768" },
@@ -71,6 +104,12 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
             : "";
     };
 
+    const getKeyboardLayout = () => {
+        return keyboardLayoutOptions.find((o) => o.value === config.keyboardLayout)
+            ? config.keyboardLayout
+            : "";
+    };
+
     const getResolutionValue = () => {
         const current = `${config.monitorWidth}x${config.monitorHeight}`;
         return resolutionOptions.some((r) => r.value === current)
@@ -96,6 +135,36 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
 
     const handleUserAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const updated = { ...config, userAgent: e.target.value };
+        setConfig(updated);
+    };
+
+    const handleKeyboardLayoutChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const chosenKB = keyboardLayoutOptions.find((o) => o.value === e.target.value)
+        const updated = { ...config, keyboardLayout: e.target.value };
+
+        const request = window.indexedDB.open("gfnclient");
+		request.onsuccess = (event) => {
+            if(event.target && event.target.result && chosenKB) {
+                const db = event.target.result;
+                const transaction = db.transaction("sharedStore", "readwrite");
+                const objectStore = transaction.objectStore("sharedStore");
+
+                if(chosenKB.value === "") {
+                    objectStore.delete("keyboardLayout");
+                }
+                else {
+                    const item = { 
+                        name: chosenKB.label, 
+                        code: chosenKB.value,
+                        params: undefined
+                    };
+                    objectStore.put(item, "keyboardLayout");
+                }
+            }
+            
+        }
+        request.onerror = (err) => console.log(`[DEV] - Error opening indexedDB : ${err}`);
+
         setConfig(updated);
     };
 
@@ -183,6 +252,34 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         className="rounded p-2 bg-[#23272b] border border-gray-600 ml-4 text-white"
                     >
                         {userAgentOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label className="flex items-center justify-between">
+                    <span>
+                        Keyboard Layout
+                        <div className="relative group inline-block">
+                            <FaInfoCircle className="ml-2 cursor-pointer peer" />
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 ml-8 mb-2 px-3 py-1 rounded-md bg-gray-500 text-white text-base opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                                Changes the keyboard layout
+                                <br />
+                                (default on non Windows OS
+                                <br />
+                                is en-US)
+                            </div>
+                        </div>
+                        <br />
+                        <small>Restart application to apply changes</small>
+                    </span>
+                    <select
+                        value={getKeyboardLayout()}
+                        onChange={handleKeyboardLayoutChange}
+                        className="rounded p-2 bg-[#23272b] border border-gray-600 ml-4 text-white"
+                    >
+                        {keyboardLayoutOptions.map((option) => (
                             <option key={option.value} value={option.value}>
                                 {option.label}
                             </option>

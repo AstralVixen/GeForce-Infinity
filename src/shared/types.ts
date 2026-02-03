@@ -2,6 +2,7 @@ import { User } from "firebase/auth";
 
 export const defaultConfig: Config = {
     userAgent: "",
+    keyboardLayout: "",
     autofocus: false,
     automute: false,
     notify: true,
@@ -16,6 +17,7 @@ export const defaultConfig: Config = {
 
 export interface Config {
     userAgent: string;
+    keyboardLayout: string;
     autofocus: boolean;
     automute: boolean;
     notify: boolean;
