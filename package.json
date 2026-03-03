@@ -91,6 +91,7 @@
         "directories": {
             "output": "builds"
         },
+        "mac": null,
         "win": {
             "target": [
                 "nsis",
