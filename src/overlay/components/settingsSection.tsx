@@ -68,9 +68,14 @@ const keyboardLayoutOptions = [
 
 // New options
 const resolutionOptions = [
-    { label: "1366 x 768", value: "1366x768" },
-    { label: "1920 x 1080", value: "1920x1080" },
-    { label: "2560 x 1440", value: "2560x1440" },
+    { label: "2560 x 1440 (16:9) - QHD", value: "2560x1440" },
+    { label: "1920 x 1080 (16:9) - FHD", value: "1920x1080" },
+    { label: "1366 x 768 (16:9) - HD", value: "1366x768" },
+    { label: "3440 x 1440 (21:9) - UW QHD", value: "3440x1440" },
+    { label: "2560 x 1080 (21:9) - UW FHD", value: "2560x1080" },
+    { label: "1680 x 720 (21:9) - UW HD", value: "1680x720" },
+    { label: "5120 x 1440 (32:9) - SW QHD", value: "5120x1440" },
+    { label: "3840 x 1080 (32:9) - SW HD", value: "3840x1080" },
 ];
 
 const fpsOptions = [
@@ -258,6 +263,12 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         ))}
                     </select>
                 </label>
+
+                <label className="flex items-center justify-between">
+                    <span className="mt-2 text-xs text-grey-200"> Look at <a className="mt-2 text-xs text-blue-400 underline" href="https://nvidia.custhelp.com/app/answers/detail/a_id/5223"> GFN Knowledge Base </a> for suitable options for your Subscription
+                    </span>
+                </label>
+
                 <label className="flex items-center justify-between">
                     <span>
                         Keyboard Layout
@@ -295,6 +306,12 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                                 Select the target monitor resolution
                                 <br />
                                 used for streaming.
+                                <br />
+                                <br />
+                                NOTE: Resultions above FHD needs
+                                <br />
+                                Performance or Ultimate Subscription.
+                                <br />
                             </div>
                         </div>
                     </span>
@@ -310,6 +327,7 @@ export const SettingsSection: React.FC<SettingsSectionProps> = ({
                         ))}
                     </select>
                 </label>
+
                 <label className="flex items-center justify-between">
                     <span>
                         FPS
