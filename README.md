@@ -18,7 +18,7 @@
 ## 🚀 **Features**
 
 - **Up to 120 FPS support (GFN ultimate required)**
-- **Up to 2K resolution support (GFN performance or up required)**
+- **Up to 3440x1440 ultrawide resolution support (GFN performance or up required)**
 - **30FPS support (GFN performance or up required for some reason)**
 - **720p resolution support (GFN performance or up required for some reason)**
 - **Account system:** Users can now register and log in. After logging in, they are able to sync settings to and from the cloud.
@@ -62,7 +62,7 @@ We also provide installation via **Flatpak** (hosted at Flathub) and **AUR**.
 
 Press `Ctrl+I` to open sidebar to access GeForce Infinity features.
 
-## 💻 **How to use 1440p & 120 FPS streaming**
+## 💻 **How to use 1440p, ultrawide & 120 FPS streaming**
 
 Press `Ctrl+I` to open sidebar and change **Resolution** and **FPS** to your liking. Make sure to set the **User Agent to Chrome!**
 **DO NOT USE** native GeForce NOW settings for resolution and FPS, GeForce Infinity **doesn't** alter GeForce NOW settings, so you still see 1080p max resolution and 60 FPS. GeForce Infinity override these values.
